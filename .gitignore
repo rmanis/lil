@@ -3,3 +3,4 @@ etc/swapfile*
 log/compile
 log/debug.log
 log/log
+.*.swp
