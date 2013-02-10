@@ -1,4 +1,4 @@
-tmp_eval_file.c
+eval/tmp_eval_file.c
 etc/swapfile*
 log/compile
 log/debug.log
