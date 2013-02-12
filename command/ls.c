@@ -3,8 +3,9 @@ int main(string dir) {
     int window_width = 80;
     int TAB_WIDTH = 8;
 
-    string *files = get_dir(dir);
-    int numfiles = sizeof(files);
+    string path = resolve_path(this_player()->query_cwd(), dir);
+    string *files;
+    int numfiles;
 
     string current;
     int longest_length = 0;
@@ -16,6 +17,18 @@ int main(string dir) {
     int i, j;
     int this_tab_width;
     int tabs_to_print;
+
+    if (!sizeof(stat(path))) {
+	printf("No such file or directory: %s\n", path);
+	return 1;
+    }
+
+    if (stringp(stat(path)[0]) && path != "/") {
+	path += "/";
+    }
+
+    files = get_dir(path);
+    numfiles = sizeof(files);
 
     foreach (current in files) {
 
