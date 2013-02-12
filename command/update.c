@@ -4,8 +4,8 @@ int
 main(string file)
 {
     object obj;
+    string path;
 
-    // need to call resolve_path() and query_cwd()
     if (!file) {
 #ifndef __NO_ADD_ACTION__
 	return notify_fail("update what?\n");
@@ -14,9 +14,16 @@ main(string file)
 	return 1;
 #endif
     }
-    if (obj = find_object(file)) {
+
+    path = resolve_path(this_player()->query_cwd(), file);
+
+    if (!sizeof(stat(path)) && !sizeof(stat(path + ".c"))) {
+	write(file + " (" + path + ") does not exist.\n");
+    }
+
+    if (obj = find_object(path)) {
 	destruct(obj);
     }
-    load_object(file);
+    load_object(path);
     return 1;
 }
