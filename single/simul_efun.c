@@ -66,7 +66,7 @@ string
 file_owner(string file)
 {
     string temp;
-    
+
     if (file[0] != '/') file = "/" + file;
 
     if (sscanf(file, "/u/%s/%s/%*s", temp, temp) == 2) {
@@ -87,20 +87,20 @@ dump_variable(mixed arg)
 {
    string rtn;
    mixed x, y;
-   
+
    switch(typeof(arg)) {
    case OBJECT: return "("+file_name(arg)+")";
    case STRING: return "\""+arg+"\"";
    case INT: return "#"+arg;
-   case ARRAY: 
+   case ARRAY:
        {
        rtn = "ARRAY\n";
-       foreach (y in arg) 
+       foreach (y in arg)
            rtn += sprintf("[%d] == %s\n", x++, dump_variable(y));
-           
+
        return rtn;
        }
- 
+
    case MAPPING:
        {
        rtn = "MAPPING\n" +
@@ -108,7 +108,7 @@ dump_variable(mixed arg)
                       (: sprintf("[%s] == %s", $1, $2) :))), "\n");
        return rtn;
        }
-  
+
      case FUNCTION:
      case CLASS:
      case FLOAT:
@@ -116,69 +116,87 @@ dump_variable(mixed arg)
        {
        return sprintf("%O\n", arg);
        }
-       
+
        return "UNKNOWN";
    }
 }
 
-/*
-// Thanks to Huthar for resolve_path.
-// Rewrite by Symmetry 5/4/95
-*/
-
 string resolve_path(string curr, string newer) {
     int i, j, size;
     string *tmp;
-    
+
     switch(newer) {
-    case 0: 
+    case 0:
+    case "":
     case ".":
-    return curr;
-    
+	return curr;
+
+    case "~":
+	return user_path((string)this_player()->query_name());
+
 #ifndef __NO_ENVIRONMENT__
     case "here":
-    return file_name(environment())+".c";
+	return file_name(environment())+".c";
 #endif
-    
+
     default:
-    if (newer[0..1] == "~/") newer = user_path((string)this_player()->query_name()) + newer[2..];
-    else {
-        switch(newer[0]) {
-        case '~':
-        {
-        i = strsrch(newer, '/');
-        if (i < 0) newer = user_path(newer[1..]);
-        else newer = user_path(newer[1..i-1]) + newer[i..];
-        break;
-        }
-        case '/': break;
-        default: newer[<0..<1] = curr + "/";
-        }
+	if (newer[0..1] == "~/") {
+
+	    newer = user_path((string)this_player()->query_name())
+		+ newer[2..];
+
+	} else {
+
+	    switch(newer[0]) {
+	    case '~': {
+		i = strsrch(newer, '/');
+		if (i < 0) {
+		    newer = user_path(newer[1..]);
+		} else {
+		    newer = user_path(newer[1..i-1]) + newer[i..];
+		}
+
+		break;
+	    }
+
+	    case '/':
+		break;
+
+	    default:
+		newer = curr + "/" + newer;
+	    }
     }
-    
-    if (newer[<1] != '/') newer += "/";
+
+    if (newer[<1] != '/') {
+	newer += "/";
+    }
+
     size = sizeof(tmp = regexp(explode(newer, "/"), "."));
-    
+
     i = j = 0;
-    
+
     while (i < size) {
         switch(tmp[i]) {
         case "..":
-        if (j) {
-            while (j-- && !tmp[j]);
-            if (j >= 0) tmp[j] = 0;
-            else j++;
-        }
+	    if (j) {
+		while (j-- && !tmp[j]);
+
+		if (j >= 0)
+		    tmp[j] = 0;
+		else
+		    j++;
+	    }
+
         case ".":
-        tmp[i++] = 0;
-        break;
-        
+	    tmp[i++] = 0;
+	    break;
+
         default:
-        j = ++i;
-        break;
+	    j = ++i;
+	    break;
         }
     }
-    return "/"+implode(tmp, "/");
+    return "/" + implode(tmp, "/");
     }
 }
 
