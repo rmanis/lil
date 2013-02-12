@@ -8,6 +8,8 @@ inherit BASE;
 
 private string name;
 
+private string cwd = "/";
+
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
     receive(str);
@@ -19,7 +21,14 @@ void catch_tell(string str) {
 string
 query_cwd()
 {
-    return "";
+    if (!cwd) {
+	cwd = "/";
+    }
+    return cwd;
+}
+
+void set_cwd(string newcwd) {
+    cwd = newcwd;
 }
 
 // logon: move this to /single/login.c when login.c gets written.
