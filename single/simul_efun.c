@@ -52,7 +52,7 @@ getoid(object ob)
 string
 user_cwd(string name)
 {
-   return ("/u/" + name[0..0] + "/" + name);
+   return ("/u/homes/" + name[0..0] + "/" + name);
 }
 
 string user_path(string name)
