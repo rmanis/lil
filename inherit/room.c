@@ -14,7 +14,7 @@ private object *occupants;
 
 private mixed *exits;
 
-void reset() {
+void setup() {
     set_glance("New room");
     set_description("This is a new room.  Someone should describe it.");
 }
