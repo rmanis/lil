@@ -4,3 +4,4 @@ log/compile
 log/debug.log
 log/log
 .*.swp
+.DS_Store
