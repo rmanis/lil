@@ -19,6 +19,9 @@
 #define LOGIN_OB   "/clone/login"
 #define USER_OB    "/clone/user"
 #define VOID_OB    "/single/void"
+#define ROOM_OB    "/inherit/room"
+
+#define START_ROOM "/domain/wiz/workshop"
 
 #define ROOT_UID     "Root"
 #define BACKBONE_UID "Backbone"
