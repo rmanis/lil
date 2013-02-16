@@ -1,6 +1,15 @@
+#include <globals.h>
 
-#ifndef __DIRECTIONS__
-#define __DIRECTIONS__
+object here();
+
+string opposite(string direction);
+string unabbreviate_direction(string direction);
+string abbreviate_direction(string direction);
+int is_direction(string direction);
+
+object here() {
+    return environment(this_player());
+}
 
 mapping opposites = ([
         "north" : "south",
@@ -58,4 +67,3 @@ int is_direction(string direction) {
     return opposites[direction] || here()->has_direction(direction);
 }
 
-#endif
