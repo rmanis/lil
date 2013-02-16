@@ -117,7 +117,7 @@ string glance_exits() {
 	for (i = 0; i < len; i++) {
 	    abr[i] = abbreviate_direction(exits[i]);
 	}
-	r = "[" + join(",", abr) + "]";
+	r = "[" + implode(abr, ",") + "]";
     } else {
 	r = "[]";
     }
@@ -128,7 +128,7 @@ string glance_exits() {
 string look_exits() {
     string *exits = exit_directions();
     if (exits && sizeof(exits)) {
-	return "Exits: " + join(", ", exits);
+	return "Exits: " + implode(exits, ", ");
     }
     return "There are no obvious exits.";
 }

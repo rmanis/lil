@@ -26,8 +26,6 @@ string unabbreviate_direction(string direction);
 string abbreviate_direction(string direction);
 int is_direction(string direction);
 
-string join(string separator, string *strings);
-
 int
 same(mixed x, mixed y) {
     if (typeof(x) != typeof(y)) return 0;
@@ -253,20 +251,3 @@ object here() {
 }
 
 #include "directions.c"
-
-string join(string separator, string *strings) {
-    int len;
-    string r = "";
-    int i;
-
-    if (strings && sizeof(strings)) {
-	r += strings[0];
-	len = sizeof(strings);
-	if (len > 1) {
-	    for (i = 1; i < len; i++) {
-		r += separator + strings[i];
-	    }
-	}
-    }
-    return r;
-}
