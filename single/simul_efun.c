@@ -5,6 +5,29 @@
 #include <globals.h>
 #include <lpctypes.h>
 
+int same(mixed x, mixed y);
+void cat(string file);
+varargs int getoid(object ob);
+string user_cwd(string name);
+string user_path(string name);
+string file_owner(string file);
+
+string dump_variable(mixed arg);
+string resolve_path(string curr, string newer);
+string domain_file(string);
+string creator_file(string);
+string author_file(string);
+void simul();
+
+object here();
+
+string opposite(string direction);
+string unabbreviate_direction(string direction);
+string abbreviate_direction(string direction);
+int is_direction(string direction);
+
+string join(string separator, string *strings);
+
 int
 same(mixed x, mixed y) {
     if (typeof(x) != typeof(y)) return 0;
@@ -74,8 +97,6 @@ file_owner(string file)
     }
     return 0;
 }
-
-#include <lpctypes.h>
 
 // dump_variable, author: Huthar@Portals, TMI
 // - returns a printable representation of any variable.
@@ -226,3 +247,26 @@ author_file(string)
 }
 
 void simul() {}
+
+object here() {
+    return environment(this_player());
+}
+
+#include "directions.c"
+
+string join(string separator, string *strings) {
+    int len;
+    string r = "";
+    int i;
+
+    if (strings && sizeof(strings)) {
+	r += strings[0];
+	len = sizeof(strings);
+	if (len > 1) {
+	    for (i = 1; i < len; i++) {
+		r += separator + strings[i];
+	    }
+	}
+    }
+    return r;
+}

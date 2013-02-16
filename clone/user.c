@@ -97,6 +97,17 @@ exec_command(string arg) {
     string rest = implode(parts[1..], " ");
     string cmd_path = COMMAND_PREFIX + verb;
     object cobj = load_object(cmd_path);
+    object destination;
+    string direction = unabbreviate_direction(arg);
+
+    if (is_direction(direction)) {
+	destination = here()->destination(direction);
+	if (destination) {
+	    this_player()->move(destination);
+	} else {
+	    write("There doesn't seem to be an exit in that direction.\n");
+	}
+    }
 
     if (cobj) {
     cobj->main(rest);

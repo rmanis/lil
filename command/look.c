@@ -10,8 +10,7 @@ int main(string thing) {
 	room = environment(this_player());
 
 	if (room) {
-	    // Maybe call something on the room to get the exits and whatnot.
-	    write(room->get_description() + "\n");
+	    room->write_look();
 	} else {
 	    write("You don't seem to be anywhere, really.\n");
 	}

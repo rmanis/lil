@@ -10,10 +10,9 @@ int main(string thing) {
 	room = environment(this_player());
 
 	if (room) {
-	    // Maybe call something on the room to get the exits and whatnot.
-	    write(room->get_glance() + "\n");
+	    room->write_glance();
 	} else {
-	    write("Nowhere.\n");
+	    write("Nowhere []\n");
 	}
     }
 }
