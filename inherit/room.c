@@ -66,16 +66,16 @@ void simple_set_exits(mapping exs) {
     string k;
     exits = ([ ]);
     if (exs) {
-	foreach (k in keys(exs)) {
-	    exits[k] = ([ "file" : exs[k] ]);
-	}
+        foreach (k in keys(exs)) {
+            exits[k] = ([ "file" : exs[k] ]);
+        }
     }
 }
 
 mapping attributes(string direction) {
     mapping r = 0;
     if (strlen(direction) && exits) {
-	r = exits[direction];
+        r = exits[direction];
     }
 
     return r;
@@ -85,7 +85,7 @@ string destination(string direction) {
     string r;
     mapping attribs = attributes(direction);
     if (attribs) {
-	r = attribs["file"];
+        r = attribs["file"];
     }
     return r;
 }
@@ -105,14 +105,14 @@ int is_road(string direction) {
     int r = 0;
     mapping exit = attributes(direction);
     if (exit) {
-	r = exit["road"];
+        r = exit["road"];
     }
     return r;
 }
 
 string *exit_directions() {
     if (exits) {
-	return keys(exits);
+        return keys(exits);
     }
     return ({ });
 }
@@ -124,10 +124,10 @@ string glance_exits() {
     int len = sizeof(exits);
 
     if (len) {
-	abr = map(exits, "abbreviate_direction", "/single/simul_efun");
-	r = "[" + implode(abr, ",") + "]";
+        abr = map(exits, "abbreviate_direction", "/single/simul_efun");
+        r = "[" + implode(abr, ",") + "]";
     } else {
-	r = "[]";
+        r = "[]";
     }
 
     return r;
@@ -136,7 +136,7 @@ string glance_exits() {
 string look_exits() {
     string *exits = exit_directions();
     if (exits && sizeof(exits)) {
-	return "Exits: " + implode(exits, ", ");
+        return "Exits: " + implode(exits, ", ");
     }
     return "There are no obvious exits.";
 }
