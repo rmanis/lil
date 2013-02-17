@@ -76,46 +76,46 @@ string resolve_path(string curr, string newer) {
     case 0:
     case "":
     case ".":
-	return curr;
+        return curr;
 
     case "~":
-	return user_path((string)this_player()->query_name());
+        return user_path((string)this_player()->query_name());
 
 #ifndef __NO_ENVIRONMENT__
     case "here":
-	return file_name(environment())+".c";
+        return file_name(environment())+".c";
 #endif
 
     default:
-	if (newer[0..1] == "~/") {
+        if (newer[0..1] == "~/") {
 
-	    newer = user_path((string)this_player()->query_name())
-		+ newer[2..];
+            newer = user_path((string)this_player()->query_name())
+                + newer[2..];
 
-	} else {
+        } else {
 
-	    switch(newer[0]) {
-	    case '~': {
-		i = strsrch(newer, '/');
-		if (i < 0) {
-		    newer = user_path(newer[1..]);
-		} else {
-		    newer = user_path(newer[1..i-1]) + newer[i..];
-		}
+            switch(newer[0]) {
+            case '~': {
+                i = strsrch(newer, '/');
+                if (i < 0) {
+                    newer = user_path(newer[1..]);
+                } else {
+                    newer = user_path(newer[1..i-1]) + newer[i..];
+                }
 
-		break;
-	    }
+                break;
+            }
 
-	    case '/':
-		break;
+            case '/':
+                break;
 
-	    default:
-		newer = curr + "/" + newer;
-	    }
+            default:
+                newer = curr + "/" + newer;
+            }
     }
 
     if (newer[<1] != '/') {
-	newer += "/";
+        newer += "/";
     }
 
     size = sizeof(tmp = regexp(explode(newer, "/"), "."));
@@ -125,22 +125,22 @@ string resolve_path(string curr, string newer) {
     while (i < size) {
         switch(tmp[i]) {
         case "..":
-	    if (j) {
-		while (j-- && !tmp[j]);
+            if (j) {
+                while (j-- && !tmp[j]);
 
-		if (j >= 0)
-		    tmp[j] = 0;
-		else
-		    j++;
-	    }
+                if (j >= 0)
+                    tmp[j] = 0;
+                else
+                    j++;
+            }
 
         case ".":
-	    tmp[i++] = 0;
-	    break;
+            tmp[i++] = 0;
+            break;
 
         default:
-	    j = ++i;
-	    break;
+            j = ++i;
+            break;
         }
     }
     return "/" + implode(tmp, "/");
