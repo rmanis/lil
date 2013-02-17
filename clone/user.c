@@ -107,11 +107,12 @@ exec_command(string arg) {
 	} else {
 	    write("There doesn't seem to be an exit in that direction.\n");
 	}
-    }
-
-    if (cobj) {
-    cobj->main(rest);
+    } else if (cobj) {
+        cobj->main(rest);
     } else {
+        if (!destination) {
+            write("What?\n");
+        }
     // maybe call an emote/soul daemon here
     }
 }
