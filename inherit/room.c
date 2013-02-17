@@ -109,7 +109,6 @@ string glance_exits() {
     string *abr;
     string r = "";
     int len = sizeof(exits);
-    int i;
 
     if (len) {
 	abr = map(exits, "abbreviate_direction", "/single/simul_efun");
