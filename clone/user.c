@@ -110,7 +110,7 @@ exec_command(string arg) {
     } else if (cobj) {
         cobj->main(rest);
     } else {
-        if (!destination) {
+        if (!destination && strlen(arg)) {
             write("What?\n");
         }
     // maybe call an emote/soul daemon here
