@@ -29,6 +29,8 @@ string *exit_directions();
 string glance_exits();
 string description_exits();
 
+string direction_to(object destination);
+
 void write_glance();
 void write_look();
 
@@ -86,6 +88,17 @@ string destination(string direction) {
 	r = attribs["file"];
     }
     return r;
+}
+
+string direction_to(object place) {
+    string dir;
+
+    foreach (dir in exit_directions()) {
+        if (destination(dir) == file_name(place)) {
+            return as_place(dir);
+        }
+    }
+    return "somewhere";
 }
 
 int is_road(string direction) {

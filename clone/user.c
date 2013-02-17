@@ -22,7 +22,7 @@ string
 query_cwd()
 {
     if (!cwd) {
-	cwd = "/";
+        cwd = "/";
     }
     return cwd;
 }
@@ -89,6 +89,25 @@ start_ed(string file) {
 }
 #endif
 
+void move_to(object to, string direction_of_travel) {
+    // TODO: switch heralding to use something like lima's "simple_action"
+    object from;
+    string msg;
+
+    from = environment(this_player());
+
+    msg = sprintf("%s leaves %s.\n", this_player()->query_name(), direction_of_travel);
+    tell_room(from, msg, ({ this_player() }));
+
+    msg = sprintf("You walk %s.\n", direction_of_travel);
+    tell_object(this_player(), msg);
+
+    this_player()->move(to);
+
+    msg = sprintf("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
+    tell_room(to, msg, ({ this_player() }));
+}
+
 #ifdef __NO_ADD_ACTION__
 void
 exec_command(string arg) {
@@ -101,12 +120,12 @@ exec_command(string arg) {
     string direction = unabbreviate_direction(arg);
 
     if (is_direction(direction)) {
-	destination = here()->destination(direction);
-	if (destination) {
-	    this_player()->move(destination);
-	} else {
-	    write("There doesn't seem to be an exit in that direction.\n");
-	}
+        destination = here()->destination(direction);
+        if (destination) {
+            move_to(destination, direction);
+        } else {
+            write("There doesn't seem to be an exit in that direction.\n");
+        }
     } else if (cobj) {
         cobj->main(rest);
     } else {

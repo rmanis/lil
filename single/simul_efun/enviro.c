@@ -11,6 +11,17 @@ object here() {
     return environment(this_player());
 }
 
+string *cardinal_directions = ({
+        "north",
+        "south",
+        "east",
+        "west",
+        "northeast",
+        "southwest",
+        "northwest",
+        "southeast"
+        });
+
 mapping opposites = ([
         "north" : "south",
         "south" : "north",
@@ -67,3 +78,15 @@ int is_direction(string direction) {
     return opposites[direction] || here()->has_direction(direction);
 }
 
+string as_place(string direction) {
+    if (member_array(direction, cardinal_directions) >= 0) {
+        return "the " + direction;
+    }
+    switch (direction) {
+        case "in": return "inside";
+        case "out" : return "outside";
+        case "up": return "above";
+        case "down": return "below";
+    }
+    return direction;
+}
