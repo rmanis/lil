@@ -4,19 +4,19 @@ main(string a)
     object ret;
     mixed code;
 
-    if (file_size("/tmp_eval_file.c") != -1)
-    rm ("/tmp_eval_file.c");
-    if (find_object("/tmp_eval_file"))
-    destruct(find_object("/tmp_eval_file"));
+    if (file_size("/eval/tmp_eval_file.c") != -1)
+    rm ("/eval/tmp_eval_file.c");
+    if (find_object("/eval/tmp_eval_file"))
+    destruct(find_object("/eval/tmp_eval_file"));
 
-    write_file("/tmp_eval_file.c", "mixed eval() { " + a + "; }\n");
+    write_file("/eval/tmp_eval_file.c", "mixed eval() { " + a + "; }\n");
 
-    ret = load_object("/tmp_eval_file");
+    ret = load_object("/eval/tmp_eval_file");
 
-    dump_prog(ret, 1, "/CODE_TMP_FILE");
-    code = read_file( "/CODE_TMP_FILE");
-    rm("/CODE_TMP_FILE");
-    rm("/tmp_eval_file.c");
+    dump_prog(ret, 1, "/eval/CODE_TMP_FILE");
+    code = read_file( "/eval/CODE_TMP_FILE");
+    rm("/eval/CODE_TMP_FILE");
+    rm("/eval/tmp_eval_file.c");
 
     code = explode(code, ";;;  *** Disassembly ***\n");
     code = code[1];
