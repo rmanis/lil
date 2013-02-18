@@ -93,7 +93,7 @@ string glance_exits() {
     int len = sizeof(exits);
 
     if (len) {
-        abr = map(exits, "abbreviate_direction", "/single/simul_efun");
+        abr = map(exits, (: abbreviate_direction($1) :));
         r = "[" + implode(abr, ",") + "]";
     } else {
         r = "[]";
