@@ -5,10 +5,7 @@ string itemize(object *objects) {
 
     if (objects) {
         count = sizeof(objects);
-        names = allocate(count);
-        for (i = 0; i < count; i++) {
-            names[i] = objects[i]->query_name();
-        }
+        names = map(objects, (: $1->query_name() :));
 
         switch (count) {
             case 0:
