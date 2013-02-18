@@ -6,6 +6,8 @@
 
 inherit BASE;
 
+private string old_input = "";
+
 private string name;
 
 private string cwd = "/";
@@ -147,6 +149,11 @@ process_input(string arg) {
     arg = arg[1..];
     }
 #endif
+    if (arg == "!") {
+        arg = old_input;
+    } else {
+        old_input = arg;
+    }
     exec_command(arg);
 }
 #else
