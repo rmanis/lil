@@ -1,36 +1,24 @@
 
 inherit "/inherit/itemize";
 
-object *interactive_in_array(object *arr, int value);
+object *get_players();
+object *get_items();
 void write_occupants();
 
-object *interactive_in_array(object *arr, int value) {
-    int playercount = 0;
-    object o;
-    object *ret;
+object *get_players() {
+    return filter(all_inventory(this_object()), (: interactive($1) :));
+}
 
-    foreach (o in arr) {
-        if (interactive(o) == value) {
-            playercount++;
-        }
-    }
-    ret = allocate(playercount);
-    foreach (o in arr) {
-        if (interactive(o) == value) {
-            playercount--;
-            ret[playercount] = o;
-        }
-    }
-    return ret;
+object *get_items() {
+    return filter(all_inventory(this_object()), (: !interactive($1) :));
 }
 
 void write_occupants() {
-    object *occupants = all_inventory(this_object());
     object *players, *items;
-    int count = sizeof(occupants);
+    int count;
 
-    players = interactive_in_array(occupants, 1);
-    items = interactive_in_array(occupants, 0);
+    players = get_players();
+    items = get_items();
 
     write("\n");
 
@@ -47,7 +35,7 @@ void write_occupants() {
     }
 
     count = sizeof(items);
-    if (sizeof(items)) {
+    if (count) {
         write("\n");
         write(itemize(items));
         if (count > 1) {
