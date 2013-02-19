@@ -1,7 +1,7 @@
 #include <globals.h>
 #include <command.h>
 
-int error_out(string str);
+inherit "/inherit/error_out";
 
 int main(string arg) {
     object here = here();
@@ -9,7 +9,7 @@ int main(string arg) {
     object target_ob;
 
     if (!arg) {
-        return error_out("usage: dest-dir object");
+        return error_out("Usage: dest-dir <object>");
     }
 
     if (here) {
@@ -34,11 +34,3 @@ int main(string arg) {
     return 0;
 }
 
-int error_out(string str) {
-#ifndef __NO_ADD_ACTION__
-        return notify_fail(str + "\n");
-#else
-        output(str + "\n");
-        return 1;
-#endif
-}
