@@ -18,8 +18,6 @@ void catch_tell(string str) {
 }
 #endif
 
-// replace this with a functioning version.
-
 string
 query_cwd()
 {
@@ -33,16 +31,7 @@ void set_cwd(string newcwd) {
     cwd = newcwd;
 }
 
-// logon: move this to /single/login.c when login.c gets written.
-
-void
-logon()
-{
-    write("Welcome to Lil.\n> ");
-}
-
 // query_name: called by various objects needing to know this user's name.
-
 string
 query_name()
 {
