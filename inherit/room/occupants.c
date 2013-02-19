@@ -20,28 +20,28 @@ void write_occupants() {
     players = get_players();
     items = get_items();
 
-    write("\n");
+    output("\n");
 
     count = sizeof(players);
     if (count) {
-        write(itemize(players));
+        output(itemize(players));
         if (count > 1) {
-            write(" are here.\n");
+            output(" are here.\n");
         } else {
-            write(" is here.\n");
+            output(" is here.\n");
         }
     } else {
-        write("No one is here.\n");
+        output("No one is here.\n");
     }
 
     count = sizeof(items);
     if (count) {
-        write("\n");
-        write(itemize(items));
+        output("\n");
+        output(itemize(items));
         if (count > 1) {
-            write(" are here.\n");
+            output(" are here.\n");
         } else {
-            write(" is here.\n");
+            output(" is here.\n");
         }
     }
 }

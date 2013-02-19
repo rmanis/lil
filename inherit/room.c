@@ -36,12 +36,12 @@ string get_description() {
 }
 
 void write_glance() {
-    write(get_glance() + " " + glance_exits());
+    output("%s %s", get_glance(), glance_exits());
     write_occupants();
 }
 
 void write_look() {
-    write(get_description() + "\n");
-    write(look_exits());
+    output("%s\n", get_description());
+    output(look_exits());
     write_occupants();
 }
