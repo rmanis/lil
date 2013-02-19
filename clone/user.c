@@ -5,6 +5,7 @@
 #include <globals.h>
 
 inherit BASE;
+inherit __DIR__ "user/terminal";
 
 private string old_input = "";
 
