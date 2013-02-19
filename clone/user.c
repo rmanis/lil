@@ -91,15 +91,15 @@ void move_to(object to, string direction_of_travel) {
 
     from = environment(this_player());
 
-    msg = sprintf("%s leaves %s.\n", this_player()->query_name(), direction_of_travel);
+    msg = format("%s leaves %s.\n", this_player()->query_name(), direction_of_travel);
     tell_room(from, msg, ({ this_player() }));
 
-    msg = sprintf("You walk %s.\n", direction_of_travel);
+    msg = format("You walk %s.\n", direction_of_travel);
     tell_object(this_player(), msg);
 
     this_player()->move(to);
 
-    msg = sprintf("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
+    msg = format("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
     tell_room(to, msg, ({ this_player() }));
 
     // TODO: Brief versus verbose.
