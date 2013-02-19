@@ -101,6 +101,9 @@ void move_to(object to, string direction_of_travel) {
 
     msg = sprintf("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
     tell_room(to, msg, ({ this_player() }));
+
+    // TODO: Brief versus verbose.
+    to->write_glance();
 }
 
 #ifdef __NO_ADD_ACTION__
