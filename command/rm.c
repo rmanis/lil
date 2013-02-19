@@ -9,7 +9,7 @@ main(string file)
     if (files && sizeof(files)) {
 	rm(file);
     } else {
-	write(file + " (" + path + ") does not exist.\n");
+	output("%s (%s) does not exist.\n", file, path);
     }
     return 1;
 }

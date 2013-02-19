@@ -21,13 +21,13 @@ int main(string arg) {
         }
 
         if (target_ob) {
-            printf("Destructing %O\n", target_ob);
+            output("Destructing %O\n", target_ob);
             target_ob->remove();
             if(target_ob) {
                 safe_destruct(target_ob);
             }
         } else {
-            printf("Nothing to destruct.\n");
+            output("Nothing to destruct.\n");
         }
     }
 
@@ -38,7 +38,7 @@ int error_out(string str) {
 #ifndef __NO_ADD_ACTION__
         return notify_fail(str + "\n");
 #else
-        write(str + "\n");
+        output(str + "\n");
         return 1;
 #endif
 }

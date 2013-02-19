@@ -8,6 +8,6 @@ int main(string directory) {
     if (files && sizeof(files)) {
 	this_player()->set_cwd(path);
     } else {
-	write(directory + " (" + path + ") does not exist.\n");
+	output("%s (%s) does not exist.\n", directory, path );
     }
 }

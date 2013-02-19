@@ -9,7 +9,7 @@ main(string arg)
 #ifndef __NO_ADD_ACTION__
         return notify_fail("usage: dest object\n");
 #else
-        write("usage: dest object\n");
+        output("usage: dest object\n");
         return 1;
 #endif
     }
@@ -26,7 +26,7 @@ main(string arg)
 #ifndef __NO_ADD_ACTION__
         return notify_fail("can't find that.\n");
 #else
-        write("can't find that.\n");
+        output("can't find that.\n");
         return 1;
 #endif
     }

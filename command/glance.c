@@ -12,7 +12,7 @@ int main(string thing) {
 	if (room) {
 	    room->write_glance();
 	} else {
-	    write("Nowhere []\n");
+	    output("Nowhere []\n");
 	}
     }
 }
