@@ -14,6 +14,14 @@ int get_print_width() {
     return print_width;
 }
 
+void set_print_width(int w) {
+    print_width = w;
+}
+
+void set_print_height(int h) {
+    print_height = h;
+}
+
 int get_print_height() {
     if (!print_height) {
         print_height = 24;
@@ -21,4 +29,8 @@ int get_print_height() {
     return print_height;
 }
 
+void window_size(int width, int height) {
+    set_print_width(width);
+    set_print_height(height);
+    output("New window size: %d x %d", width, height);
 }
