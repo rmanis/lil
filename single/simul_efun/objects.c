@@ -83,3 +83,23 @@ string dump_variable(mixed arg)
         return "UNKNOWN";
     }
 }
+
+void safe_destruct(mixed thing) {
+    object target;
+    object *players;
+    object p;
+
+    if (stringp(thing)) {
+        target = find_object(thing);
+    } else if (objectp(thing)) {
+        target = thing;
+    }
+
+    if (target) {
+        players = filter(all_inventory(target), (: interactive($1) :));
+        foreach (p in players) {
+            p->move(VOID_OB);
+        }
+        destruct(target);
+    }
+}

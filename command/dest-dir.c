@@ -24,7 +24,7 @@ int main(string arg) {
             printf("Destructing %O\n", target_ob);
             target_ob->remove();
             if(target_ob) {
-                destruct(target_ob);
+                safe_destruct(target_ob);
             }
         } else {
             printf("Nothing to destruct.\n");

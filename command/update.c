@@ -22,7 +22,7 @@ main(string file)
     }
 
     if (obj = find_object(path)) {
-	destruct(obj);
+	safe_destruct(obj);
     }
     load_object(path);
     return 1;

@@ -32,7 +32,7 @@ main(string arg)
     }
     obj->remove();
     if (obj) {
-        destruct(obj);
+        safe_destruct(obj);
     }
     return 1;
 }
