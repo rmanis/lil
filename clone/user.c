@@ -8,10 +8,9 @@ inherit BASE;
 inherit __DIR__ "user/terminal";
 
 private string old_input = "";
-
 private string name;
-
 private string cwd = "/";
+private int logged_in;
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
@@ -56,6 +55,10 @@ set_name(string arg)
 //  may wish to add security to prevent just anyone from changing
 //  someone else's name.
     name = arg;
+}
+
+int is_logged_in() {
+    return logged_in;
 }
 
 // called by the present() efun (and some others) to determine whether
@@ -246,6 +249,7 @@ setup()
 #else
     set_this_player(this_object());
 #endif
+    logged_in = 1;
 }
 
 // net_dead: called by the gamedriver when an interactive player loses

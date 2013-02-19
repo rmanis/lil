@@ -20,6 +20,7 @@
 #define USER_OB    "/clone/user"
 #define VOID_OB    "/single/void"
 #define ROOM_OB    "/inherit/room"
+#define COLOR_OB   "/clone/user/color"
 
 #define START_ROOM "/domain/wiz/workshop"
 

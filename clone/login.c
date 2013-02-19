@@ -36,7 +36,7 @@ void logon() {
 }
 
 void login_prompt() {
-    write("Name: ");
+    output("Name: ");
     input_to("handle_username", 0, 0);
 }
 
@@ -46,10 +46,10 @@ void handle_username(string username, int tries) {
     if (strlen(username) == 0) {
 	reject();
     } else if (user_exists(luser)) {
-	write("Password: ");
+	output("Password: ");
 	input_to("handle_password", 1, luser, tries);
     } else {
-	write("User '" + luser + "' does not exist.  Create (y/n) ? ");
+	output("User '%s' does not exist.  Create (y/n) ? ", luser);
 	input_to("create_new_user", 0, luser);
     }
 }
@@ -58,11 +58,11 @@ void create_new_user(string yes_no, string username) {
     string yn = lower_case(yes_no);
 
     if (yn[0] == 'y') {
-	write("Creating user '" + username + "'\n");
-	write("Password: ");
+	output("Creating user '%s'\n", username);
+	output("Password: ");
 	input_to("create_password", 1, username);
     } else {
-	write("Okay, we'll try again.\n");
+	output("Okay, we'll try again.\n");
 	login_prompt();
     }
 }
@@ -71,14 +71,14 @@ void handle_password(string password, string user, int tries) {
     string input_key = encrypt(password);
     string accepted_key = read_file(password_file(user), 1, 1);
 
-    write("\n");
+    output("\n");
 
     if (strlen(password) == 0) {
 	reject();
     } else if (input_key == accepted_key) {
 	successful_login(user);
     } else {
-	write("Wrong password\n");
+	output("Wrong password\n");
 	handle_username(user, tries + 1);
     }
 }
@@ -99,7 +99,7 @@ void create_password(string password, string username) {
 private void ensure_no_user(string user) {
     string file = password_file(user);
     if (sizeof(stat(file))) {
-	write("Ruh-roh!  We're overwriting " + user + "'s password\n");
+	output("Ruh-roh!  We're overwriting %s's password\n", user);
 	rm(file);
     }
 }
@@ -125,7 +125,7 @@ private void create_user_object(string name) {
 }
 
 void reject() {
-    write("Rejected.  Goodbye.\n\n");
+    output("Rejected.  Goodbye.\n\n");
     remove_interactive(this_object());
 }
 
@@ -139,7 +139,7 @@ private void ensure_passwords_folder () {
     if ( sizeof( stat( "/u/passwords" ) ) == 0 ) {
         mkdir( "/u/passwords" );
     } else {
-	write("creating passwords folder\n");
+	output("creating passwords folder\n");
     }
 }
 
