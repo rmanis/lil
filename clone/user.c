@@ -65,22 +65,22 @@ write_prompt() {
     switch (query_ed_mode()) {
     case 0:
     case -2:
-        write(":");
+        output(":");
         break;
 
     case -1:
-        write("> ");
+        output("%^RESET%^> ");
         break;
 
     default:
-        write("*\b");
+        output("*\b");
         break;
     }
 }
 
 void
 start_ed(string file) {
-    write(ed_start(file, 0));
+    output(ed_start(file, 0));
 }
 #endif
 
@@ -119,13 +119,13 @@ exec_command(string arg) {
         if (destination) {
             move_to(destination, direction);
         } else {
-            write("There doesn't seem to be an exit in that direction.\n");
+            output("There doesn't seem to be an exit in that direction.\n");
         }
     } else if (cobj) {
         cobj->main(rest);
     } else {
         if (!destination && strlen(arg)) {
-            write("What?\n");
+            output("What?\n");
         }
     // maybe call an emote/soul daemon here
     }
@@ -136,7 +136,7 @@ process_input(string arg) {
 #ifndef __OLD_ED__
     if (query_ed_mode() != -1) {
     if (arg[0] != '!') {
-        write(ed_cmd(arg));
+        output(ed_cmd(arg));
         return;
     }
     arg = arg[1..];
@@ -156,7 +156,7 @@ process_input(string arg)
 #ifndef __OLD_ED__
     if (query_ed_mode() != -1) {
     if (arg[0] != '!') {
-        write(ed_cmd(arg));
+        output(ed_cmd(arg));
         return 0;
     }
     arg = arg[1..];
