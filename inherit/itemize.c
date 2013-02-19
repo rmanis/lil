@@ -1,7 +1,6 @@
 string itemize(object *objects) {
     string *names;
     int count;
-    int i;
 
     if (objects) {
         count = sizeof(objects);
