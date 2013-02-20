@@ -6,6 +6,7 @@
 
 inherit BASE;
 inherit __DIR__ "user/terminal";
+inherit __DIR__ "user/alias";
 
 private string old_input = "";
 private string name;
@@ -136,6 +137,8 @@ exec_command(string arg) {
 
 void
 process_input(string arg) {
+    mixed pre;
+
 #ifndef __OLD_ED__
     if (query_ed_mode() != -1) {
     if (arg[0] != '!') {
@@ -149,6 +152,11 @@ process_input(string arg) {
         arg = old_input;
     } else {
         old_input = arg;
+    }
+
+    pre = get_prefix(arg[0]);
+    if (pre) {
+        arg = pre + " " + arg[1..];
     }
     exec_command(arg);
 }
