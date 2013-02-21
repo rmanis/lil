@@ -140,15 +140,23 @@ void move_to(mixed to, string direction_of_travel) {
     object from;
     string msg;
 
-    from = environment(this_player());
+    from = environment(this_object());
 
-    msg = format("%s leaves %s.\n", this_player()->query_name(), direction_of_travel);
-    tell_room(from, msg, ({ this_player() }));
+    if (strlen(direction_of_travel)) {
+        msg = format("%s leaves %s.\n", this_object()->query_name(), direction_of_travel);
+    } else {
+        msg = format("%s turns to dust and blows away.\n", this_object()->query_name());
+    }
+    tell_room(from, msg, ({ this_object() }));
 
-    msg = format("You walk %s.\n", direction_of_travel);
-    tell_object(this_player(), msg);
+    if (strlen(direction_of_travel)) {
+        msg = format("You walk %s.\n", direction_of_travel);
+    } else {
+        msg = format("You are transported somewhere.\n");
+    }
+    tell_object(this_object(), msg);
 
-    this_player()->move(to);
+    this_object()->move(to);
 
     if (stringp(to)) {
         set_room(to);
@@ -157,7 +165,7 @@ void move_to(mixed to, string direction_of_travel) {
     }
 
     msg = format("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
-    tell_room(to, msg, ({ this_player() }));
+    tell_room(to, msg, ({ this_object() }));
 
     // TODO: Brief versus verbose.
     to->write_glance();
@@ -283,6 +291,12 @@ receive_message(string newclass, string msg)
 {
     // the meaning of 'class' is at the mudlib's discretion
     receive(msg);
+}
+
+int move_or_destruct(object ob) {
+    tell_object(this_object(), format("You feel the world crumble around you.\n"));
+    this_object()->move_to(VOID_OB, "");
+    return 0;
 }
 
 // setup: used to configure attributes that aren't known by this_object()
