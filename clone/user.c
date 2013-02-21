@@ -146,10 +146,8 @@ void move_to(mixed to, string direction_of_travel) {
     this_player()->move(to);
 
     if (stringp(to)) {
-        output("Setting room %O\n", to);
         set_room(to);
     } else if (objectp(to)) {
-        output("Setting room %O\n", to);
         set_room(file_name(to));
     }
 
