@@ -23,6 +23,8 @@ void set_room(string filename);
 string get_room();
 void set_name(string arg);
 int is_logged_in();
+void autosave(int save_now);
+void tell(string str);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
@@ -40,10 +42,18 @@ void save() {
     ensure_path_of_file_exists(savefile);
 
     if (save_object(savefile)) {
-        output("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n");
+        tell(format("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n"));
     } else {
-        output("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n");
+        tell(format("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n"));
     }
+}
+
+void autosave(int save_now) {
+    if (save_now) {
+        tell(format("%^CYAN%^Autosaving...%^RESET%^\n"));
+        save();
+    }
+    call_out("autosave", SAVE_PERIOD, 1);
 }
 
 void load() {
@@ -135,6 +145,10 @@ start_ed(string file) {
 }
 #endif
 
+void tell(string str) {
+    tell_object(this_object(), str);
+}
+
 void move_to(mixed to, string direction_of_travel) {
     // TODO: switch heralding to use something like lima's "simple_action"
     object from;
@@ -154,7 +168,7 @@ void move_to(mixed to, string direction_of_travel) {
     } else {
         msg = format("You are transported somewhere.\n");
     }
-    tell_object(this_object(), msg);
+    tell(msg);
 
     this_object()->move(to);
 
@@ -294,7 +308,7 @@ receive_message(string newclass, string msg)
 }
 
 int move_or_destruct(object ob) {
-    tell_object(this_object(), format("You feel the world crumble around you.\n"));
+    tell(format("You feel the world crumble around you.\n"));
     this_object()->move_to(VOID_OB, "");
     return 0;
 }
@@ -320,6 +334,7 @@ setup()
     set_this_player(this_object());
 #endif
     load();
+    autosave(0);
 
     logged_in = 1;
 }

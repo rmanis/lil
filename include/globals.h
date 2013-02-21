@@ -32,6 +32,9 @@
 
 #define COMMAND_PREFIX "/command/"
 
+// Seconds delay between autosave calls.
+#define SAVE_PERIOD 300
+
 // classes for message() efun.
 #define M_STATUS "status"
 #define M_SAY    "say"
