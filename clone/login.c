@@ -118,7 +118,7 @@ private void create_user_object(string name) {
     user->setup();
 
 #ifndef __NO_ENVIRONMENT__
-    user->move(START_ROOM);
+    user->move(user->get_room());
 #endif
 
     destruct(this_object());

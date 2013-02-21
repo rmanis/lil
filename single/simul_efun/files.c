@@ -147,3 +147,24 @@ string resolve_path(string curr, string newer) {
     }
 }
 
+void ensure_path_of_file_exists(string path) {
+    string *parts;
+    string tmp;
+    int count;
+    int i;
+
+    if (!path || !strlen(path)) {
+        return;
+    }
+
+    parts = explode(path, "/")[0..<2];
+
+    count = sizeof(parts);
+
+    for (i = 0; i < count; i++) {
+        tmp = "/" + implode(parts[0..i], "/");
+        if (!stat(tmp) || !sizeof(stat(tmp))) {
+            mkdir(tmp);
+        }
+    }
+}

@@ -11,13 +11,58 @@ inherit __DIR__ "user/alias";
 private string old_input = "";
 private string name;
 private string cwd = "/";
-private int logged_in;
+private string room;
+
+private static int logged_in;
+
+string save_filename();
+void save();
+string query_cwd();
+string query_name();
+void set_room(string filename);
+string get_room();
+void set_name(string arg);
+int is_logged_in();
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
     receive(str);
 }
 #endif
+
+string save_filename() {
+    return sprintf("/data/user/%s", query_name());
+}
+
+void save() {
+    string savefile = save_filename();
+
+    ensure_path_of_file_exists(savefile);
+
+    if (save_object(savefile)) {
+        output("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n");
+    } else {
+        output("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n");
+    }
+}
+
+void load() {
+    string fname = save_filename();
+    if (sizeof(stat(fname + ".o"))) {
+        restore_object(fname);
+    }
+}
+
+string get_room() {
+    if (!room) {
+        room = START_ROOM;
+    }
+    return room;
+}
+
+void set_room(string filename) {
+    room = filename;
+}
 
 string
 query_cwd()
@@ -85,7 +130,7 @@ start_ed(string file) {
 }
 #endif
 
-void move_to(object to, string direction_of_travel) {
+void move_to(mixed to, string direction_of_travel) {
     // TODO: switch heralding to use something like lima's "simple_action"
     object from;
     string msg;
@@ -99,6 +144,14 @@ void move_to(object to, string direction_of_travel) {
     tell_object(this_player(), msg);
 
     this_player()->move(to);
+
+    if (stringp(to)) {
+        output("Setting room %O\n", to);
+        set_room(to);
+    } else if (objectp(to)) {
+        output("Setting room %O\n", to);
+        set_room(file_name(to));
+    }
 
     msg = format("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
     tell_room(to, msg, ({ this_player() }));
@@ -249,6 +302,8 @@ setup()
 #else
     set_this_player(this_object());
 #endif
+    load();
+
     logged_in = 1;
 }
 
