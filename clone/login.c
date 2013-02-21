@@ -120,6 +120,7 @@ private void create_user_object(string name) {
 #ifndef __NO_ENVIRONMENT__
     user->move(user->get_room());
 #endif
+    shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", user->query_name()));
 
     destruct(this_object());
 }

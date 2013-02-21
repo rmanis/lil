@@ -8,7 +8,7 @@ int
 main(string arg)
 {
     output("Bye.\n");
-    this_player()->save();
+    this_player()->quit();
     say((string)previous_object()->query_name()
         + " leaves this reality.\n");
     previous_object()->remove();

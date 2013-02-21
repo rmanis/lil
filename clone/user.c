@@ -53,6 +53,11 @@ void load() {
     }
 }
 
+void quit() {
+    save();
+    shout(format("%^BOLD%^[ %s leaves the mud ]%^RESET%^\n", query_name()));
+}
+
 string get_room() {
     if (!room) {
         room = START_ROOM;
