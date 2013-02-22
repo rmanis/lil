@@ -146,7 +146,7 @@ start_ed(string file) {
 #endif
 
 void tell(string str) {
-    tell_object(this_object(), str);
+    tell_object(this_object(), c_format(this_object()->get_print_width(), "%s", str));
 }
 
 void move_to(mixed to, string direction_of_travel) {
