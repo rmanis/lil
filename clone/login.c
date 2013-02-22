@@ -139,8 +139,6 @@ void reject() {
 private void ensure_passwords_folder () {
     if ( sizeof( stat( "/u/passwords" ) ) == 0 ) {
         mkdir( "/u/passwords" );
-    } else {
-	output("creating passwords folder\n");
     }
 }
 
