@@ -1,17 +1,14 @@
 #include <command.h>
 
+inherit "/inherit/error_out";
+
 int
 main(string arg)
 {
     object obj;
 
     if (!arg) {
-#ifndef __NO_ADD_ACTION__
-        return notify_fail("usage: dest object\n");
-#else
-        output("usage: dest object\n");
-        return 1;
-#endif
+        return error_out("usage: dest object");
     }
     obj = find_object(arg);
 #ifndef __NO_ENVIRONMENT__
@@ -23,12 +20,7 @@ main(string arg)
     }
 #endif
     if (!obj) {
-#ifndef __NO_ADD_ACTION__
-        return notify_fail("can't find that.\n");
-#else
-        output("can't find that.\n");
-        return 1;
-#endif
+        return error_out("can't find that.\n");
     }
     obj->remove();
     if (obj) {

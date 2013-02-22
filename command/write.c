@@ -3,5 +3,5 @@
 
 int main(string arg) {
     output("%s\n", arg);
-    return 0;
+    return 1;
 }

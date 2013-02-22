@@ -1,4 +1,7 @@
+
 #include <globals.h>
+
+inherit "/inherit/error_out";
 
 int
 main(string file)
@@ -7,12 +10,7 @@ main(string file)
     string path;
 
     if (!file) {
-#ifndef __NO_ADD_ACTION__
-	return notify_fail("update what?\n");
-#else
-	output("update what?\n");
-	return 1;
-#endif
+        return error_out("update what?");
     }
 
     path = resolve_path(this_player()->query_cwd(), file);

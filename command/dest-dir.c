@@ -31,6 +31,6 @@ int main(string arg) {
         }
     }
 
-    return 0;
+    return 1;
 }
 

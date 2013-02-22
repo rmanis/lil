@@ -6,6 +6,6 @@ int error_out(string str) {
         return notify_fail(str + "\n");
 #else
         output("%s\n", str);
-        return 1;
+        return 0;
 #endif
 }

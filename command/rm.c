@@ -1,4 +1,7 @@
+
 #include <globals.h>
+
+inherit "/inherit/error_out";
 
 int
 main(string file)
@@ -9,7 +12,7 @@ main(string file)
     if (files && sizeof(files)) {
 	rm(file);
     } else {
-	output("%s (%s) does not exist.\n", file, path);
+        return error_out(sprintf("%s (%s) does not exist.", file, path));
     }
     return 1;
 }

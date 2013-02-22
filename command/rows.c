@@ -14,5 +14,5 @@ int main(string arg) {
             output("New height: %d\n", this_player()->get_print_height());
         }
     }
-    return 0;
+    return 1;
 }

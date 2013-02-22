@@ -1,3 +1,6 @@
+
+inherit "/inherit/error_out";
+
 int main(string dir) {
 
     int window_width = 80;
@@ -19,8 +22,7 @@ int main(string dir) {
     int tabs_to_print;
 
     if (!sizeof(stat(path))) {
-	printf("No such file or directory: %s\n", path);
-	return 1;
+	return error_out(sprintf("No such file or directory: %s", path));
     }
 
     if (stringp(stat(path)[0]) && path != "/") {
@@ -60,5 +62,5 @@ int main(string dir) {
     }
     write("\n");
 
-    return 0;
+    return 1;
 }

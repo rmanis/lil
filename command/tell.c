@@ -38,5 +38,5 @@ int main(string arg) {
         player->tell(color_surround("red", msg));
     }
 
-    return 0;
+    return 1;
 }

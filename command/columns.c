@@ -14,5 +14,5 @@ int main(string arg) {
             output("New width: %d\n", this_player()->get_print_width());
         }
     }
-    return 0;
+    return 1;
 }
