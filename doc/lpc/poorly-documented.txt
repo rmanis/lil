@@ -13,8 +13,27 @@ Array slices.
      => 6
 
 
-Lambdas
+Lambdas.
     filter(({ 1, 2, 3, 4 }), (: $1 % 2 == 0 :))
      => ({ 2, 4 })
 
     $N is the Nth argument.  Can only be used inside an anonymous function.
+
+
+Variadic functions.
+    So you want to wrap printf?
+
+	void funk(string s, string t, mixed args...) {
+	    printf(s + t, args...);
+	}
+
+    You can pass any array as the remainder of the arguments:
+	mixed *ob = whatever();
+	bar(ob...);
+
+    The function has to be variadic, either with the varargs keyword or with an
+    ellipsis.
+
+	void bar(mixed orgs...);
+	    or
+	varargs void bar(int a, int b, int c);
