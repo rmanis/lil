@@ -5,6 +5,7 @@ varargs string format(string fmt, mixed args...);
 varargs void output(string fmt, mixed args...);
 varargs string c_format(int indent, string fmt, mixed args...);
 varargs void c_output(int indent, string fmt, mixed args...);
+string color_surround(string color, string str);
 
 varargs string format(string fmt, mixed args...) {
     return c_format(0, fmt, args...);
@@ -31,4 +32,8 @@ varargs string c_format(int indent, string fmt, mixed args...) {
 varargs void c_output(int indent, string fmt, mixed args...) {
     string str = c_format(indent, fmt, args...);
     write(str);
+}
+
+string color_surround(string color, string str) {
+    return sprintf("%%^%s%%^%s%%^RESET%%^", upper_case(color), str);
 }
