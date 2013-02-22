@@ -90,10 +90,13 @@ string encrypt(string input) {
 void create_password(string password, string username) {
     string key = encrypt(password);
 
+    output("\n");
+
     ensure_passwords_folder();
     ensure_no_user(username);
 
     write_file(password_file(username), key);
+    successful_login(username);
 }
 
 private void ensure_no_user(string user) {
@@ -118,9 +121,12 @@ private void create_user_object(string name) {
     user->setup();
 
 #ifndef __NO_ENVIRONMENT__
-    user->move(user->get_room());
+    user->teleport_to(user->get_room(),
+            format(color_surround("green", "%s enters the mud.\n"),
+                name),
+            1);
 #endif
-    shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", user->query_name()));
+    shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", name));
 
     destruct(this_object());
 }
