@@ -3,16 +3,23 @@
 
 inherit "/inherit/error_out";
 
-int
-main(string file)
-{
-    string path = resolve_path(this_player()->query_cwd(), file);
-    mixed *files = stat(path);
+int main(string arg) {
+    string *filenames = explode(arg, " ");
+    string path;
+    int count = sizeof(filenames);
 
-    if (files && sizeof(files)) {
-	rm(file);
-    } else {
-        return error_out(sprintf("%s (%s) does not exist.", file, path));
+    if (!count) {
+        return error_out("Usage: rm { <file> }");
     }
+
+    filenames = map(filter(filenames, (: strlen($1) :)),
+            (: resolve_path(this_player()->query_cwd(), $1) :));
+
+    foreach (path in filenames) {
+        if (!rm(path)) {
+            output("Could not remove %s.\n", path);
+        }
+    }
+
     return 1;
 }
