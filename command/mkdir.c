@@ -8,6 +8,10 @@ int main(string arg) {
     string path;
     int count = sizeof(filenames);
 
+    if (!count) {
+        return error_out("Usage: mkdir { <directory> }");
+    }
+
     filenames = map(filter(filenames, (: strlen($1) :)),
             (: resolve_path(this_player()->query_cwd(), $1) :));
 
