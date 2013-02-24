@@ -11,6 +11,7 @@ private mapping exits;
 
 mapping attributes(string direction);
 void set_exits(mapping exs);
+mapping get_exits();
 void simple_set_exits(mapping exs);
 string *exit_directions();
 
@@ -24,6 +25,10 @@ string description_exits();
 
 void set_exits(mapping exs) {
     exits = exs;
+}
+
+mapping get_exits() {
+    return exits;
 }
 
 mapping attributes(string direction) {
