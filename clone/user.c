@@ -51,6 +51,12 @@ void save() {
     }
 }
 
+void manual_save() {
+    remove_call_out("autosave");
+    save();
+    autosave(0);
+}
+
 void autosave(int save_now) {
     if (save_now) {
         tell(format("%^CYAN%^Autosaving...%^RESET%^\n"));

@@ -1,6 +1,6 @@
 #include <globals.h>
 
 int main(string arg) {
-    this_player()->save();
+    this_player()->manual_save();
 }
 
