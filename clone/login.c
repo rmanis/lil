@@ -115,18 +115,24 @@ private void successful_login(string user) {
 private void create_user_object(string name) {
     object user;
 
-    user = new("/clone/user");
-    user->set_name(name);
-    exec(user, this_object());
-    user->setup();
+    string error = catch {
+        user = new("/clone/user");
+        user->set_name(name);
+        exec(user, this_object());
+        user->setup();
 
 #ifndef __NO_ENVIRONMENT__
-    user->teleport_to(user->get_room(),
-            format(color_surround("green", "%s enters the mud.\n"),
-                name),
-            1);
+        user->teleport_to(user->get_room(),
+                format(color_surround("green", "%s enters the mud.\n"),
+                    name),
+                1);
 #endif
-    shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", name));
+        shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", name));
+    };
+
+    if (error) {
+        write("Error occurred while creating user object.\n");
+    }
 
     destruct(this_object());
 }
