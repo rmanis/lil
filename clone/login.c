@@ -2,7 +2,6 @@
 
 void login_prompt();
 void handle_username(string username, int tries);
-string encrypt(string input);
 void create_new_user(string yes_no, string username);
 void handle_password(string password, string user, int tries);
 private void ensure_no_user(string user);
@@ -81,10 +80,6 @@ void handle_password(string password, string user, int tries) {
 	output("Wrong password\n");
 	handle_username(user, tries + 1);
     }
-}
-
-string encrypt(string input) {
-    return crypt(input, "aa");
 }
 
 void create_password(string password, string username) {
