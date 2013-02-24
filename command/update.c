@@ -3,25 +3,35 @@
 
 inherit "/inherit/error_out";
 
-int
-main(string file)
-{
-    object obj;
+int main(string arg) {
+    string *filenames = explode(arg, " ");
     string path;
+    object obj;
+    int exists;
+    int count = sizeof(filenames);
 
-    if (!file) {
-        return error_out("update what?");
+    if (!count) {
+        return error_out("Usage: update { <file> }");
     }
 
-    path = resolve_path(this_player()->query_cwd(), file);
+    filenames = map(filter(filenames, (: strlen($1) :)),
+            (: resolve_path(this_player()->query_cwd(), $1) :));
 
-    if (!sizeof(stat(path)) && !sizeof(stat(path + ".c"))) {
-	output(file + " (" + path + ") does not exist.\n");
-    }
+    foreach (path in filenames) {
+        if (!(sizeof(stat(path + ".c")) || sizeof(stat(path)))) {
+            exists = 0;
+            output(path + " does not exist.\n");
+        } else {
+            exists = 1;
+        }
 
-    if (obj = find_object(path)) {
-	destruct(obj);
+        if (obj = find_object(path)) {
+            destruct(obj);
+        }
+
+        if (!load_object(path) && exists) {
+            output("Could not update " + path + "\n");
+        }
     }
-    load_object(path);
     return 1;
 }
