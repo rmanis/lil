@@ -10,6 +10,7 @@ void cat(string file);
 string user_cwd(string name);
 string user_path(string name);
 string file_owner(string file);
+string basename(string path);
 string dirname(string path);
 string resolve_path(string curr, string newer);
 
@@ -73,6 +74,20 @@ string dirname(string path) {
     string *parts = explode(path, "/");
 
     return "/" + implode(parts[0..<2], "/");
+}
+
+string basename(string path) {
+    string *parts;
+
+    while (path[<1] == '/' && path != "/") {
+        path = path[0..<2];
+    }
+
+    parts = explode(path, "/");
+
+    if (sizeof(parts)) {
+        return parts[<1];
+    }
 }
 
 string resolve_path(string curr, string newer) {
