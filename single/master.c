@@ -250,17 +250,32 @@ staticf void error_handler(mapping map, int flag) {
   string str;
 
   ob = this_interactive() || this_player();
-  if (flag) str = "*Error caught\n";
-  else str = "";
-  str += sprintf("Error: %s\nCurrent object: %O\nCurrent program: %s\nFile: %O Line: %d\n%O\n",
-         map["error"], (map["object"] || "No current object"),
-         (map["program"] || "No current program"),
-         map["file"], map["line"],
-         implode(map_array(map["trace"],
-                   (: sprintf("Line: %O  File: %O Object: %O Program: %O", $1["line"], $1["file"], $1["object"] || "No object", $1["program"] ||
-                          "No program") :)), "\n"));
+
+  if (flag) {
+      str = "*Error caught\n";
+  } else {
+      str = "";
+  }
+
+  str += sprintf("Error: %s\nCurrent object: %O\nCurrent program: %s\n%s:%d\n%s\n",
+          map["error"],
+          (map["object"] || "No current object"),
+          (map["program"] || "No current program"),
+          map["file"],
+          map["line"],
+          implode(
+              map_array(map["trace"],
+                  (: sprintf("%s:%O\tObject: %O\tProgram: %O",
+                             $1["file"],
+                             $1["line"],
+                             $1["object"] || "No object",
+                             $1["program"] || "No program") :)),
+              "\n"));
   write_file("/log/log", str);
-  if (!flag && ob) tell_object(ob, str);
+
+  if (!flag && ob) {
+      tell_object(ob, str);
+  }
 }
      
 int valid_bind() {
