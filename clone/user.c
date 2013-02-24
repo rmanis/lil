@@ -155,60 +155,82 @@ void tell(string str) {
 void move_to(mixed to, string direction_of_travel) {
     // TODO: switch heralding to use something like lima's "simple_action"
     object from;
-    string msg;
+    string leave_msg1;
+    string leave_msg3;
+    string arrival_msg;
+    string err;
 
     from = environment(this_object());
 
     if (strlen(direction_of_travel)) {
-        msg = format("%s leaves %s.\n", this_object()->query_name(), direction_of_travel);
+        leave_msg1 = format("You walk %s.\n", direction_of_travel);
+        leave_msg3 = format("%s leaves %s.\n", this_object()->query_name(), direction_of_travel);
     } else {
-        msg = format("%s turns to dust and blows away.\n", this_object()->query_name());
+        leave_msg1 = format("You are transported somewhere.\n");
+        leave_msg3 = format("%s turns to dust which blows away.\n", this_object()->query_name());
     }
-    tell_room(from, msg, ({ this_object() }));
 
-    if (strlen(direction_of_travel)) {
-        msg = format("You walk %s.\n", direction_of_travel);
+    err = catch {
+        this_object()->move(to);
+    };
+
+    if (err) {
+        leave_msg1 = format("You attempt to go %s, but something stops you....\n",
+                direction_of_travel);
+        leave_msg3 = format("%s starts going %s but appears to have great difficulty moving",
+                this_object()->query_name(),
+                direction_of_travel);
+    }
+
+    if (!err) {
+        tell_room(from, leave_msg3);
+        tell(leave_msg1);
+
+        if (stringp(to)) {
+            set_room(to);
+        } else if (objectp(to)) {
+            set_room(file_name(to));
+        }
+
+        arrival_msg = format("%s arrives from %s.\n", this_player()->query_name(),
+                to->direction_to(from));
+
+        tell_room(to, arrival_msg, ({ this_object() }));
+        // TODO: Brief versus verbose.
+        to->write_glance();
     } else {
-        msg = format("You are transported somewhere.\n");
+        tell_room(from, leave_msg3, ({ this_object() }));
+        tell(leave_msg1);
     }
-    tell(msg);
-
-    this_object()->move(to);
-
-    if (stringp(to)) {
-        set_room(to);
-    } else if (objectp(to)) {
-        set_room(file_name(to));
-    }
-
-    msg = format("%s arrives from %s.\n", this_player()->query_name(), to->direction_to(from));
-    tell_room(to, msg, ({ this_object() }));
-
-    // TODO: Brief versus verbose.
-    to->write_glance();
 }
 
 varargs void teleport_to(mixed to, string msg, int silent) {
     object destination;
+    string err;
 
-    if (stringp(to)) {
-        destination = load_object(to);
-    } else if (objectp(to)) {
-        destination = to;
-    }
+    err = catch {
+        if (stringp(to)) {
+            destination = load_object(to);
+        } else if (objectp(to)) {
+            destination = to;
+        }
+    };
 
-    if (!destination) {
-        return;
+    if (!err) {
+        if (!silent) {
+            tell("You are transported somewhere.\n");
+        }
+        this_object()->move(destination);
+        if (strlen(msg)) {
+            tell_room(destination, msg, ({ this_object() }));
+        }
+        destination->write_glance();
+    } else {
+        if (!environment(this_object())) {
+            tell("You are transported to the void.\n");
+            this_object()->move(VOID_OB);
+        }
     }
-
-    if (!silent) {
-        tell("You are transported somewhere.\n");
-    }
-    this_object()->move(destination);
-    if (strlen(msg)) {
-        tell_room(destination, msg, ({ this_object() }));
-    }
-    destination->write_glance();
 }
 
 #ifdef __NO_ADD_ACTION__
