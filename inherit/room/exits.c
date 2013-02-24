@@ -13,6 +13,7 @@ mapping attributes(string direction);
 void set_exits(mapping exs);
 mapping get_exits();
 void simple_set_exits(mapping exs);
+varargs mapping add_exit(string direction, string destination);
 string absolute_path(string file);
 string *exit_directions();
 
@@ -76,6 +77,15 @@ void simple_set_exits(mapping exs) {
             exits[k] = ([ "file" : absolute_path(exs[k]) ]);
         }
     }
+}
+
+varargs mapping add_exit(string direction, string destination, int road) {
+    string real_direction = unabbreviate_direction(direction);
+    if (direction && destination) {
+        exits[real_direction] = ([ "file" : absolute_path(destination),
+                "road" : road ]);
+    }
+    return exits;
 }
 
 string absolute_path(string file) {
