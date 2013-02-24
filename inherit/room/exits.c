@@ -13,6 +13,7 @@ mapping attributes(string direction);
 void set_exits(mapping exs);
 mapping get_exits();
 void simple_set_exits(mapping exs);
+string absolute_path(string file);
 string *exit_directions();
 
 string direction_to(object destination);
@@ -24,7 +25,29 @@ string glance_exits();
 string description_exits();
 
 void set_exits(mapping exs) {
-    exits = exs;
+    string k;
+    mapping v;
+    string direction;
+
+    mapping exit_attributes;
+    string attrib_key;
+    mixed attrib_val;
+
+    exits = ([ ]);
+
+    foreach (k, v in exs) {
+        direction = unabbreviate_direction(k);
+        exit_attributes = ([ ]);
+
+        foreach (attrib_key, attrib_val in v) {
+            if (attrib_key == "file") {
+                exit_attributes[attrib_key] = absolute_path(attrib_val);
+            } else {
+                exit_attributes[attrib_key] = attrib_val;
+            }
+        }
+        exits[k] = exit_attributes;
+    }
 }
 
 mapping get_exits() {
@@ -50,9 +73,13 @@ void simple_set_exits(mapping exs) {
     exits = ([ ]);
     if (exs) {
         foreach (k in keys(exs)) {
-            exits[k] = ([ "file" : exs[k] ]);
+            exits[k] = ([ "file" : absolute_path(exs[k]) ]);
         }
     }
+}
+
+string absolute_path(string file) {
+    return resolve_path(dirname(file_name(this_object())), file);
 }
 
 string *exit_directions() {
