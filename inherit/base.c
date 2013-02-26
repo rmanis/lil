@@ -1,3 +1,14 @@
+
+#include <globals.h>
+
+void remove();
+int move(mixed dest);
+void set_ids(string *arg);
+int id(string arg);
+varargs void tell(string str, int indent);
+string query_name();
+string to_string();
+
 // set to 'private static' so that inheritor won't be able to directly
 // access this variable and so that save_object() won't save it to the .o file
 
@@ -39,4 +50,12 @@ id(string arg)
 
 varargs void tell(string str, int indent) {
 
+}
+
+string query_name() {
+    return basename(file_name(this_object()));
+}
+
+string to_string() {
+    return query_name();
 }
