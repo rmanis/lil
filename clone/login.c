@@ -116,13 +116,13 @@ private void create_user_object(string name) {
         exec(user, this_object());
         user->setup();
 
+        shout(sprintf("%%^BOLD%%^[ %s enters the mud ]%%^RESET%%^\n", name));
 #ifndef __NO_ENVIRONMENT__
-        user->teleport_to(user->get_room(),
-                format(color_surround("green", "%s enters the mud.\n"),
-                    name),
-                1);
+        user->move(user->get_room());
+        tell_room(user->get_room(),
+                color_surround("green", sprintf("%s enters the mud.\n", name)),
+                ({ user }));
 #endif
-        shout(format("%^BOLD%^[ %s enters the mud ]%^RESET%^\n", name));
     };
 
     if (error) {

@@ -10,6 +10,9 @@ int main(string arg) {
     object player;
     object user;
 
+    string prefix1;
+    string prefix2;
+
     if (!arg || !strlen(arg)) {
         return error_out("Usage: tell <player> <message>");
     }
@@ -25,17 +28,21 @@ int main(string arg) {
     }
 
     if (!player) {
-        return error_out(format("%s is not logged in.", target));
+        return error_out(sprintf("%s is not logged in.", target));
     }
 
     if (player == this_player()) {
-        tell_object(this_player(), format("%^RED%^You tell yourself: %s\n%^RESET%^", msg));
+        prefix1 = "You tell yourself: ";
+        this_player()->tell(sprintf(color_surround("red", "%s%s\n"), prefix1, msg),
+                strlen(prefix1));
     } else if(!strlen(msg)) {
-        error_out(format("Tell %s what?", player->query_name()));
+        error_out(sprintf("Tell %s what?", player->query_name()));
     } else {
-        this_player()->tell(color_surround("red", sprintf("You tell %s: %s\n", player->query_name(), msg)));
-        msg = sprintf("%s tells you: %s\n", this_player()->query_name(), msg);
-        player->tell(color_surround("red", msg));
+        prefix1 = sprintf("You tell %s: ", player->query_name());
+        prefix2 = sprintf("%s tells you: ", this_player()->query_name());
+        this_player()->tell(color_surround("red", sprintf("%s%s\n", prefix1, msg)));
+        msg = sprintf("%s%s\n", prefix2, msg);
+        player->tell(color_surround("red", msg), strlen(prefix2));
     }
 
     return 1;

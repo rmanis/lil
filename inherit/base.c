@@ -36,3 +36,7 @@ id(string arg)
     }
     return (member_array(arg, ids) != -1);
 }
+
+varargs void tell(string str, int indent) {
+
+}

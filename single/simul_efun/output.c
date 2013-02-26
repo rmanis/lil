@@ -1,6 +1,29 @@
 
 #include <globals.h>
 
+varargs void shout(string str, object shouter) {
+    object p;
+    foreach (p in users()) {
+        if (p != shouter) {
+            p->tell(str);
+        }
+    }
+}
+
+varargs void tell_room(mixed room, string str, object *exclude, int indent) {
+    object o;
+    if (stringp(room)) {
+        room = load_object(room);
+    }
+    foreach (o in all_inventory(room) - exclude) {
+        if (inherits(USER_TERM, o)) {
+            o->tell(str, indent);
+        } else {
+            tell_object(o, str);
+        }
+    }
+}
+
 varargs string format(string fmt, mixed args...);
 varargs void output(string fmt, mixed args...);
 varargs string c_format(int indent, string fmt, mixed args...);

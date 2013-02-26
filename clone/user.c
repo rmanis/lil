@@ -45,9 +45,9 @@ void save() {
     ensure_path_of_file_exists(savefile);
 
     if (save_object(savefile)) {
-        tell(format("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n"));
+        tell("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n");
     } else {
-        tell(format("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n"));
+        tell("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n");
     }
 }
 
@@ -59,7 +59,7 @@ void manual_save() {
 
 void autosave(int save_now) {
     if (save_now) {
-        tell(format("%^CYAN%^Autosaving...%^RESET%^\n"));
+        tell("%^CYAN%^Autosaving...%^RESET%^\n");
         save();
     }
     call_out("autosave", SAVE_PERIOD, 1);
@@ -74,7 +74,8 @@ void load() {
 
 void quit() {
     save();
-    shout(format("%^BOLD%^[ %s leaves the mud ]%^RESET%^\n", query_name()));
+    shout(color_surround("bold",
+                sprintf("[ %s leaves the mud ]\n", query_name())));
 }
 
 string get_room() {
@@ -326,7 +327,7 @@ receive_message(string newclass, string msg)
 }
 
 int move_or_destruct(object ob) {
-    tell(format("You feel the world crumble around you.\n"));
+    tell("You feel the world crumble around you.\n");
     this_object()->teleport_to(VOID_OB, "", 1);
     return 0;
 }
