@@ -18,6 +18,7 @@
 
 #define LOGIN_OB   "/clone/login"
 #define USER_OB    "/clone/user"
+#define USER_TERM  "/clone/user/terminal"
 #define VOID_OB    "/single/void"
 #define ROOM_OB    "/inherit/room"
 #define COLOR_OB   "/clone/user/color"

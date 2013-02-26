@@ -3,6 +3,7 @@ inherit __DIR__ "color";
 
 int get_print_width();
 int get_print_height();
+varargs string format(int indent, string fmt, mixed args...);
 
 private int print_width;
 private int print_height;
@@ -27,6 +28,10 @@ int get_print_height() {
         print_height = 24;
     }
     return print_height;
+}
+
+varargs string format(int indent, string fmt, mixed args...) {
+    return wc_format(get_print_width(), indent, get_color_map(), fmt, args...);
 }
 
 void window_size(int width, int height) {
