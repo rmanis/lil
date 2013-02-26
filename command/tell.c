@@ -33,7 +33,7 @@ int main(string arg) {
 
     if (player == this_player()) {
         prefix1 = "You tell yourself: ";
-        this_player()->tell(sprintf(color_surround("red", "%s%s\n"), prefix1, msg),
+        this_player()->tell(color_surround("red", sprintf("%s%s\n", prefix1, msg)),
                 strlen(prefix1));
     } else if(!strlen(msg)) {
         error_out(sprintf("Tell %s what?", player->query_name()));
