@@ -26,6 +26,7 @@ int is_logged_in();
 void autosave(int save_now);
 varargs void tell(string str, int indent);
 
+void move(mixed location);
 varargs void teleport_to(mixed to, string msg, int silent);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
@@ -159,6 +160,18 @@ varargs void tell(string str, int indent) {
     } else {
         tell_object(this_object(), format(0, "%s", str));
     }
+}
+
+void move(mixed location) {
+    ::move(location);
+
+    if (objectp(location)) {
+        set_room(file_name(location));
+    } else if (stringp(location)) {
+        set_room(location);
+    }
+
+    get_room()->write_glance();
 }
 
 varargs void teleport_to(mixed to, string msg, int silent) {

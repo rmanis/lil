@@ -30,7 +30,7 @@ varargs int move(mixed thing, mixed destination, int teleport) {
         leave1 = "You are transported somewhere.\n";
         leave3 = sprintf("%s turns to dust which blows away.\n",
                 thing->query_name());
-        arrive3 = sprintf("%s arrives from somewhere.\n");
+        arrive3 = sprintf("%s arrives from somewhere.\n", thing->query_name());
     } else {
         direction_to = from->direction_to(dest_obj);
         direction_from = dest_obj->direction_to(from);
@@ -41,8 +41,8 @@ varargs int move(mixed thing, mixed destination, int teleport) {
                 direction_from);
     }
 
-    thing->move(dest_obj);
     report_move(thing, environment(thing), dest_obj, leave1, leave3, arrive3);
+    thing->move(dest_obj);
 }
 
 int move_direction(object thing, string direction) {
@@ -70,7 +70,6 @@ int move_direction(object thing, string direction) {
         arrival_msg = sprintf("%s arrives from %s.\n", thing->query_name(),
                 destination->direction_to(from));
 
-        thing->move(destination);
     } else {
         leave_msg1 = sprintf("You attempt to go %s, "
                 "but something stops you....\n", direction);
@@ -79,6 +78,9 @@ int move_direction(object thing, string direction) {
     }
 
     report_move(thing, from, destination, leave_msg1, leave_msg3, arrival_msg);
+    if (destination) {
+        thing->move(destination);
+    }
     return 1;
 }
 
