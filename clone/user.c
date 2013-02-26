@@ -24,9 +24,8 @@ string get_room();
 void set_name(string arg);
 int is_logged_in();
 void autosave(int save_now);
-void tell(string str);
+varargs void tell(string str, int indent);
 
-void move_to(mixed to, string direction_of_travel);
 varargs void teleport_to(mixed to, string msg, int silent);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
@@ -154,59 +153,11 @@ start_ed(string file) {
 }
 #endif
 
-void tell(string str) {
-    tell_object(this_object(), c_format(this_object()->get_print_width(), "%s", str));
-}
-
-void move_to(mixed to, string direction_of_travel) {
-    // TODO: switch heralding to use something like lima's "simple_action"
-    object from;
-    string leave_msg1;
-    string leave_msg3;
-    string arrival_msg;
-    string err;
-
-    from = environment(this_object());
-
-    if (strlen(direction_of_travel)) {
-        leave_msg1 = format("You walk %s.\n", direction_of_travel);
-        leave_msg3 = format("%s leaves %s.\n", this_object()->query_name(), direction_of_travel);
+varargs void tell(string str, int indent) {
+    if (indent) {
+        tell_object(this_object(), format(indent, "%s", str));
     } else {
-        leave_msg1 = format("You are transported somewhere.\n");
-        leave_msg3 = format("%s turns to dust which blows away.\n", this_object()->query_name());
-    }
-
-    err = catch {
-        this_object()->move(to);
-    };
-
-    if (err) {
-        leave_msg1 = format("You attempt to go %s, but something stops you....\n",
-                direction_of_travel);
-        leave_msg3 = format("%s starts going %s but appears to have great difficulty moving",
-                this_object()->query_name(),
-                direction_of_travel);
-    }
-
-    if (!err) {
-        tell_room(from, leave_msg3);
-        tell(leave_msg1);
-
-        if (stringp(to)) {
-            set_room(to);
-        } else if (objectp(to)) {
-            set_room(file_name(to));
-        }
-
-        arrival_msg = format("%s arrives from %s.\n", this_player()->query_name(),
-                to->direction_to(from));
-
-        tell_room(to, arrival_msg, ({ this_object() }));
-        // TODO: Brief versus verbose.
-        to->write_glance();
-    } else {
-        tell_room(from, leave_msg3, ({ this_object() }));
-        tell(leave_msg1);
+        tell_object(this_object(), format(0, "%s", str));
     }
 }
 
@@ -253,7 +204,7 @@ exec_command(string arg) {
     if (is_direction(direction)) {
         destination = here()->destination(direction);
         if (destination) {
-            move_to(destination, direction);
+            MOVE_D->move_direction(this_object(), direction);
         } else {
             output("There doesn't seem to be an exit in that direction.\n");
         }

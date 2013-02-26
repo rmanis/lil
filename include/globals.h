@@ -15,6 +15,7 @@
 #define LOG_DIR    "/log"
 
 #define VIRTUAL_D  "/single/virtual"
+#define MOVE_D     "/single/movement"
 
 #define LOGIN_OB   "/clone/login"
 #define USER_OB    "/clone/user"
