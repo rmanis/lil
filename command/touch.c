@@ -1,17 +1,17 @@
 
 #include <globals.h>
 
-int main(string arg) {
-    string *files = explode(arg, " ");
-    string file;
+inherit "/inherit/command/multi-file";
 
-    foreach (file in files) {
-        file = resolve_path(this_player()->query_cwd(), file);
-        if(!sizeof(stat(file))) {
-            ensure_path_of_file_exists(file);
-            write_file(file, "");
-        }
-    }
+string usage() {
+    return "Usage: touch { <file> }";
+}
 
-    return 1;
+int condition(string path) {
+    return !sizeof(stat(path));
+}
+
+void operate(string path) {
+    ensure_path_of_file_exists(path);
+    write_file(path, "");
 }

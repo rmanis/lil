@@ -1,37 +1,31 @@
 
 #include <globals.h>
 
-inherit "/inherit/error_out";
+inherit "/inherit/command/multi-file";
 
-int main(string arg) {
-    string *filenames = explode(arg, " ");
-    string path;
+string usage() {
+    return "Usage: update { <file> }";
+}
+
+void operate(string path) {
     object obj;
     int exists;
-    int count = sizeof(filenames);
-
-    if (!count) {
-        return error_out("Usage: update { <file> }");
+    if (!(sizeof(stat(path + ".c")) || sizeof(stat(path)))) {
+        exists = 0;
+        output(path + " does not exist.\n");
+    } else {
+        exists = 1;
     }
 
-    filenames = map(filter(filenames, (: strlen($1) :)),
-            (: resolve_path(this_player()->query_cwd(), $1) :));
-
-    foreach (path in filenames) {
-        if (!(sizeof(stat(path + ".c")) || sizeof(stat(path)))) {
-            exists = 0;
-            output(path + " does not exist.\n");
-        } else {
-            exists = 1;
-        }
-
-        if (obj = find_object(path)) {
-            destruct(obj);
-        }
-
-        if (!load_object(path) && exists) {
-            output("Could not update " + path + "\n");
-        }
+    if (obj = find_object(path)) {
+        destruct(obj);
     }
-    return 1;
+
+    if (!load_object(path) && exists) {
+        output("Could not update " + path + "\n");
+    }
+}
+
+int condition(string path) {
+    return find_object(path) != 0 || sizeof(stat(path + ".c"));
 }
