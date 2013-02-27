@@ -23,6 +23,8 @@ void set_room(string filename);
 string get_room();
 void set_name(string arg);
 int is_logged_in();
+void manual_save();
+void disable_autosave();
 void autosave(int save_now);
 varargs void tell(string str, int indent);
 
@@ -52,9 +54,15 @@ void save() {
 }
 
 void manual_save() {
-    remove_call_out("autosave");
+    int callout = remove_call_out("autosave");
     save();
-    autosave(0);
+    if (callout >= 0) {
+        autosave(0);
+    }
+}
+
+void disable_autosave() {
+    remove_call_out("autosave");
 }
 
 void autosave(int save_now) {
