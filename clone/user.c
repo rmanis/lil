@@ -29,7 +29,6 @@ void autosave(int save_now);
 varargs void tell(string str, int indent);
 
 void move(mixed location);
-varargs void teleport_to(mixed to, string msg, int silent);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
@@ -183,35 +182,6 @@ void move(mixed location) {
     get_room()->write_glance();
 }
 
-varargs void teleport_to(mixed to, string msg, int silent) {
-    object destination;
-    string err;
-
-    err = catch {
-        if (stringp(to)) {
-            destination = load_object(to);
-        } else if (objectp(to)) {
-            destination = to;
-        }
-    };
-
-    if (!err) {
-        if (!silent) {
-            tell("You are transported somewhere.\n");
-        }
-        this_object()->move(destination);
-        if (strlen(msg)) {
-            tell_room(destination, msg, ({ this_object() }));
-        }
-        destination->write_glance();
-    } else {
-        if (!environment(this_object())) {
-            tell("You are transported to the void.\n");
-            this_object()->move(VOID_OB);
-        }
-    }
-}
-
 #ifdef __NO_ADD_ACTION__
 void
 exec_command(string arg) {
@@ -339,7 +309,7 @@ receive_message(string newclass, string msg)
 
 int move_or_destruct(object ob) {
     tell("You feel the world crumble around you.\n");
-    this_object()->teleport_to(VOID_OB, "", 1);
+    MOVE_D->move(this_object(), VOID_OB, 1);
     return 0;
 }
 
