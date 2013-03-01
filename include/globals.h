@@ -16,6 +16,7 @@
 
 #define VIRTUAL_D  "/single/virtual"
 #define MOVE_D     "/single/movement"
+#define ALIAS_D    "/single/alias"
 
 #define LOGIN_OB   "/clone/login"
 #define USER_OB    "/clone/user"
