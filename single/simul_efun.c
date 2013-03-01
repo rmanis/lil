@@ -10,6 +10,7 @@ inherit __DIR__ "simul_efun/objects";
 inherit __DIR__ "simul_efun/enviro";
 inherit __DIR__ "simul_efun/output";
 inherit __DIR__ "simul_efun/crypto";
+inherit __DIR__ "simul_efun/strings";
 
 void simul() {}
 
