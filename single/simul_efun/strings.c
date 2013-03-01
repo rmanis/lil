@@ -1,4 +1,12 @@
 
+string quoted(string str);
+int whitespace(int char);
+string trim(string str);
+
+string quoted(string str) {
+    return "\"" + str + "\"";
+}
+
 int whitespace(int char) {
     return char == ' ' || char == '\t' || char == '\n';
 }
