@@ -221,12 +221,12 @@ exec_command(string arg) {
     string cmd_path = COMMAND_PREFIX + verb;
     object cobj = load_object(cmd_path);
     object destination;
-    string direction = unabbreviate_direction(arg);
+    string direction = unabbreviate_direction(verb);
     string alias = get_alias(verb);
 
     if (alias) {
         exec_command(alias + " " + rest);
-    } else if (is_direction(direction)) {
+    } else if (is_direction(direction) && !strlen(trim(rest))) {
         destination = here()->destination(direction);
         if (destination) {
             MOVE_D->move_direction(this_object(), direction);
