@@ -8,9 +8,6 @@ void set_description(string desc);
 string get_glance();
 string get_description();
 
-void write_glance();
-void write_look();
-
 private string glance;
 private string description;
 
@@ -33,15 +30,4 @@ string get_glance() {
 
 string get_description() {
     return description;
-}
-
-void write_glance() {
-    output("%s %s", get_glance(), glance_exits());
-    write_occupants();
-}
-
-void write_look() {
-    output("%s\n", get_description());
-    output(look_exits());
-    write_occupants();
 }

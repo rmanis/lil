@@ -22,9 +22,6 @@ string destination(string direction);
 int has_direction(string direction);
 int is_road(string direction);
 
-string glance_exits();
-string description_exits();
-
 void set_exits(mapping exs) {
     string k;
     mapping v;
@@ -126,28 +123,4 @@ int is_road(string direction) {
         r = exit["road"];
     }
     return r;
-}
-
-string glance_exits() {
-    string *exits = exit_directions();
-    string *abr;
-    string r = "";
-    int len = sizeof(exits);
-
-    if (len) {
-        abr = map(exits, (: abbreviate_direction($1) :));
-        r = "[" + implode(abr, ",") + "]";
-    } else {
-        r = "[]";
-    }
-
-    return r;
-}
-
-string look_exits() {
-    string *exits = exit_directions();
-    if (exits && sizeof(exits)) {
-        return "Exits: " + implode(exits, ", ");
-    }
-    return "There are no obvious exits.";
 }

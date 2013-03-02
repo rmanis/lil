@@ -179,7 +179,7 @@ void move(mixed location) {
         set_room(location);
     }
 
-    get_room()->write_glance();
+    LOOK_D->player_glance(this_object());
 }
 
 #ifdef __NO_ADD_ACTION__
