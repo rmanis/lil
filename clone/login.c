@@ -4,7 +4,9 @@ void login_prompt();
 void handle_username(string username, int tries);
 void create_new_user(string yes_no, string username);
 void handle_password(string password, string user, int tries);
+void create_password(string password, string username);
 private void ensure_no_user(string user);
+private void check_logged_in(string user);
 private void successful_login(string user);
 private void create_user_object(string name);
 private void ensure_passwords_folder();
@@ -75,7 +77,7 @@ void handle_password(string password, string user, int tries) {
     if (strlen(password) == 0) {
 	reject();
     } else if (input_key == accepted_key) {
-	successful_login(user);
+        check_logged_in(user);
     } else {
 	output("Wrong password\n");
 	handle_username(user, tries + 1);
@@ -100,6 +102,18 @@ private void ensure_no_user(string user) {
 	output("Ruh-roh!  We're overwriting %s's password\n", user);
 	rm(file);
     }
+}
+
+private void check_logged_in(string user) {
+    object o = find_player(user);
+
+    if (o) {
+        o->tell("You're being replaced.\n");
+        o->save();
+        remove_interactive(o);
+        destruct(o);
+    }
+    successful_login(user);
 }
 
 private void successful_login(string user) {
