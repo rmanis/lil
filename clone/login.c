@@ -45,13 +45,13 @@ void handle_username(string username, int tries) {
     string luser = lower_case(username);
 
     if (strlen(username) == 0) {
-	reject();
+        reject();
     } else if (user_exists(luser)) {
-	output("Password: ");
-	input_to("handle_password", 1, luser, tries);
+        output("Password: ");
+        input_to("handle_password", 1, luser, tries);
     } else {
-	output("User '%s' does not exist.  Create (y/n) ? ", luser);
-	input_to("create_new_user", 0, luser);
+        output("User '%s' does not exist.  Create (y/n) ? ", luser);
+        input_to("create_new_user", 0, luser);
     }
 }
 
@@ -59,12 +59,12 @@ void create_new_user(string yes_no, string username) {
     string yn = lower_case(yes_no);
 
     if (yn[0] == 'y') {
-	output("Creating user '%s'\n", username);
-	output("Password: ");
-	input_to("create_password", 1, username);
+        output("Creating user '%s'\n", username);
+        output("Password: ");
+        input_to("create_password", 1, username);
     } else {
-	output("Okay, we'll try again.\n");
-	login_prompt();
+        output("Okay, we'll try again.\n");
+        login_prompt();
     }
 }
 
@@ -75,12 +75,12 @@ void handle_password(string password, string user, int tries) {
     output("\n");
 
     if (strlen(password) == 0) {
-	reject();
+        reject();
     } else if (input_key == accepted_key) {
         check_logged_in(user);
     } else {
-	output("Wrong password\n");
-	handle_username(user, tries + 1);
+        output("Wrong password\n");
+        handle_username(user, tries + 1);
     }
 }
 
@@ -99,8 +99,8 @@ void create_password(string password, string username) {
 private void ensure_no_user(string user) {
     string file = password_file(user);
     if (sizeof(stat(file))) {
-	output("Ruh-roh!  We're overwriting %s's password\n", user);
-	rm(file);
+        output("Ruh-roh!  We're overwriting %s's password\n", user);
+        rm(file);
     }
 }
 
