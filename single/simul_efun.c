@@ -11,6 +11,7 @@ inherit __DIR__ "simul_efun/enviro";
 inherit __DIR__ "simul_efun/output";
 inherit __DIR__ "simul_efun/crypto";
 inherit __DIR__ "simul_efun/strings";
+inherit __DIR__ "simul_efun/players";
 
 void simul() {}
 
