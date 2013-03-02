@@ -1,5 +1,7 @@
 #include <globals.h>
 
+void output(string str, mixed args...);
+
 void login_prompt();
 void handle_username(string username, int tries);
 void create_new_user(string yes_no, string username);
@@ -13,6 +15,11 @@ private void ensure_passwords_folder();
 private string password_file(string name);
 private int user_exists(string name);
 void reject();
+
+void output(string str, mixed args...) {
+    write(wc_format(80, 0, COLOR_OB->get_color_map(),
+                str, args));
+}
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {

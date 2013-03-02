@@ -14,7 +14,7 @@ main(string arg)
 
     if (strlen(arg) > 0) {
 	write_file("/eval/tmp_eval_file.c",start + arg + end);
-	output("Result = %O\n", "/eval/tmp_eval_file"->eval());
+	previous_object()->tell(sprintf("Result = %O\n", "/eval/tmp_eval_file"->eval()));
     }
 
     return 1;

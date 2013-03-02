@@ -9,7 +9,7 @@ string usage() {
 
 int condition(string path) {
     if (!rm(path)) {
-        output("Could not remove %s.\n", path);
+        previous_object()->tell(sprintf("Could not remove %s.\n", path));
     }
     return 0;
 }

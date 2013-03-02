@@ -12,7 +12,7 @@ void operate(string path) {
     int exists;
     if (!(sizeof(stat(path + ".c")) || sizeof(stat(path)))) {
         exists = 0;
-        output(path + " does not exist.\n");
+        previous_object()->tell(sprintf("%s does not exist.\n", path));
     } else {
         exists = 1;
     }
@@ -22,7 +22,7 @@ void operate(string path) {
     }
 
     if (!load_object(path) && exists) {
-        output("Could not update " + path + "\n");
+        previous_object()->tell(sprintf("Could not update %s\n", path));
     }
 }
 

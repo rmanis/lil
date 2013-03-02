@@ -1,6 +1,11 @@
 
 #include <globals.h>
 
+varargs void shout(string str, object shouter);
+varargs void tell_room(mixed room, string str, object *exclude, int indent);
+varargs string wc_format(int width, int indent, mapping colors, string fmt, mixed args...);
+string color_surround(string color, string str);
+
 varargs void shout(string str, object shouter) {
     object p;
     foreach (p in users()) {
@@ -24,31 +29,6 @@ varargs void tell_room(mixed room, string str, object *exclude, int indent) {
     }
 }
 
-varargs string format(string fmt, mixed args...);
-varargs void output(string fmt, mixed args...);
-varargs string c_format(int indent, string fmt, mixed args...);
-varargs string wc_format(int width, int indent, mapping colors, string fmt, mixed args...);
-varargs void c_output(int indent, string fmt, mixed args...);
-string color_surround(string color, string str);
-
-varargs string format(string fmt, mixed args...) {
-    return c_format(0, fmt, args...);
-}
-varargs void output(string fmt, mixed args...) {
-    return c_output(0, fmt, args...);
-}
-
-varargs string c_format(int indent, string fmt, mixed args...) {
-    object player = this_player();
-    mapping colors;
-
-    colors = player->is_logged_in() ?
-        player->get_color_map() :
-        COLOR_OB->get_color_map();
-
-    return wc_format(80, indent, colors, fmt, args...);
-}
-
 // Formats a string.  Does color and fill-paragraph.
 varargs string wc_format(int width, int indent, mapping colors, string fmt, mixed args...) {
     string new_fmt;
@@ -60,11 +40,12 @@ varargs string wc_format(int width, int indent, mapping colors, string fmt, mixe
     return terminal_colour(new_str, colors, width, indent);
 }
 
-varargs void c_output(int indent, string fmt, mixed args...) {
-    string str = c_format(indent, fmt, args...);
-    write(str);
-}
-
-string color_surround(string color, string str) {
-    return sprintf("%%^%s%%^%s%%^RESET%%^", upper_case(color), str);
+varargs string color_surround(string color, string arg2, string arg3) {
+    string reset = "RESET";
+    string msg = arg2;
+    if (arg3) {
+        reset = upper_case(arg2);
+        msg = arg3;
+    }
+    return sprintf("%%^%s%%^%s%%^%s%%^", upper_case(color), msg, reset);
 }

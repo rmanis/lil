@@ -2,6 +2,6 @@
 #include <globals.h>
 
 int main(string arg) {
-    output("%s\n", arg);
+    previous_object()->tell(sprintf("%s\n", arg));
     return 1;
 }

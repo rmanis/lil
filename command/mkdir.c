@@ -9,7 +9,7 @@ string usage() {
 
 int condition(string path) {
     if (!mkdir(path)) {
-        output("%s already exists.\n", path);
+        previous_object()->tell(sprintf("%s already exists.\n", path));
     }
     return 0;
 }

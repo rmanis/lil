@@ -143,22 +143,22 @@ write_prompt() {
     switch (query_ed_mode()) {
     case 0:
     case -2:
-        output(":");
+        tell(":");
         break;
 
     case -1:
-        output("%^RESET%^> ");
+        tell("%^RESET%^> ");
         break;
 
     default:
-        output("*\b");
+        tell("*\b");
         break;
     }
 }
 
 void
 start_ed(string file) {
-    output(ed_start(file, 0));
+    tell(ed_start(file, 0));
 }
 #endif
 
@@ -201,13 +201,13 @@ exec_command(string arg) {
         if (destination) {
             MOVE_D->move_direction(this_object(), direction);
         } else {
-            output("There doesn't seem to be an exit in that direction.\n");
+            tell("There doesn't seem to be an exit in that direction.\n");
         }
     } else if (cobj) {
         cobj->main(rest);
     } else {
         if (!destination && strlen(arg)) {
-            output("What?\n");
+            tell("What?\n");
         }
     // maybe call an emote/soul daemon here
     }
@@ -220,7 +220,7 @@ process_input(string arg) {
 #ifndef __OLD_ED__
     if (query_ed_mode() != -1) {
     if (arg[0] != '!') {
-        output(ed_cmd(arg));
+        tell(ed_cmd(arg));
         return;
     }
     arg = arg[1..];
@@ -245,7 +245,7 @@ process_input(string arg)
 #ifndef __OLD_ED__
     if (query_ed_mode() != -1) {
     if (arg[0] != '!') {
-        output(ed_cmd(arg));
+        tell(ed_cmd(arg));
         return 0;
     }
     arg = arg[1..];
