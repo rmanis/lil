@@ -12,5 +12,6 @@ mapping default_aliases() {
     return ([
             "l" : "look",
             "i" : "inventory",
+            "t" : "tell",
             ]);
 }
