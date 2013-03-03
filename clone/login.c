@@ -4,6 +4,7 @@ void output(string str, mixed args...);
 
 void login_prompt();
 void handle_username(string username, int tries);
+void handle_spaces_user(string yes_no, string username);
 void create_new_user(string yes_no, string username);
 void handle_password(string password, string user, int tries);
 void create_password(string password, string username);
@@ -48,10 +49,19 @@ void login_prompt() {
     input_to("handle_username", 0, 0);
 }
 
+string first_word(string str) {
+    string *strs = explode(trim(str), " ");
+    return lower_case(strs[0]);
+}
+
 void handle_username(string username, int tries) {
     string luser = lower_case(username);
 
-    if (strlen(username) == 0) {
+    if (regexp(username, "[ \t]")) {
+        luser = first_word(luser);
+        output("No spaces!  Use '" + luser + "'? (y/n) ");
+        input_to("handle_spaces_user", 0, luser);
+    } else if (strlen(username) == 0) {
         reject();
     } else if (user_exists(luser)) {
         output("Password: ");
@@ -59,6 +69,14 @@ void handle_username(string username, int tries) {
     } else {
         output("User '%s' does not exist.  Create (y/n) ? ", luser);
         input_to("create_new_user", 0, luser);
+    }
+}
+
+void handle_spaces_user(string yes_no, string username) {
+    if (lower_case(yes_no)[0] == 'y') {
+        handle_username(username, 0);
+    } else {
+        login_prompt();
     }
 }
 
