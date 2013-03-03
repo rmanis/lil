@@ -205,7 +205,11 @@ void process_input(string arg) {
     if (pre) {
         arg = pre + " " + arg[1..];
     }
-    try_execute(arg);
+    if (trim(arg) == "stop") {
+        clear_queue();
+    } else {
+        try_execute(arg);
+    }
 }
 #else
 string

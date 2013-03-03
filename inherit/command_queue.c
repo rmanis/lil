@@ -5,6 +5,7 @@ inherit __DIR__ "command_queue/alias";
 
 void execute(string command);
 void try_execute(string command);
+void clear_queue();
 string *get_command_queue();
 varargs string *remove_first_slice(int num);
 
@@ -85,6 +86,12 @@ void try_execute(string command) {
         MESSAGE_D->tell(this_object(),
                 sprintf("Queued command '%s'\n", command));
     }
+}
+
+void clear_queue() {
+    command_queue = ({ });
+    execution_count = 6;
+    MESSAGE_D->tell(this_object(), "Command queue cleared\n");
 }
 
 string *get_command_queue() {
