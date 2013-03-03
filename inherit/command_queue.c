@@ -8,8 +8,12 @@ void try_execute(string command);
 string *get_command_queue();
 varargs string *remove_first_slice(int num);
 
+int get_speed();
+void set_speed(int speed);
+
 string *command_queue;
 int execution_count;
+int speed;
 
 void heart_beat() {
     string *commands = remove_first_slice();
@@ -20,6 +24,19 @@ void heart_beat() {
     foreach (command in commands) {
         execute(command);
         execution_count++;
+    }
+}
+
+int get_speed() {
+    if (!speed) {
+        speed = DEFAULT_SPEED;
+    }
+    return speed;
+}
+
+void set_speed(int new_speed) {
+    if (speed > 0) {
+        speed = new_speed;
     }
 }
 
@@ -54,7 +71,7 @@ void execute(string arg) {
 }
 
 void try_execute(string command) {
-    if (execution_count < 6) {
+    if (execution_count < get_speed()) {
         execute(command);
         execution_count++;
     } else {
@@ -73,7 +90,7 @@ string *get_command_queue() {
 
 varargs string *remove_first_slice(int num) {
     // int command_count = sizeof(command_queue);
-    int take = (num > 0 ? num : 6) - 1;
+    int take = (num > 0 ? num : get_speed()) - 1;
     string *slice = get_command_queue()[0..take];
     command_queue = command_queue[take+1..];
 

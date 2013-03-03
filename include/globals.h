@@ -41,6 +41,9 @@
 // Seconds delay between autosave calls.
 #define SAVE_PERIOD             300
 
+// Number of executions per heartbeat
+#define DEFAULT_SPEED           6
+
 // classes for message() efun.
 #define M_STATUS                "status"
 #define M_SAY                   "say"
