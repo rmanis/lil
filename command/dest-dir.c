@@ -27,7 +27,7 @@ int main(string arg) {
                 destruct(target_ob);
             }
         } else {
-            previous_object()->tell(sprintf("Nothing to destruct.\n");
+            previous_object()->tell(sprintf("Nothing to destruct.\n"));
         }
     }
 
