@@ -18,12 +18,14 @@
 #define MOVE_D                  "/single/movement"
 #define ALIAS_D                 "/single/alias"
 #define LOOK_D                  "/single/look"
+#define MESSAGE_D               "/single/messaging"
 
 #define LOGIN_OB                "/clone/login"
 #define USER_OB                 "/clone/user"
 #define USER_TERM               "/clone/user/terminal"
 #define VOID_OB                 "/single/void"
 #define ROOM_OB                 "/inherit/room"
+#define COMMAND_OB              "/inherit/command_queue"
 #define COLOR_OB                "/clone/user/color"
 
 #define START_ROOM              "/domain/wiz/workshop"

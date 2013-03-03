@@ -5,8 +5,8 @@
 #include <globals.h>
 
 inherit BASE;
+inherit COMMAND_OB;
 inherit __DIR__ "user/terminal";
-inherit __DIR__ "user/alias";
 
 private string old_input = "";
 private string name;
@@ -183,38 +183,7 @@ void move(mixed location) {
 }
 
 #ifdef __NO_ADD_ACTION__
-void
-exec_command(string arg) {
-    string *parts = explode(arg, " ");
-    string verb = sizeof(parts) ? parts[0] : "";
-    string rest = implode(parts[1..], " ");
-    string cmd_path = COMMAND_PREFIX + verb;
-    object cobj = load_object(cmd_path);
-    object destination;
-    string direction = unabbreviate_direction(verb);
-    string alias = get_alias(verb);
-
-    if (alias) {
-        exec_command(alias + " " + rest);
-    } else if (is_direction(direction) && !strlen(trim(rest))) {
-        destination = here()->destination(direction);
-        if (destination) {
-            MOVE_D->move_direction(this_object(), direction);
-        } else {
-            tell("There doesn't seem to be an exit in that direction.\n");
-        }
-    } else if (cobj) {
-        cobj->main(rest);
-    } else {
-        if (!destination && strlen(arg)) {
-            tell("What?\n");
-        }
-    // maybe call an emote/soul daemon here
-    }
-}
-
-void
-process_input(string arg) {
+void process_input(string arg) {
     mixed pre;
 
 #ifndef __OLD_ED__
@@ -236,7 +205,7 @@ process_input(string arg) {
     if (pre) {
         arg = pre + " " + arg[1..];
     }
-    exec_command(arg);
+    try_execute(arg);
 }
 #else
 string
