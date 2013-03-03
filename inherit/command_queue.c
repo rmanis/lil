@@ -49,9 +49,15 @@ void execute(string arg) {
     object destination;
     string direction = unabbreviate_direction(verb);
     string alias = get_alias(verb);
+    string *cmds;
+    string cmd;
 
     if (alias) {
-        execute(alias + " " + rest);
+        alias = alias + " " + rest;
+        cmds = explode(alias, ";");
+        foreach (cmd in cmds) {
+            try_execute(cmd);
+        }
     } else if (is_direction(direction) && !strlen(trim(rest))) {
         destination = here()->destination(direction);
         if (destination) {
