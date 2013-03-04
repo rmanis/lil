@@ -37,5 +37,5 @@ varargs string format(int indent, string fmt, mixed args...) {
 void window_size(int width, int height) {
     set_print_width(width);
     set_print_height(height);
-    this_object()->tell(sprintf("New window size: %d x %d", width, height));
+    this_object()->tell(sprintf("New window size: %d x %d\n", width, height));
 }
