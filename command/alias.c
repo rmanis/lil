@@ -29,6 +29,7 @@ void print_aliases() {
     string fmt;
 
     mapping aliases = previous_object()->get_aliases();
+    string *keys = keys(aliases);
 
     if (!sizeof(aliases)) {
         previous_object()->tell("No aliases defined.\n");
@@ -41,7 +42,8 @@ void print_aliases() {
             longest = len;
         }
     }
-    foreach (k, v in aliases) {
+    foreach (k in sort_array(keys, 1)) {
+        v = aliases[k];
         fmt = sprintf("%%s%%%ds : %%s\n", longest - strlen(k));
         previous_object()->tell(sprintf(fmt, k, "", quoted(v)));
     }
