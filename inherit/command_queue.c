@@ -49,17 +49,8 @@ void execute(string arg) {
     object cobj = load_object(cmd_path);
     object destination;
     string direction = unabbreviate_direction(verb);
-    string alias = get_alias(verb);
-    string *cmds;
-    string cmd;
 
-    if (alias) {
-        alias = alias + " " + rest;
-        cmds = explode(alias, ";");
-        foreach (cmd in cmds) {
-            try_execute(cmd);
-        }
-    } else if (is_direction(direction) && !strlen(trim(rest))) {
+    if (is_direction(direction) && !strlen(trim(rest))) {
         destination = here()->destination(direction);
         if (destination) {
             MOVE_D->move_direction(this_object(), direction);
@@ -78,7 +69,20 @@ void execute(string arg) {
 }
 
 void try_execute(string command) {
-    if (execution_count < get_speed()) {
+    string *parts = explode(trim(command), " ");
+    string verb = sizeof(parts) ? parts[0] : "";
+    string rest = implode(parts[1..], " ");
+    string alias = get_alias(verb);
+    string *cmds;
+    string cmd;
+
+    if (alias) {
+        alias = alias + " " + rest;
+        cmds = explode(alias, ";");
+        foreach (cmd in cmds) {
+            try_execute(cmd);
+        }
+    } else if (execution_count < get_speed()) {
         execute(command);
         execution_count++;
     } else {
