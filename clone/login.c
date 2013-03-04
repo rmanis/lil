@@ -19,7 +19,7 @@ void reject();
 
 void output(string str, mixed args...) {
     write(wc_format(80, 0, COLOR_OB->get_color_map(),
-                str, args));
+                str, args...));
 }
 
 #ifdef __INTERACTIVE_CATCH_TELL__
@@ -59,7 +59,7 @@ void handle_username(string username, int tries) {
 
     if (regexp(username, "[ \t]")) {
         luser = first_word(luser);
-        output("No spaces!  Use '" + luser + "'? (y/n) ");
+        output("No spaces!  Use '%s'? (y/n) ", luser);
         input_to("handle_spaces_user", 0, luser);
     } else if (strlen(username) == 0) {
         reject();
