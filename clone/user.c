@@ -17,15 +17,18 @@ private static int logged_in;
 
 string save_filename();
 void save();
-string query_cwd();
-string query_name();
-void set_room(string filename);
-string get_room();
-void set_name(string arg);
-int is_logged_in();
 void manual_save();
 void disable_autosave();
 void autosave(int save_now);
+void load();
+void quit();
+
+string query_cwd();
+string query_name();
+string get_room();
+void set_room(string filename);
+void set_name(string arg);
+int is_logged_in();
 varargs void tell(string str, int indent);
 
 void move(mixed location);
