@@ -8,6 +8,8 @@ int main(string arg) {
     string *parts = explode(arg, " ");
     string key;
     string value;
+    string old_alias;
+    string msg;
 
     if (!strlen(arg)) {
         print_aliases();
@@ -17,6 +19,19 @@ int main(string arg) {
         key = parts[0];
         value = implode(parts[1..], " ");
 
+        old_alias = previous_object()->get_alias(key);
+
+        if (old_alias) {
+            msg = sprintf("Changing alias '%s'\n", key);
+            previous_object()->tell(msg);
+            msg = sprintf(" from: %s\n", old_alias);
+            previous_object()->tell(msg, 7);
+            msg = sprintf(" to:   %s\n", value);
+            previous_object()->tell(msg, 7);
+        } else {
+            msg = sprintf("Adding alias '%s' as '%s'\n", key, value);
+            previous_object()->tell(msg);
+        }
         previous_object()->set_alias(key, value);
     }
     return 1;
