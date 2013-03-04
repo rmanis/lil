@@ -77,7 +77,7 @@ void try_execute(string command) {
     string cmd;
 
     if (alias) {
-        alias = alias + " " + rest;
+        alias = alias + (strlen(rest) ? " " + rest : "");
         cmds = explode(alias, ";");
         foreach (cmd in cmds) {
             try_execute(cmd);
