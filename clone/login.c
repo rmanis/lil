@@ -150,10 +150,7 @@ private void create_user_object(string name) {
     object user;
 
     string error = catch {
-        user = new("/clone/user");
-        user->set_name(name);
-        exec(user, this_object());
-        user->setup();
+        user = BIRTH_D->create_user(name, this_object());
 
         shout(sprintf("%%^BOLD%%^[ %s enters the mud ]%%^RESET%%^\n", name));
 #ifndef __NO_ENVIRONMENT__

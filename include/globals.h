@@ -17,6 +17,7 @@
 #define VIRTUAL_D               "/single/virtual"
 #define MOVE_D                  "/single/movement"
 #define ALIAS_D                 "/single/alias"
+#define BIRTH_D                 "/single/birth"
 #define LOOK_D                  "/single/look"
 #define MESSAGE_D               "/single/messaging"
 

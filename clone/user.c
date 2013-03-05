@@ -16,12 +16,15 @@ private string room;
 private static int logged_in;
 
 string save_filename();
+int quiet_save();
 void save();
 void manual_save();
 void disable_autosave();
 void autosave(int save_now);
 void load();
 void quit();
+
+void swap_out();
 
 string query_cwd();
 string query_name();
@@ -31,6 +34,10 @@ void set_name(string arg);
 int is_logged_in();
 varargs void tell(string str, int indent);
 
+void activate_interactive();
+void setup();
+
+void quiet_move(mixed location);
 void move(mixed location);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
@@ -43,12 +50,15 @@ string save_filename() {
     return sprintf("/data/user/%s", query_name());
 }
 
-void save() {
+int quiet_save() {
     string savefile = save_filename();
-
     ensure_path_of_file_exists(savefile);
 
-    if (save_object(savefile)) {
+    return save_object(savefile);
+}
+
+void save() {
+    if (quiet_save()) {
         tell("%^BOLD%^%^GREEN%^Saved.%^RESET%^\n");
     } else {
         tell("%^BOLD%^%^RED%^Error saving file.%^RESET%^\n");
@@ -86,6 +96,28 @@ void quit() {
     save();
     shout(color_surround("bold",
                 sprintf("[ %s leaves the mud ]\n", query_name())));
+}
+
+void swap_out() {
+    object new_user;
+
+    if (find_object(USER_OB)) {
+        destruct(find_object(USER_OB));
+    }
+
+    quiet_save();
+
+    new_user = BIRTH_D->create_swapped_user(query_name(), this_object());
+
+    if (new_user) {
+        new_user->quiet_move(environment());
+        new_user->load();
+        new_user->tell("You feel different.\n");
+
+        destruct(this_object());
+    } else {
+        this_object()->tell("Nothing happens.\n");
+    }
 }
 
 string get_room() {
@@ -173,7 +205,7 @@ varargs void tell(string str, int indent) {
     }
 }
 
-void move(mixed location) {
+void quiet_move(mixed location) {
     ::move(location);
 
     if (objectp(location)) {
@@ -181,6 +213,10 @@ void move(mixed location) {
     } else if (stringp(location)) {
         set_room(location);
     }
+}
+
+void move(mixed location) {
+    quiet_move(location);
 
     LOOK_D->player_glance(this_object());
 }
@@ -289,12 +325,7 @@ int move_or_destruct(object ob) {
     return 0;
 }
 
-// setup: used to configure attributes that aren't known by this_object()
-// at create() time such as living_name (and so can't be done in create()).
-
-void
-setup()
-{
+void activate_interactive() {
     set_heart_beat(1);
 #ifdef __PACKAGE_UIDS__
     seteuid(getuid(this_object()));
@@ -309,6 +340,15 @@ setup()
 #else
     set_this_player(this_object());
 #endif
+}
+
+// setup: used to configure attributes that aren't known by this_object()
+// at create() time such as living_name (and so can't be done in create()).
+
+void setup() {
+    write("User setup\n");
+
+    activate_interactive();
     load();
     autosave(0);
 
