@@ -3,6 +3,7 @@ main(string arg)
 {
     string start;
     string end;
+    mixed result;
     /* clean up first */
     if (file_size("/eval/tmp_eval_file.c") != -1)
     rm ("/eval/tmp_eval_file.c");
@@ -13,8 +14,11 @@ main(string arg)
     end = read_file("/eval/footer");
 
     if (strlen(arg) > 0) {
-	write_file("/eval/tmp_eval_file.c",start + arg + end);
-	previous_object()->tell(sprintf("Result = %O\n", "/eval/tmp_eval_file"->eval()));
+        write_file("/eval/tmp_eval_file.c",start + arg + end);
+        result = "/eval/tmp_eval_file"->eval();
+        if (previous_object()) {
+            previous_object()->tell(sprintf("Result = %O\n", result));
+        }
     }
 
     return 1;
