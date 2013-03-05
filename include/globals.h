@@ -1,5 +1,8 @@
 // file: globals.h
 
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
+
 #ifdef __SENSIBLE_MODIFIERS__
 #define staticf protected
 #define staticv nosave
@@ -50,3 +53,5 @@
 #define M_SAY                   "say"
 
 #define CLEAN_UP                "/inherit/clean_up"
+
+#endif
