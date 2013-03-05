@@ -97,7 +97,7 @@ void report_move(object thing, object from, object to,
         arrival_witnesses = filter(all_inventory(to), (: interactive($1) :));
     }
 
-    thing->tell(leave_msg1, 0);
+    tell(0, thing, leave_msg1);
     tell_players(leave_witnesses, leave_msg3, exclude);
     tell_players(arrival_witnesses, arrive_msg, exclude);
 }
@@ -107,13 +107,13 @@ varargs void tell_players(object *players, string str, object *exclude) {
     if (strlen(str) && sizeof(players)) {
         foreach (p in players) {
             if (member_array(p, exclude) < 0) {
-                p->tell(str, 0);
+                p->tell(color_surround("green", str), 0);
             }
         }
     }
 }
 
 void tell(int indent, object player, string str) {
-    player->tell(str, indent);
+    player->tell(color_surround("green", str), indent);
 }
 
