@@ -59,8 +59,8 @@ void print_aliases() {
     }
     foreach (k in sort_array(keys, 1)) {
         v = aliases[k];
-        fmt = sprintf("%%s%%%ds : %%s\n", longest - strlen(k));
-        previous_object()->tell(sprintf(fmt, k, "", quoted(v)));
+        width = longest - strlen(k);
+        previous_object()->tell(sprintf("%s%" + width + "s : %s", k, "", quoted(v)));
     }
 }
 
