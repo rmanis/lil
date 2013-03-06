@@ -8,6 +8,8 @@ string compose_message(object hearer, object doer, string action,
 
 void simple_action(object doer, string action, object *objs);
 void targeted_action(object doer, string action, object *objs);
+void my_action(object doer, string action, object *objs);
+void other_action(object doer, string action, object *objs);
 
 void tell(object o, string message) {
     o->tell(message);
@@ -82,4 +84,16 @@ void simple_action(object doer, string action, object *objs) {
 // Targeted action
 // involves the subject and maybe other players.
 void targeted_action(object doer, string action, object *objs) {
+}
+
+void my_action(object doer, string action, object *objs) {
+    string msg = compose_message(doer, doer, action, objs);
+    tell(doer, msg);
+}
+
+void other_action(object doer, string action, object *objs) {
+    string msg = compose_message(0, doer, action, objs);
+    object room = environment(doer);
+
+    tell_room(room, msg, ({ doer }));
 }
