@@ -7,6 +7,7 @@ void set_ids(string *arg);
 int id(string arg);
 varargs void tell(string str, int indent);
 string query_name();
+string query_nominitive();
 string to_string();
 
 // set to 'private static' so that inheritor won't be able to directly
@@ -46,6 +47,10 @@ varargs void tell(string str, int indent) {
 
 string query_name() {
     return basename(file_name(this_object()));
+}
+
+string query_nominitive() {
+    return query_name();
 }
 
 string to_string() {
