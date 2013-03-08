@@ -43,6 +43,8 @@ varargs int move(mixed thing, mixed destination, int teleport) {
 
     report_move(thing, environment(thing), dest_obj, leave1, leave3, arrive3);
     thing->move(dest_obj);
+
+    return 1;
 }
 
 int move_direction(object thing, string direction) {
