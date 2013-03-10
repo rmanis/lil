@@ -274,7 +274,11 @@ staticf void error_handler(mapping map, int flag) {
   write_file("/log/log", str);
 
   if (!flag && ob) {
-      tell_object(ob, str);
+      if (ob->query_wizard()) {
+          MESSAGE_D->tell(ob, str);
+      } else {
+          MESSAGE_D->tell(ob, "You feel like something is wrong.\n");
+      }
   }
 }
      

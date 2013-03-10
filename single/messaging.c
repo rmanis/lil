@@ -15,6 +15,12 @@ void tell(object o, string message) {
     o->tell(message);
 }
 
+void announce(string message) {
+    foreach (object u in users()) {
+        u->tell(color_surround("bold", message));
+    }
+}
+
 // Grammar notes:
 //  accusative - direct object
 //  nominative - subject

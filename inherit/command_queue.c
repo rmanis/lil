@@ -13,6 +13,7 @@ string *get_command_paths();
 void set_command_paths(string *paths);
 string *add_command_path(string path);
 void ensure_wizard_paths();
+void ensure_no_wizard_paths();
 
 varargs string *remove_first_slice(int num);
 
@@ -150,6 +151,10 @@ void ensure_wizard_paths() {
     if (member_array(WIZ_PATH, get_command_paths()) < 0) {
         add_command_path(WIZ_PATH);
     }
+}
+
+void ensure_no_wizard_paths() {
+    set_command_paths(get_command_paths() - ({ WIZ_PATH }));
 }
 
 varargs string *remove_first_slice(int num) {

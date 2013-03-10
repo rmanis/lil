@@ -8,7 +8,7 @@ object find_player(string name) {
     object u;
 
     foreach (u in users()) {
-        if (u->query_name() == name) {
+        if (u->query_name() == "/single/simul_efun/strings"->trim(name)) {
             return u;
         }
     }

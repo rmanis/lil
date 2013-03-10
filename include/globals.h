@@ -23,6 +23,7 @@
 #define BIRTH_D                 "/single/birth"
 #define LOOK_D                  "/single/look"
 #define MESSAGE_D               "/single/messaging"
+#define WIZ_D                   "/single/wiz"
 
 #define LOGIN_OB                "/clone/login"
 #define USER_OB                 "/clone/user"
