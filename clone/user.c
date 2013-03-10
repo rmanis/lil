@@ -12,6 +12,7 @@ private string old_input = "";
 private string name;
 private string cwd = "/";
 private string room;
+private int wizard;
 
 private static int logged_in;
 
@@ -28,6 +29,8 @@ void swap_out();
 
 string query_cwd();
 string query_name();
+int query_wizard();
+void set_wizard(int wiz);
 string get_room();
 void set_room(string filename);
 void set_name(string arg);
@@ -157,6 +160,14 @@ set_name(string arg)
 //  may wish to add security to prevent just anyone from changing
 //  someone else's name.
     name = arg;
+}
+
+int query_wizard() {
+    return wizard;
+}
+
+void set_wizard(int wiz) {
+    wizard = wiz;
 }
 
 int is_logged_in() {
@@ -349,8 +360,13 @@ void setup() {
     write("User setup\n");
 
     activate_interactive();
+    set_wizard(0);
     load();
     autosave(0);
+
+    if (query_wizard()) {
+        ensure_wizard_paths();
+    }
 
     logged_in = 1;
 }

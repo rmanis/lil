@@ -3,15 +3,23 @@
 
 inherit __DIR__ "command_queue/alias";
 
+string which_command(string verb);
 void execute(string command);
 void try_execute(string command);
 void clear_queue();
 string *get_command_queue();
+
+string *get_command_paths();
+void set_command_paths(string *paths);
+string *add_command_path(string path);
+void ensure_wizard_paths();
+
 varargs string *remove_first_slice(int num);
 
 int get_speed();
 void set_speed(int speed);
 
+string *command_paths;
 string *command_queue;
 int execution_count;
 int speed;
@@ -41,11 +49,28 @@ void set_speed(int new_speed) {
     }
 }
 
+string which_command(string verb) {
+    string *possibilities;
+    string *existing;
+
+    if (strlen(verb)) {
+        possibilities = map(get_command_paths(),
+                (: $1 + "/" + $2 + ".c" :), verb);
+        existing = filter(possibilities, (: filep($1) :));
+
+        if (sizeof(existing)) {
+            return existing[0];
+        }
+    }
+
+    return "";
+}
+
 void execute(string arg) {
     string *parts = explode(arg, " ");
     string verb = sizeof(parts) ? parts[0] : "";
     string rest = implode(parts[1..], " ");
-    string cmd_path = COMMAND_PREFIX + verb;
+    string cmd_path = which_command(verb);
     object cobj = load_object(cmd_path);
     object destination;
     string direction = unabbreviate_direction(verb);
@@ -103,6 +128,28 @@ string *get_command_queue() {
         command_queue = ({ });
     }
     return command_queue;
+}
+
+string *get_command_paths() {
+    if (!command_paths) {
+        command_paths = ({ USER_PATH });
+    }
+    return command_paths;
+}
+
+void set_command_paths(string *paths) {
+    command_paths = paths;
+}
+
+string *add_command_path(string path) {
+    set_command_paths(({ path }) + get_command_paths());
+    return command_paths;
+}
+
+void ensure_wizard_paths() {
+    if (member_array(WIZ_PATH, get_command_paths()) < 0) {
+        add_command_path(WIZ_PATH);
+    }
 }
 
 varargs string *remove_first_slice(int num) {

@@ -41,6 +41,8 @@
 #define OVERRIDES_FILE          "/single/simul_efun"
 
 #define COMMAND_PREFIX          "/command/"
+#define USER_PATH               "/command/user"
+#define WIZ_PATH                "/command/wizard"
 
 // Seconds delay between autosave calls.
 #define SAVE_PERIOD             300
