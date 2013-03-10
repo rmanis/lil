@@ -13,6 +13,8 @@
 
 #include "tests.h"
 
+#define DEB(X) printf(#X ": %O\n", X)
+
 #define SINGLE_DIR              "/single"
 #define CONFIG_DIR              "/etc"
 #define LOG_DIR                 "/log"
