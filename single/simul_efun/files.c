@@ -9,6 +9,8 @@ void cat(string file);
 
 string user_cwd(string name);
 string user_path(string name);
+int dirp(string path);
+int filep(string path);
 string file_owner(string file);
 string basename(string path);
 string dirname(string path);
@@ -53,6 +55,18 @@ user_cwd(string name)
 string user_path(string name)
 {
    return (user_cwd(name) + "/");
+}
+
+int dirp(string path) {
+    mixed *stats = stat(path);
+
+    return sizeof(stats) && stringp(stats[0]);
+}
+
+int filep(string path) {
+    mixed *stats = stat(path);
+
+    return sizeof(stats) && intp(stats[0]);
 }
 
 // Get the owner of a file.  Used by log_error() in master.c.
