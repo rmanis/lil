@@ -3,11 +3,11 @@
 
 void tell(object o, string message);
 
-string compose_message(object hearer, object doer, string action,
-        object *objs);
+string compose_message(object hearer, object doer, object target,
+        string action, object *objs);
 
 void simple_action(object doer, string action, object *objs);
-void targeted_action(object doer, string action, object *objs);
+void targeted_action(object doer, string action, object target, object *objs);
 void my_action(object doer, string action, object *objs);
 void other_action(object doer, string action, object *objs);
 
@@ -30,14 +30,14 @@ void announce(string message) {
 //  $N - Nominative, the doer
 //  $v - verb
 
-string compose_message(object hearer, object doer, string action,
-        object *objs) {
+string compose_message(object hearer, object doer, object target,
+        string action, object *objs) {
     int i;
+    int j = 0;
     string msg = "";
     string verb;
-    string target;
     mixed *fmt = reg_assoc(action, ({ "\\$[Nvt][A-Za-z]*" }), ({ 1 }));
-    int num_objs = sizeof(objs);
+    // int num_objs = sizeof(objs);
     fmt = fmt[0][1..];
 
     for (i = 0; i < sizeof(fmt); i++) {
@@ -53,17 +53,29 @@ string compose_message(object hearer, object doer, string action,
             case 'N':
                 msg += (hearer == doer ? "You" : doer->query_nominitive());
                 break;
+            case 'n':
+                msg += (hearer == doer ? "you" : doer->query_nominitive());
+                break;
             case 'v':
                 verb = fmt[i][2..];
                 msg += (hearer == doer ? verb : pluralize(verb));
                 break;
+            case 'T':
+                if (target && hearer == target) {
+                    msg += "You";
+                } else if (target) {
+                    msg += target->to_string();
+                }
+                break;
             case 't':
-                if (i < num_objs) {
-                    target = objs[i]->to_string();
-                    msg += target;
+                if (target && hearer == target) {
+                    msg += "you";
+                } else if (target) {
+                    msg += target->to_string();
                 }
                 break;
         }
+        j++;
     }
     return msg;
 }
@@ -80,25 +92,45 @@ void simple_action(object doer, string action, object *objs) {
     string msg_others;
     object room = environment(doer);
 
-    msg_doer = compose_message(doer, doer, action, objs);
-    msg_others = compose_message(0, doer, action, objs);
+    msg_doer = compose_message(doer, doer, 0, action, objs);
+    msg_others = compose_message(0, doer, 0, action, objs);
 
     tell(doer, msg_doer);
     tell_room(room, msg_others, ({ doer }));
 }
 
 // Targeted action
-// involves the subject and maybe other players.
-void targeted_action(object doer, string action, object *objs) {
+// involves the subject, the target, and maybe other players.
+void targeted_action(object doer, string action, object target, object *objs) {
+    string msg_doer = compose_message(doer, doer, target, action, objs);
+    string msg_target = compose_message(target, doer, target, action, objs);
+    string msg_others = compose_message(0, doer, target, action, objs);
+    object doer_room;
+    object target_room;
+    object *except = ({ doer, target });
+
+    doer_room = doer ? environment(doer) : 0;
+    target_room = target ? environment(target) : 0;
+
+    if (doer_room) {
+        tell(doer, msg_doer);
+        tell(target, msg_target);
+        tell_room(doer_room, msg_others, except);
+        if (doer_room != target_room) {
+            tell_room(target_room, msg_others, except);
+        }
+    }
 }
 
+// Action that only the doer hears.
 void my_action(object doer, string action, object *objs) {
-    string msg = compose_message(doer, doer, action, objs);
+    string msg = compose_message(doer, doer, 0, action, objs);
     tell(doer, msg);
 }
 
+// Action that everyone around the doer can hear, but the doer can't
 void other_action(object doer, string action, object *objs) {
-    string msg = compose_message(0, doer, action, objs);
+    string msg = compose_message(0, doer, 0, action, objs);
     object room = environment(doer);
 
     tell_room(room, msg, ({ doer }));
