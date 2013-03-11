@@ -61,15 +61,23 @@ string compose_message(object hearer, object doer, object target,
                 msg += (hearer == doer ? verb : pluralize(verb));
                 break;
             case 'T':
-                if (target && hearer == target) {
+                if (target && target == hearer && target == doer) {
+                    msg += "Yourself";
+                } else if (target && hearer == target) {
                     msg += "You";
+                } else if (target && target == doer) {
+                    msg += target->query_reflexive();
                 } else if (target) {
                     msg += target->to_string();
                 }
                 break;
             case 't':
-                if (target && hearer == target) {
+                if (target && target == hearer && target == doer) {
+                    msg += "yourself";
+                } else if (target && hearer == target) {
                     msg += "you";
+                } else if (target && target == doer) {
+                    msg += target->query_reflexive();
                 } else if (target) {
                     msg += target->to_string();
                 }
@@ -114,7 +122,9 @@ void targeted_action(object doer, string action, object target, object *objs) {
 
     if (doer_room) {
         tell(doer, msg_doer);
-        tell(target, msg_target);
+        if (target != doer) {
+            tell(target, msg_target);
+        }
         tell_room(doer_room, msg_others, except);
         if (doer_room != target_room) {
             tell_room(target_room, msg_others, except);

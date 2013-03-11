@@ -8,6 +8,7 @@ int id(string arg);
 varargs void tell(string str, int indent);
 string query_name();
 string query_nominitive();
+string query_reflexive();
 string to_string();
 
 // set to 'private static' so that inheritor won't be able to directly
@@ -51,6 +52,10 @@ string query_name() {
 
 string query_nominitive() {
     return query_name();
+}
+
+string query_reflexive() {
+    return "itself";
 }
 
 string to_string() {

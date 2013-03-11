@@ -29,6 +29,7 @@ void swap_out();
 
 string query_cwd();
 string query_name();
+string query_reflexive();
 int query_wizard();
 void set_wizard(int wiz);
 string get_room();
@@ -152,6 +153,10 @@ string
 query_name()
 {
     return name;
+}
+
+string query_reflexive() {
+    return "himself";
 }
 
 void
