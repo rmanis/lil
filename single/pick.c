@@ -6,7 +6,7 @@
 int is_num(string str);
 mixed *parse_names(string str);
 object *parse_names_for_player(object player, string str);
-varargs object pick_for_player(object player, string thing, int specifier);
+varargs mixed pick_for_player(object player, string thing, int specifier);
 object find_in_array_by_name(string name, object *arr);
 object *find_all_in_arr_by_name(string name, object *arr);
 
@@ -73,13 +73,13 @@ object *parse_names_for_player(object player, string str) {
             player);
 }
 
-varargs object pick_for_player(object player, string thing, int specifier) {
+varargs mixed pick_for_player(object player, string thing, int specifier) {
     object *inv;
     object *env;
     object *errthang;
     object *things;
     object room;
-    object target;
+    mixed target;
 
     specifier = specifier ? specifier : 1;
 
@@ -102,6 +102,9 @@ varargs object pick_for_player(object player, string thing, int specifier) {
         }
     }
 
+    if (!target) {
+        target = thing;
+    }
     return target;
 }
 
