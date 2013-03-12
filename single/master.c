@@ -4,6 +4,7 @@
 
 // /inherit/master/valid.c contains all the valid_* functions
 inherit "/inherit/master/valid";
+inherit "/inherit/master/nlp";
 
 void flag(string str) {
     switch (str) {
