@@ -75,7 +75,7 @@ string abbreviate_direction(string direction) {
 }
 
 int is_direction(string direction) {
-    return opposites[direction] || here()->has_direction(direction);
+    return opposites[direction] || (here() && here()->has_direction(direction));
 }
 
 string as_place(string direction) {

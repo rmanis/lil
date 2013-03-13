@@ -362,8 +362,6 @@ void activate_interactive() {
 // at create() time such as living_name (and so can't be done in create()).
 
 void setup() {
-    write("User setup\n");
-
     activate_interactive();
     set_wizard(0);
     load();
