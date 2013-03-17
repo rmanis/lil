@@ -76,24 +76,31 @@ void execute(string arg) {
     object destination;
     string direction = unabbreviate_direction(verb);
 
-    if (here() && is_direction(direction) && !strlen(trim(rest))) {
-        destination = here()->destination(direction);
-        if (destination) {
-            MOVE_D->move_direction(this_object(), direction);
-        } else {
-            MESSAGE_D->tell(this_object(),
-                    "There doesn't seem to be an exit in that direction.\n");
-        }
-    } else if (!here() && is_direction(direction)) {
-        MESSAGE_D->tell(this_object(),
-                "You can't move if you're not anywhere.\n");
-    } else if (cobj) {
-        cobj->main(rest);
+    mixed par = parse_sentence(arg);
+
+    if (stringp(par)) {
+        MESSAGE_D->tell(this_object(), par);
     } else {
-        if (!destination && strlen(arg)) {
-            MESSAGE_D->tell(this_object(), "What?\n");
+
+        if (here() && is_direction(direction) && !strlen(trim(rest))) {
+            destination = here()->destination(direction);
+            if (destination) {
+                MOVE_D->move_direction(this_object(), direction);
+            } else {
+                MESSAGE_D->tell(this_object(),
+                        "There doesn't seem to be an exit in that direction.\n");
+            }
+        } else if (!here() && is_direction(direction)) {
+            MESSAGE_D->tell(this_object(),
+                    "You can't move if you're not anywhere.\n");
+        } else if (cobj) {
+            cobj->main(rest);
+        } else {
+            if (!destination && strlen(arg)) {
+                MESSAGE_D->tell(this_object(), "What?\n");
+            }
+        // maybe call an emote/soul daemon here
         }
-    // maybe call an emote/soul daemon here
     }
 }
 

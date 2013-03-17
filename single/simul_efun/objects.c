@@ -4,6 +4,7 @@
 int same(mixed x, mixed y);
 varargs int getoid(object ob);
 string dump_variable(mixed arg);
+void p_refresh();
 
 int same(mixed x, mixed y) {
     if (typeof(x) != typeof(y)) return 0;
@@ -82,4 +83,9 @@ string dump_variable(mixed arg)
 
         return "UNKNOWN";
     }
+}
+
+// Force the master to refresh parsing stuff.
+void p_refresh() {
+    "/single/master"->p_refresh();
 }

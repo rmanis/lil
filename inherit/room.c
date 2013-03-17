@@ -14,6 +14,11 @@ varargs void tell(string msg, int indent);
 private string glance;
 private string description;
 
+void create() {
+    ::create();
+    set_parse_ids(({ "here", file_name() }));
+}
+
 void setup() {
     set_glance("New room");
     set_description("This is a new room.  Someone should describe it.");

@@ -12,5 +12,6 @@ main(string arg)
     say((string)previous_object()->query_name()
         + " leaves this reality.\n");
     previous_object()->remove();
+    p_refresh();
     return 1;
 }

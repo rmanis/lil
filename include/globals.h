@@ -18,6 +18,7 @@
 #define SINGLE_DIR              "/single"
 #define CONFIG_DIR              "/etc"
 #define LOG_DIR                 "/log"
+#define VERB_DIR                "/command/verb"
 
 #define VIRTUAL_D               "/single/virtual"
 #define MOVE_D                  "/single/movement"
@@ -27,6 +28,7 @@
 #define MESSAGE_D               "/single/messaging"
 #define WIZ_D                   "/single/wiz"
 #define PICK_D                  "/single/pick"
+#define VERB_D                  "/single/verb"
 
 #define LOGIN_OB                "/clone/login"
 #define USER_OB                 "/clone/user"
@@ -35,6 +37,7 @@
 #define ROOM_OB                 "/inherit/room"
 #define COMMAND_OB              "/inherit/command_queue"
 #define COLOR_OB                "/clone/user/color"
+#define VERB_OB                 "/inherit/verb.c"
 
 #define START_ROOM              "/domain/wiz/workshop"
 

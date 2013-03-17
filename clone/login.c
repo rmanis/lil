@@ -165,6 +165,7 @@ private void create_user_object(string name) {
         write("Error occurred while creating user object.\n");
     }
 
+    p_refresh();
     destruct(this_object());
 }
 

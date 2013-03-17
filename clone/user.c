@@ -321,6 +321,7 @@ init()
 void
 create()
 {
+    ::create();
 #ifdef __PACKAGE_UIDS__
     seteuid(0); // so that login.c can export uid to us
 #endif
@@ -370,6 +371,8 @@ void setup() {
     if (query_wizard()) {
         ensure_wizard_paths();
     }
+
+    set_parse_ids(({ query_name() }));
 
     logged_in = 1;
 }

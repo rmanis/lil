@@ -90,18 +90,13 @@ update_file(string file)
 {
     string *arr;
     string str;
-    int i;
 
     str = read_file(file);
     if (!str) {
         return ({});
     }
-    arr = explode(str, "\n");
-    for (i = 0; i < sizeof(arr); i++) {
-        if (arr[i][0] == '#') {
-            arr[i] = 0;
-        }
-    }
+
+    arr = filter(explode(str, "\n") - ({ "" }), (: $1[0] != '#' :));
     return arr;
 }
 
@@ -111,9 +106,8 @@ update_file(string file)
 string *
 epilog(int)
 {
-    string *items;
+    string *items = update_file(CONFIG_DIR "/preload");
 
-    items = update_file(CONFIG_DIR + "/preload");
     return items;
 }
 
@@ -129,7 +123,7 @@ preload(string file)
         return;
 
     t1 = time();
-    write("Preloading : " + file + "...");
+    write("Preloading : " + file + "...\n");
     err = catch(call_other(file, "??"));
     if (err != 0) {
         write("\nError " + err + " when loading " + file + "\n");
