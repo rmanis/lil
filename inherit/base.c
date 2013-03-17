@@ -88,3 +88,11 @@ string *parse_command_id_list() {
 string *parse_command_plural_id_list() {
     return parse_plural_ids || ({ pluralize(to_string()) });
 }
+
+mixed direct_look_obj(object obj, string ob_text) {
+    return 1;
+}
+
+mixed direct_look_at_obj(object obj, string ob_text) {
+    return direct_look_obj(obj, ob_text);
+}
