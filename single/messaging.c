@@ -12,7 +12,9 @@ void my_action(object doer, string action, object *objs);
 void other_action(object doer, string action, object *objs);
 
 void tell(object o, string message) {
-    o->tell(message);
+    if (o) {
+        o->tell(message);
+    }
 }
 
 void announce(string message) {
@@ -113,7 +115,9 @@ void simple_action(object doer, string action, object *objs) {
     msg_others = compose_message(0, doer, 0, action, objs);
 
     tell(doer, msg_doer);
-    tell_room(room, msg_others, ({ doer }));
+    if (room) {
+        tell_room(room, msg_others, ({ doer }));
+    }
 }
 
 // Targeted action
@@ -134,9 +138,11 @@ void targeted_action(object doer, string action, object target, object *objs) {
         if (target != doer) {
             tell(target, msg_target);
         }
-        tell_room(doer_room, msg_others, except);
-        if (doer_room != target_room) {
-            tell_room(target_room, msg_others, except);
+        if (doer_room) {
+            tell_room(doer_room, msg_others, except);
+            if (doer_room != target_room && target_room) {
+                tell_room(target_room, msg_others, except);
+            }
         }
     }
 }
@@ -152,5 +158,7 @@ void other_action(object doer, string action, object *objs) {
     string msg = compose_message(0, doer, 0, action, objs);
     object room = environment(doer);
 
-    tell_room(room, msg, ({ doer }));
+    if (room) {
+        tell_room(room, msg, ({ doer }));
+    }
 }
