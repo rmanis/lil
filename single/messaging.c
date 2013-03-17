@@ -34,9 +34,10 @@ string compose_message(object hearer, object doer, object target,
         string action, object *objs) {
     int i;
     int j = 0;
+    int o_i = 0;
     string msg = "";
     string verb;
-    mixed *fmt = reg_assoc(action, ({ "\\$[Nvt][A-Za-z]*" }), ({ 1 }));
+    mixed *fmt = reg_assoc(action, ({ "\\$[NnvTtOo][A-Za-z]*" }), ({ 1 }));
     // int num_objs = sizeof(objs);
     fmt = fmt[0][1..];
 
@@ -81,6 +82,14 @@ string compose_message(object hearer, object doer, object target,
                 } else if (target) {
                     msg += target->to_string();
                 }
+                break;
+            case 'O':
+                msg += capitalize(objs[o_i]->to_string());
+                o_i++;
+                break;
+            case 'o':
+                msg += objs[o_i]->to_string();
+                o_i++;
                 break;
         }
         j++;
