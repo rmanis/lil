@@ -14,6 +14,31 @@ int is_num(string str) {
     return regexp(str, "^[0-9]+$");
 }
 
+string *parse_list(string str) {
+    mapping *parse = parse_names(str);
+    mapping m;
+    string current;
+    string *arr = allocate(sizeof(parse));
+    int i = 0;
+
+    foreach (m in parse) {
+        if (!m["thing"] || (m["specifier"] && m["count"])) {
+            continue;
+        }
+
+        // TODO: handle cases like "2 swords"
+        if (m["specifier"]) {
+            current = sprintf("%s %d", m["thing"], m["specifier"]);
+        } else {
+            current = m["thing"];
+        }
+
+        arr[i++] = current;
+    }
+
+    return arr;
+}
+
 mixed *parse_names(string str) {
     mixed *arr;
     int count;
@@ -49,12 +74,17 @@ mixed *parse_names(string str) {
             current = 0;
         } else if (is_num(arr[i])) {
             if (!current) {
-                current = allocate_mapping(2);
+                current = allocate_mapping(3);
             }
-            sscanf(arr[i], "%d", current["specifier"]);
+            if (current["thing"]) {
+                sscanf(arr[i], "%d", current["specifier"]);
+            } else {
+                // TODO: spelt out numbers
+                sscanf(arr[i], "%d", current["count"]);
+            }
         } else {
             if (!current) {
-                current = allocate_mapping(2);
+                current = allocate_mapping(3);
             }
             current["thing"] = arr[i];
         }
