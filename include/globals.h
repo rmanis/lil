@@ -37,7 +37,7 @@
 #define ROOM_OB                 "/inherit/room"
 #define COMMAND_OB              "/inherit/command_queue"
 #define COLOR_OB                "/clone/user/color"
-#define VERB_OB                 "/inherit/verb.c"
+#define VERB_OB                 "/inherit/verb"
 
 #define START_ROOM              "/domain/wiz/workshop"
 
