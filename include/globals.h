@@ -38,6 +38,7 @@
 #define COMMAND_OB              "/inherit/command_queue"
 #define COLOR_OB                "/clone/user/color"
 #define VERB_OB                 "/inherit/verb"
+#define ITEM_OB                 "/inherit/item"
 
 #define START_ROOM              "/domain/wiz/workshop"
 

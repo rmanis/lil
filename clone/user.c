@@ -29,6 +29,8 @@ void swap_out();
 
 string query_cwd();
 string query_name();
+string query_in_room_name();
+string query_target_string();
 string query_reflexive();
 int query_wizard();
 void set_wizard(int wiz);
@@ -153,6 +155,14 @@ string
 query_name()
 {
     return name;
+}
+
+string query_in_room_name() {
+    return query_name();
+}
+
+string query_target_string() {
+    return query_name();
 }
 
 string query_reflexive() {
@@ -371,6 +381,8 @@ void setup() {
     if (query_wizard()) {
         ensure_wizard_paths();
     }
+
+    look_description = "This is " + query_name() + ".\n";
 
     set_parse_ids(({ query_name() }));
 

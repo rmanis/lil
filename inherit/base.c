@@ -7,8 +7,11 @@ void set_ids(string *arg);
 int id(string arg);
 varargs void tell(string str, int indent);
 string query_name();
+string query_in_room_name();
+string query_target_string();
 string query_nominitive();
 string query_reflexive();
+string query_look_description();
 string to_string();
 
 string *parse_command_id_list();
@@ -18,11 +21,14 @@ string *parse_command_id_list();
 
 string *ids;
 
+static string look_description;
+
 private static string *parse_ids;
 private static string *parse_plural_ids;
 
 void create() {
     parse_init();
+    look_description = "This is a " + to_string() + ".";
 }
 
 void remove() {
@@ -64,7 +70,20 @@ varargs void tell(string str, int indent) {
 }
 
 string query_name() {
-    return basename(file_name(this_object()));
+    string f = file_name();
+    int index = member_array('#', f);
+    if (index > 0) {
+        f = f[0..index-1];
+    }
+    return basename(f);
+}
+
+string query_in_room_name() {
+    return "a " + query_name();
+}
+
+string query_target_string() {
+    return "the " + query_name();
 }
 
 string query_nominitive() {
@@ -73,6 +92,10 @@ string query_nominitive() {
 
 string query_reflexive() {
     return "itself";
+}
+
+string query_look_description() {
+    return look_description;
 }
 
 string to_string() {

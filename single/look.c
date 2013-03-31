@@ -29,10 +29,10 @@ void player_look(object player) {
             "There are no obvious exits.";
 
         pobs = room->get_players() - ({ player });
-        players = string_presence(map(pobs, (: $1->query_name() :)));
+        players = string_presence(map(pobs, (: $1->query_in_room_name() :)));
 
         iobs = room->get_items();
-        items = string_presence(map(iobs, (: $1->query_name() :)));
+        items = string_presence(map(iobs, (: $1->query_in_room_name() :)));
 
         msg = description + "\n" +
             color_surround("green", exits + "\n") +
@@ -64,8 +64,8 @@ void player_glance(object player) {
         pobs = room->get_players() - ({ player });
         iobs = room->get_items();
 
-        players = string_presence(map(pobs, (: $1->query_name() :)));
-        items = string_presence(map(iobs, (: $1->query_name() :)));
+        players = string_presence(map(pobs, (: $1->query_in_room_name() :)));
+        items = string_presence(map(iobs, (: $1->query_in_room_name() :)));
 
         msg = description + " " +
             color_surround("green", exits) + "\n" +
