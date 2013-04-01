@@ -82,7 +82,7 @@ string compose_message(object hearer, object doer, object target,
                 } else if (target && target == doer) {
                     msg += target->query_reflexive();
                 } else if (target) {
-                    msg += target->to_string();
+                    msg += target->query_target_string();
                 }
                 break;
             case 'O':
