@@ -43,7 +43,6 @@ void do_look_obs(object *objs, string objs_text) {
     object ob;
     string target_text = itemize(objs->query_target_string());
 
-    DEB(objs->to_string());
     MESSAGE_D->simple_action(previous_object(),
             "$N $vlook at " + target_text + ".\n", objs);
 
