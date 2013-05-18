@@ -86,7 +86,7 @@ string as_place(string direction) {
     switch (direction) {
         case "in": return "inside";
         case "out" : return "outside";
-        case "up": return "above";
+        case "up": return "the 'bove";
         case "down": return "below";
     }
     return direction;
