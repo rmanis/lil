@@ -67,6 +67,30 @@ string which_command(string verb) {
     return "";
 }
 
+mixed *deep_parser_inv(object thing) {
+    mixed *thing_inv;
+    mixed item;
+    mixed item_inv;
+    mixed *r = 0;
+
+    thing_inv = all_inventory(thing);
+    if (sizeof(thing_inv)) {
+        r = ({ });
+
+        foreach (item in thing_inv) {
+            item_inv = deep_parser_inv(item);
+
+            if (item_inv) {
+                r += ({ item, item_inv });
+            } else {
+                r += ({ item });
+            }
+        }
+    }
+
+    return r;
+}
+
 void execute(string arg) {
     string *parts = explode(arg, " ");
     string verb = sizeof(parts) ? parts[0] : "";
@@ -75,8 +99,13 @@ void execute(string arg) {
     object cobj = load_object(cmd_path);
     object destination;
     string direction = unabbreviate_direction(verb);
+    mixed accessible;
+    mixed par;
 
-    mixed par = parse_sentence(arg);
+    mixed h = here();
+    accessible = ({ h, deep_parser_inv(h) });
+    // DEB(accessible);
+    par = parse_sentence(arg, 0, accessible);
 
     if (stringp(par)) {
         MESSAGE_D->tell(this_object(), par);

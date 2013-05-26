@@ -15,9 +15,8 @@ private string glance;
 private string description;
 
 void create() {
-    // screws up NLP finding things inside
-    // ::create();
-    // set_parse_ids(({ "here", file_name() }));
+    ::create();
+    set_parse_ids(({ "here", file_name() }));
 }
 
 void setup() {
