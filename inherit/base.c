@@ -20,7 +20,6 @@ string *parse_command_id_list();
 string *parse_command_plural_id_list();
 mixed direct_look_obj(object obj, string ob_text);
 mixed direct_look_at_obj(object obj, string ob_text);
-mixed direct_drop_obj(object obj, string ob_text);
 
 // set to 'private static' so that inheritor won't be able to directly
 // access this variable and so that save_object() won't save it to the .o file
@@ -134,6 +133,3 @@ mixed direct_look_at_obj(object obj, string ob_text) {
     return direct_look_obj(obj, ob_text);
 }
 
-mixed direct_drop_obj(object obj, string ob_text) {
-    return 1;
-}
