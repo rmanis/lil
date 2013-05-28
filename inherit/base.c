@@ -1,6 +1,8 @@
 
 #include <globals.h>
 
+void create();
+void setup();
 void remove();
 int move(mixed dest);
 void set_ids(string *arg);
@@ -34,6 +36,10 @@ private static string *parse_plural_ids;
 
 void create() {
     parse_init();
+    setup();
+}
+
+void setup() {
     look_description = "This is " + query_in_room_name() + ".";
 }
 

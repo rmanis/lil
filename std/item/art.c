@@ -4,5 +4,6 @@
 inherit ITEM_OB;
 
 void setup() {
-    look_description = "This is a art.  All edges are about five inches.";
+    ::setup();
+    look_description = "This is an art.  It is framed and about fairly small.";
 }
