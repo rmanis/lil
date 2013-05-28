@@ -9,6 +9,7 @@ varargs void tell(string str, int indent);
 string query_name();
 string query_in_room_name();
 string query_target_string();
+string query_indefinite();
 string query_nominitive();
 string query_reflexive();
 string query_look_description();
@@ -33,7 +34,7 @@ private static string *parse_plural_ids;
 
 void create() {
     parse_init();
-    look_description = "This is a " + to_string() + ".";
+    look_description = "This is " + query_in_room_name() + ".";
 }
 
 void remove() {
@@ -84,11 +85,18 @@ string query_name() {
 }
 
 string query_in_room_name() {
-    return "a " + query_name();
+    return query_indefinite() + " " + query_name();
 }
 
 string query_target_string() {
     return "the " + query_name();
+}
+
+string query_indefinite() {
+    string *vowels = ({ 'a', 'o', 'e', 'u', 'i' });
+    int index = member_array(basename(query_name())[0], vowels);
+
+    return "a" + (index >= 0 ? "n" : "");
 }
 
 string query_nominitive() {
