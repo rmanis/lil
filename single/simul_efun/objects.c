@@ -1,10 +1,16 @@
 #include <globals.h>
 #include <lpctypes.h>
 
+int with_or_has(object ob);
 int same(mixed x, mixed y);
 varargs int getoid(object ob);
 string dump_variable(mixed arg);
 void p_refresh();
+
+int with_or_has(object haver, object ob) {
+    return environment(ob) == haver ||
+        environment(ob) == environment(haver);
+}
 
 int same(mixed x, mixed y) {
     if (typeof(x) != typeof(y)) return 0;
