@@ -135,7 +135,7 @@ void targeted_action(object doer, string action, object target, object *objs) {
 
     if (doer_room) {
         tell(doer, msg_doer);
-        if (target != doer) {
+        if (target != doer && target != doer_room) {
             tell(target, msg_target);
         }
         if (doer_room) {

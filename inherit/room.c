@@ -7,6 +7,7 @@ inherit __DIR__ "room/exits";
 
 void set_glance(string desc);
 void set_description(string desc);
+string query_look_description();
 string get_glance();
 string get_description();
 varargs void tell(string msg, int indent);
@@ -16,7 +17,7 @@ private string description;
 
 void create() {
     ::create();
-    set_parse_ids(({ "here", file_name() }));
+    set_parse_ids(({ "here", "room", file_name() }));
 }
 
 void setup() {
@@ -30,6 +31,10 @@ void set_glance(string desc) {
 
 void set_description(string desc) {
     description = desc;
+}
+
+string query_look_description() {
+    return "This is a room.\n" + get_description();
 }
 
 string get_glance() {
