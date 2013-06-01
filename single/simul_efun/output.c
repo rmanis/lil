@@ -20,7 +20,7 @@ varargs void tell_room(mixed room, string str, object *exclude, int indent) {
     if (stringp(room)) {
         room = load_object(room);
     }
-    if (room) {
+    if (room && strlen(str)) {
         foreach (o in all_inventory(room) - exclude) {
             if (inherits(USER_TERM, o)) {
                 o->tell(str, indent);

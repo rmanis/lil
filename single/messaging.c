@@ -12,7 +12,7 @@ void my_action(object doer, string action, object *objs);
 void other_action(object doer, string action, object *objs);
 
 void tell(object o, string message) {
-    if (o) {
+    if (o && strlen(message)) {
         o->tell(message);
     }
 }
