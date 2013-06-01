@@ -140,7 +140,8 @@ string *parse_command_plural_id_list() {
 }
 
 mixed direct_look_obj(object obj, string ob_text) {
-    return with_or_has(this_user(), obj);
+    return with_or_has(this_user(), obj) ||
+        "You can't look at that.\n";
 }
 
 mixed direct_look_at_obj(object obj, string ob_text) {
