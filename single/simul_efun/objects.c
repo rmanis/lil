@@ -1,7 +1,7 @@
 #include <globals.h>
 #include <lpctypes.h>
 
-int with_or_has(object ob);
+int with_or_has(object haver, object ob);
 int same(mixed x, mixed y);
 varargs int getoid(object ob);
 string dump_variable(mixed arg);
