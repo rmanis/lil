@@ -65,8 +65,7 @@ string parser_error_message(int error, object ob, mixed arg, int plural) {
                 return "It is out of your reach.\n";
 
         case PARSE_AMBIGUOUS: /* more than one object matched for a singular rule */
-            return "Which of the " + arg +
-                " do you mean?\n";
+            return "Which do you mean?\n";
 
         case PARSE_WRONG_NUMBER: /* not enough matching objects found */
             arg = -arg - 1;
