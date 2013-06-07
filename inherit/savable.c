@@ -50,7 +50,7 @@ object make_object(mapping serial) {
         varname = varpair[0];
         varval = varpair[1];
 
-        o->store_variable(varname, varval);
+        catch(o->store_variable(varname, varval));
     }
     foreach (item in make_inventory(inv)) {
         item->move(o);
