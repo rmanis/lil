@@ -1,6 +1,8 @@
 
 #include <globals.h>
 
+mixed fetch_variable(string variable);
+void store_variable(string variable, mixed value);
 void create();
 void setup();
 void remove();
@@ -33,6 +35,14 @@ static string look_description;
 
 private static string *parse_ids;
 private static string *parse_plural_ids;
+
+mixed fetch_variable(string variable) {
+    return efun::fetch_variable(variable);
+}
+
+void store_variable(string variable, mixed value) {
+    efun::store_variable(variable, value);
+}
 
 void create() {
     parse_init();

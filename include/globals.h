@@ -40,6 +40,8 @@
 #define VERB_OB                 "/inherit/verb"
 #define ITEM_OB                 "/inherit/item"
 
+#define SAVABLE                 "/inherit/savable"
+
 #define START_ROOM              "/domain/wiz/workshop"
 
 #define ROOT_UID                "Root"

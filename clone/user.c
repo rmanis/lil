@@ -6,6 +6,7 @@
 
 inherit BASE;
 inherit COMMAND_OB;
+inherit SAVABLE;
 inherit __DIR__ "user/terminal";
 
 private string old_input = "";
@@ -59,6 +60,7 @@ string save_filename() {
 int quiet_save() {
     string savefile = save_filename();
     ensure_path_of_file_exists(savefile);
+    store_inventory();
 
     return save_object(savefile);
 }
@@ -95,6 +97,7 @@ void load() {
     string fname = save_filename();
     if (sizeof(stat(fname + ".o"))) {
         restore_object(fname);
+        load_inventory();
     }
 }
 
