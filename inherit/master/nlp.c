@@ -5,7 +5,7 @@
 // Master object NLP applies
 string *parse_command_id_list();
 string *parse_command_plural_id_list();
-// string *parse_command_adjectiv_id_list();
+string *parse_command_adjectiv_id_list();
 string *parse_command_prepos_list();
 string parse_command_all_word();
 object *parse_command_users();
@@ -22,10 +22,9 @@ string *parse_command_plural_id_list() {
     return ({ "everything", "them", "things" });
 }
 
-// The driver might take care of these already?
-// string *parse_command_adjectiv_id_list() {
-//     return ({ "the", "a", "an" });
-// }
+string *parse_command_adjectiv_id_list() {
+    return ({ "the", "a", "an", "yon", "thy", "dat" });
+}
 
 string *parse_command_prepos_list() {
     return ({ "along", "at", "behind", "beside", "by", "from", "in", "inside",
