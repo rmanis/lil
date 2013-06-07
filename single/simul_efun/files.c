@@ -14,6 +14,7 @@ int filep(string path);
 string file_owner(string file);
 string basename(string path);
 string dirname(string path);
+string purename(string path);
 string resolve_path(string curr, string newer);
 
 // domain_file should return the domain associated with a given file.
@@ -102,6 +103,18 @@ string basename(string path) {
     if (sizeof(parts)) {
         return parts[<1];
     }
+}
+
+string purename(string path) {
+    int hash_index = member_array('#', path);
+    string r;
+
+    if (hash_index < 0) {
+        r = path;
+    } else {
+        r = path[0..hash_index-1];
+    }
+    return r;
 }
 
 string resolve_path(string curr, string newer) {
