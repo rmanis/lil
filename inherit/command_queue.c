@@ -109,7 +109,7 @@ void execute(string arg) {
 
     if (stringp(par)) {
         MESSAGE_D->tell(this_object(), par);
-    } else {
+    } else if (!par) {
 
         if (here() && is_direction(direction) && !strlen(trim(rest))) {
             destination = here()->destination(direction);
