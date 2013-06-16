@@ -34,9 +34,15 @@ void do_look() {
 }
 
 void do_look_obj(object obj, string obj_text) {
-    MESSAGE_D->targeted_action(previous_object(),
-            "$N $vlook at $t.\n", obj, 0);
-    previous_object()->tell(obj->query_look_description() + "\n");
+    if (inherits(ROOM_OB, obj)) {
+        MESSAGE_D->simple_action(previous_object(),
+                "$N $vlook at the $s.\n", ({ obj_text }));
+        previous_object()->tell(obj->query_soft_description(obj_text) + "\n");
+    } else {
+        MESSAGE_D->targeted_action(previous_object(),
+                "$N $vlook at $t.\n", obj, 0);
+        previous_object()->tell(obj->query_look_description() + "\n");
+    }
 }
 
 void do_look_obs(object *objs, string objs_text) {
