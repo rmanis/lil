@@ -4,12 +4,12 @@
 void tell(object o, string message);
 
 string compose_message(object hearer, object doer, object target,
-        string action, object *objs);
+        string action, mixed *objs);
 
-void simple_action(object doer, string action, object *objs);
-void targeted_action(object doer, string action, object target, object *objs);
-void my_action(object doer, string action, object *objs);
-void other_action(object doer, string action, object *objs);
+void simple_action(object doer, string action, mixed *objs);
+void targeted_action(object doer, string action, object target, mixed *objs);
+void my_action(object doer, string action, mixed *objs);
+void other_action(object doer, string action, mixed *objs);
 
 void tell(object o, string message) {
     if (o && strlen(message)) {
@@ -31,15 +31,17 @@ void announce(string message) {
 // Message grammar specifiers:
 //  $N - Nominative, the doer
 //  $v - verb
+//  $t - target
+//  $s - string
 
 string compose_message(object hearer, object doer, object target,
-        string action, object *objs) {
+        string action, mixed *objs) {
     int i;
     int j = 0;
     int o_i = 0;
     string msg = "";
     string verb;
-    mixed *fmt = reg_assoc(action, ({ "\\$[NnvTtOo][A-Za-z]*" }), ({ 1 }));
+    mixed *fmt = reg_assoc(action, ({ "\\$[NnvTtOoSs][A-Za-z]*" }), ({ 1 }));
     // int num_objs = sizeof(objs);
     fmt = fmt[0][1..];
 
@@ -93,6 +95,14 @@ string compose_message(object hearer, object doer, object target,
                 msg += objs[o_i]->to_string();
                 o_i++;
                 break;
+            case 'S':
+                msg += capitalize(objs[o_i]);
+                o_i++;
+                break;
+            case 's':
+                msg += objs[o_i];
+                o_i++;
+                break;
         }
         j++;
     }
@@ -106,7 +116,7 @@ string compose_message(object hearer, object doer, object target,
 // Tell the doer "You verb <thing>"
 // Tell those in the same room as doer and those in the same room
 //     as thing "<doer> verbs <thing>"
-void simple_action(object doer, string action, object *objs) {
+void simple_action(object doer, string action, mixed *objs) {
     string msg_doer;
     string msg_others;
     object room = environment(doer);
@@ -122,7 +132,7 @@ void simple_action(object doer, string action, object *objs) {
 
 // Targeted action
 // involves the subject, the target, and maybe other players.
-void targeted_action(object doer, string action, object target, object *objs) {
+void targeted_action(object doer, string action, object target, mixed *objs) {
     string msg_doer = compose_message(doer, doer, target, action, objs);
     string msg_target = compose_message(target, doer, target, action, objs);
     string msg_others = compose_message(0, doer, target, action, objs);
@@ -148,13 +158,13 @@ void targeted_action(object doer, string action, object target, object *objs) {
 }
 
 // Action that only the doer hears.
-void my_action(object doer, string action, object *objs) {
+void my_action(object doer, string action, mixed *objs) {
     string msg = compose_message(doer, doer, 0, action, objs);
     tell(doer, msg);
 }
 
 // Action that everyone around the doer can hear, but the doer can't
-void other_action(object doer, string action, object *objs) {
+void other_action(object doer, string action, mixed *objs) {
     string msg = compose_message(0, doer, 0, action, objs);
     object room = environment(doer);
 
