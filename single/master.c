@@ -123,7 +123,7 @@ preload(string file)
         return;
 
     t1 = time();
-    write("Preloading : " + file + "...\n");
+    write("Preloading : " + file + "... ");
     err = catch(call_other(file, "??"));
     if (err != 0) {
         write("\nError " + err + " when loading " + file + "\n");

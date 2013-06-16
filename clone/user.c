@@ -16,13 +16,13 @@ private string room;
 private int wizard;
 
 private static int logged_in;
+private int autosave = 1;
 
 string save_filename();
 int quiet_save();
 void save();
-void manual_save();
+int query_autosave();
 void disable_autosave();
-void autosave(int save_now);
 void load();
 void quit();
 
@@ -73,24 +73,16 @@ void save() {
     }
 }
 
-void manual_save() {
-    int callout = remove_call_out("autosave");
-    save();
-    if (callout >= 0) {
-        autosave(0);
-    }
+int query_autosave() {
+    return autosave;
 }
 
 void disable_autosave() {
-    remove_call_out("autosave");
+    autosave = 0;
 }
 
-void autosave(int save_now) {
-    if (save_now) {
-        tell("%^CYAN%^Autosaving...%^RESET%^\n");
-        save();
-    }
-    call_out("autosave", SAVE_PERIOD, 1);
+void enable_autosave() {
+    autosave = 1;
 }
 
 void load() {
@@ -379,7 +371,6 @@ void setup() {
     activate_interactive();
     set_wizard(0);
     load();
-    autosave(0);
 
     if (query_wizard()) {
         ensure_wizard_paths();
