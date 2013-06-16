@@ -20,7 +20,7 @@ private mapping soft_objects = ([ ]);
 
 void create() {
     ::create();
-    set_parse_ids(({ "here", "room", file_name() }));
+    set_parse_ids(({ "here", "room", purename(basename(file_name())) }));
 }
 
 void setup() {
@@ -43,7 +43,14 @@ void add_soft_object(string name, string desc) {
 }
 
 string query_soft_description(string name) {
-    return soft_objects[name];
+    string text = soft_objects[name];
+    if (!text &&
+            (name == "here" ||
+             name == "room" ||
+             name == purename(basename(file_name())))) {
+        text = query_look_description();
+    }
+    return text;
 }
 
 string query_look_description() {
