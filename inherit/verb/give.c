@@ -17,8 +17,5 @@ mixed direct_give_obs_to_obj(object *obs, object obj, string obs_text, string ob
 }
 
 mixed direct_give_obj_to_obj(object item, object receiver, string item_text, string receiver_text) {
-    if (environment(item) != this_user()) {
-        return "You don't have " + item->query_in_room_name() + "\n";
-    }
-    return 1;
+    return environment(item) == this_user();
 }
