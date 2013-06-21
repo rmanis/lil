@@ -7,6 +7,7 @@
 inherit BASE;
 inherit COMMAND_OB;
 inherit SAVABLE;
+inherit "/inherit/verb/indirect_give";
 inherit __DIR__ "user/terminal";
 
 private string old_input = "";
