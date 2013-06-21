@@ -28,7 +28,7 @@ string *parse_command_adjectiv_id_list() {
 
 string *parse_command_prepos_list() {
     return ({ "along", "at", "behind", "beside", "by", "from", "in", "inside",
-            "into", "on", "onto", "under", "upon", "with", "within" });
+            "into", "on", "onto", "to", "under", "unto", "upon", "with", "within" });
 }
 
 string parse_command_all_word() {
