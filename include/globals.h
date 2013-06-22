@@ -44,6 +44,8 @@
 
 #define START_ROOM              "/domain/wiz/workshop"
 
+#define ROOM_TEMPLATE           "/template/new-room.c"
+
 #define ROOT_UID                "Root"
 #define BACKBONE_UID            "Backbone"
 
