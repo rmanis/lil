@@ -15,6 +15,8 @@ int main(string args) {
     int end;
     string contents;
     string new_contents;
+    string message;
+    int result;
 
     if (!strlen(trimmed)) {
         return error_out("Usage: make-room <file> [ <description> ]");
@@ -53,5 +55,14 @@ int main(string args) {
         new_contents = contents;
     }
 
-    return write_file(filename, new_contents, 1);
+    result = write_file(filename, new_contents, 1);
+
+    if (result) {
+        message = sprintf("Created room %s (%s)\n", brief, filename);
+    } else {
+        message = sprintf("Error creating room %s (%s)\n", brief, filename);
+    }
+    previous_object()->tell(message);
+
+    return result;
 }
