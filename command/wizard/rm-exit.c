@@ -4,6 +4,7 @@
 int main(string args) {
     string *exits = explode(args, " ");
     string exit;
+    string fmt;
     string message;
     mapping result;
 
@@ -14,9 +15,13 @@ int main(string args) {
 
     foreach (exit in exits) {
         result = here()->remove_exit(exit);
-        message = sprintf( result ?  "Exit %s deleted.\n" :
-                "There is no exit in the %s direction.\n",
-                unabbreviate_direction(exit));
+        if (result) {
+            fmt = "Exit %s deleted.\n";
+            here()->set_grubby(1);
+        } else {
+            fmt = "There is no exit in the %s direction.\n";
+        }
+        message = sprintf(message, unabbreviate_direction(exit));
         previous_object()->tell(message);
     }
 
