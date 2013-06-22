@@ -5,6 +5,8 @@ inherit BASE;
 inherit __DIR__ "room/occupants";
 inherit __DIR__ "room/exits";
 
+int query_grubby();
+void set_grubby(int grubbiness);
 void set_glance(string desc);
 void set_description(string desc);
 void add_soft_object(string name, string desc);
@@ -17,6 +19,7 @@ varargs void tell(string msg, int indent);
 private string glance;
 private string description;
 private mapping soft_objects = ([ ]);
+private static int grubby = 0;
 
 void create() {
     ::create();
@@ -26,6 +29,14 @@ void create() {
 void setup() {
     set_glance("New room");
     set_description("This is a new room.  Someone should describe it.");
+}
+
+int query_grubby() {
+    return grubby;
+}
+
+void set_grubby(int grubbiness) {
+    grubby = grubbiness;
 }
 
 void set_glance(string desc) {

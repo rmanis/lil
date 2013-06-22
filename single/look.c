@@ -68,6 +68,8 @@ void player_glance(object player) {
         items = string_presence(map(iobs, (: $1->query_in_room_name() :)));
 
         msg = description + " " +
+            (player->query_wizard() && room->query_grubby() ?
+             color_surround("yellow", "*") : "") +
             color_surround("green", exits) + "\n" +
             (strlen(players) ? (players + "\n") : "") +
             (strlen(items) ? (items + "\n") : "");
