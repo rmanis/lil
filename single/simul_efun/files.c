@@ -132,7 +132,7 @@ string resolve_path(string curr, string newer) {
 
 #ifndef __NO_ENVIRONMENT__
     case "here":
-        return file_name(environment())+".c";
+        return file_name(environment(this_player()))+".c";
 #endif
 
     default:
