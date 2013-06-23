@@ -97,7 +97,7 @@ void execute(string arg) {
     string rest = implode(parts[1..], " ");
     string cmd_path = which_command(verb);
     object cobj = load_object(cmd_path);
-    object destination;
+    mixed destination;
     string direction = unabbreviate_direction(verb);
     mixed accessible;
     mixed par;
