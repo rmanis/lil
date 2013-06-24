@@ -21,7 +21,7 @@ int main(string args) {
         } else {
             fmt = "There is no exit in the %s direction.\n";
         }
-        message = sprintf(message, unabbreviate_direction(exit));
+        message = sprintf(fmt, unabbreviate_direction(exit));
         previous_object()->tell(message);
     }
 
