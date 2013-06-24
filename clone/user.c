@@ -171,6 +171,7 @@ set_name(string arg)
 //  may wish to add security to prevent just anyone from changing
 //  someone else's name.
     name = arg;
+    set_parse_ids(({ query_name() }));
 }
 
 int query_wizard() {
@@ -378,8 +379,6 @@ void setup() {
     }
 
     look_description = "This is " + query_name() + ".\n";
-
-    set_parse_ids(({ query_name() }));
 
     logged_in = 1;
 }
