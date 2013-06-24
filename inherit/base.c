@@ -3,11 +3,11 @@
 
 mixed fetch_variable(string variable);
 void store_variable(string variable, mixed value);
+int save_object(string name, int flags);
 void create();
 void setup();
 void remove();
 int move(mixed dest);
-int save_object(string name, int flags);
 void set_ids(string *arg);
 int id(string arg);
 varargs void tell(string str, int indent);
@@ -45,6 +45,10 @@ void store_variable(string variable, mixed value) {
     efun::store_variable(variable, value);
 }
 
+int save_object(string name, int flags) {
+    return efun::save_object(name, flags);
+}
+
 void create() {
     parse_init();
     setup();
@@ -67,10 +71,6 @@ int move(mixed dest) {
     move_object(dest);
 }
 #endif
-
-int save_object(string name, int flags) {
-    return efun::save_object(name, flags);
-}
 
 void set_ids(string *arg) {
     // probably want to add some security here.
