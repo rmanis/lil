@@ -6,6 +6,8 @@ void store_variable(string variable, mixed value);
 varargs int save_object(string name, int flags);
 void create();
 void setup();
+int save_to_data();
+int load_from_data();
 void remove();
 int move(mixed dest);
 void set_ids(string *arg);
@@ -56,6 +58,21 @@ void create() {
 
 void setup() {
     look_description = "This is " + query_in_room_name() + ".";
+}
+
+int save_to_data() {
+    ensure_path_of_file_exists(DATA_DIR + file_name());
+    save_object(DATA_DIR + file_name(), 0);
+}
+
+int load_from_data() {
+    mixed err;
+    int r;
+    if (sizeof(stat(DATA_DIR + file_name() + ".o"))) {
+        err = catch (r = restore_object(DATA_DIR + file_name()));
+    }
+
+    return r;
 }
 
 void remove() {

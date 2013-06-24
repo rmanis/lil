@@ -19,6 +19,7 @@
 #define CONFIG_DIR              "/etc"
 #define LOG_DIR                 "/log"
 #define VERB_DIR                "/command/verb"
+#define DATA_DIR                "/data"
 
 #define VIRTUAL_D               "/single/virtual"
 #define MOVE_D                  "/single/movement"
