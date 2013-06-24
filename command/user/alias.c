@@ -41,6 +41,7 @@ void print_aliases() {
     string k, v;
     int longest = 0;
     int len;
+    int width;
     string fmt;
 
     mapping aliases = previous_object()->get_aliases();
@@ -60,7 +61,7 @@ void print_aliases() {
     foreach (k in sort_array(keys, 1)) {
         v = aliases[k];
         width = longest - strlen(k);
-        previous_object()->tell(sprintf("%s%" + width + "s : %s", k, "", quoted(v)));
+        previous_object()->tell(sprintf("%s%" + width + "s : %s\n", k, "", quoted(v)));
     }
 }
 
