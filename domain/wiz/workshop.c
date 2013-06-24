@@ -12,6 +12,8 @@ void create() {
             "There is an archway leading into a room to the north.");
     simple_set_exits( ([ "north" : "/domain/wiz/side-room" ]) );
     add_softs();
+
+    load_from_data();
 }
 
 void add_softs() {

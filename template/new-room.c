@@ -9,4 +9,6 @@ void create() {
     simple_set_exits( ([
                 // "north" : "destination"
                 ]) );
+
+    load_from_data();
 }

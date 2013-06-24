@@ -29,6 +29,7 @@ void create() {
 void setup() {
     set_glance("New room");
     set_description("This is a new room.  Someone should describe it.");
+    load_from_data();
 }
 
 int query_grubby() {
