@@ -62,7 +62,7 @@ void setup() {
 
 int save_to_data() {
     ensure_path_of_file_exists(DATA_DIR + file_name());
-    save_object(DATA_DIR + file_name(), 0);
+    return save_object(DATA_DIR + file_name(), 0);
 }
 
 int load_from_data() {
