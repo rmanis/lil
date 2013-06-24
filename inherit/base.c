@@ -7,6 +7,7 @@ void create();
 void setup();
 void remove();
 int move(mixed dest);
+int save_object(string name, int flags);
 void set_ids(string *arg);
 int id(string arg);
 varargs void tell(string str, int indent);
@@ -66,6 +67,10 @@ int move(mixed dest) {
     move_object(dest);
 }
 #endif
+
+int save_object(string name, int flags) {
+    return efun::save_object(name, flags);
+}
 
 void set_ids(string *arg) {
     // probably want to add some security here.
