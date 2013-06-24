@@ -3,7 +3,7 @@
 
 mixed fetch_variable(string variable);
 void store_variable(string variable, mixed value);
-int save_object(string name, int flags);
+varargs int save_object(string name, int flags);
 void create();
 void setup();
 void remove();
@@ -45,7 +45,7 @@ void store_variable(string variable, mixed value) {
     efun::store_variable(variable, value);
 }
 
-int save_object(string name, int flags) {
+varargs int save_object(string name, int flags) {
     return efun::save_object(name, flags);
 }
 
