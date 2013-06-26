@@ -11,6 +11,7 @@ string filename;
 
 void create(string file);
 varargs void save(string filename);
+string *query_lines();
 varargs int find_line_matching(string pattern, int start);
 void insert(int insertion_point, string text);
 void append(int after, string text);
@@ -18,18 +19,17 @@ void delete_line(int line);
 void delete_lines(int start, int end);
 string get_line(int num);
 void change_line(int num, string replacement);
+void change_range(int start, int end, string replacement);
+int length();
 
 void create(string file) {
     string contents;
 
-    DEB(file);
     filename = file;
 
     if (filep(file)) {
         contents = read_file(file);
         lines = explode(contents, "\n");
-
-        DEB(lines);
     } else {
         lines = ({ "" });
     }
@@ -41,6 +41,10 @@ varargs void save(string file) {
     }
 
     write_file(filename, implode(lines, "\n") + "\n", 1);
+}
+
+string *query_lines() {
+    return lines;
 }
 
 varargs int find_line_matching(string pattern, int start) {
@@ -70,8 +74,6 @@ void insert(int insertion_point, string text) {
             news +
             lines[insertion_point..];
     }
-    write("inserting\n");
-    DEB(lines);
 }
 
 void append(int after, string text) {
@@ -94,6 +96,20 @@ string get_line(int num) {
 }
 
 void change_line(int num, string replacement) {
-    num--;
-    lines[num] = replacement;
+    change_range(num, num, replacement);
+}
+
+void change_range(int start, int end, string replacement) {
+    string *replace;
+    start--;
+    end--;
+    replace = explode(replacement, "\n");
+
+    lines = lines[0..start-1] +
+        replace +
+        lines[end+1..];
+}
+
+int length() {
+    return sizeof(lines);
 }
