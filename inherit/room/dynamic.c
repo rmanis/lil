@@ -40,7 +40,7 @@ int save_to_room() {
 }
 
 void add_dynamic_comment(object editor, int start, int end) {
-    mixed *exits = this_object()->get_exits();
+    mapping exits = this_object()->get_exits();
     string glance = this_object()->get_glance();
     string desc = this_object()->get_description();
     mapping soft_objects = this_object()->query_soft_objects();
