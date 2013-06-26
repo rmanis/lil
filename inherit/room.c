@@ -9,6 +9,8 @@ int query_grubby();
 void set_grubby(int grubbiness);
 void set_glance(string desc);
 void set_description(string desc);
+mapping query_soft_objects();
+void set_soft_objects(mapping soft);
 void add_soft_object(string name, string desc);
 string query_soft_description(string name);
 string query_look_description();
@@ -46,6 +48,14 @@ void set_glance(string desc) {
 
 void set_description(string desc) {
     description = desc;
+}
+
+mapping query_soft_objects() {
+    return soft_objects;
+}
+
+void set_soft_objects(mapping soft) {
+    soft_objects = soft;
 }
 
 void add_soft_object(string name, string desc) {
