@@ -65,9 +65,13 @@ int dirp(string path) {
 }
 
 int filep(string path) {
-    mixed *stats = stat(path);
+    mixed *stats;
 
-    return sizeof(stats) && intp(stats[0]);
+    if (path) {
+        stats = stat(path);
+
+        return arrayp(stats) && sizeof(stats) && intp(stats[0]);
+    }
 }
 
 // Get the owner of a file.  Used by log_error() in master.c.
