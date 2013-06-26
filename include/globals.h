@@ -40,6 +40,7 @@
 #define COLOR_OB                "/clone/user/color"
 #define VERB_OB                 "/inherit/verb"
 #define ITEM_OB                 "/inherit/item"
+#define EDITOR_OB               "/clone/editor"
 
 #define SAVABLE                 "/inherit/savable"
 
