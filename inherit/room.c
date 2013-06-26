@@ -4,6 +4,7 @@
 inherit BASE;
 inherit __DIR__ "room/occupants";
 inherit __DIR__ "room/exits";
+inherit __DIR__ "room/dynamic";
 
 int query_grubby();
 void set_grubby(int grubbiness);
