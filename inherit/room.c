@@ -13,6 +13,7 @@ void set_description(string desc);
 mapping query_soft_objects();
 void set_soft_objects(mapping soft);
 void add_soft_object(string name, string desc);
+int remove_soft_object(string name);
 string query_soft_description(string name);
 string query_look_description();
 string get_glance();
@@ -63,6 +64,14 @@ void add_soft_object(string name, string desc) {
     if (strlen(name) && strlen(desc)) {
         soft_objects[name] = desc;
     }
+}
+
+int remove_soft_object(string name) {
+    if (strlen(name) && soft_objects[name]) {
+        map_delete(soft_objects, name);
+        return 1;
+    }
+    return 0;
 }
 
 string query_soft_description(string name) {
