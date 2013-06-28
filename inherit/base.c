@@ -60,16 +60,20 @@ void setup() {
     look_description = "This is " + query_in_room_name() + ".";
 }
 
+string data_file_name() {
+    return DATA_DIR + file_name();
+}
+
 int save_to_data() {
-    ensure_path_of_file_exists(DATA_DIR + file_name());
-    return save_object(DATA_DIR + file_name(), 0);
+    ensure_path_of_file_exists(data_file_name());
+    return save_object(data_file_name(), 0);
 }
 
 int load_from_data() {
     mixed err;
     int r;
-    if (sizeof(stat(DATA_DIR + file_name() + ".o"))) {
-        err = catch (r = restore_object(DATA_DIR + file_name()));
+    if (sizeof(stat(data_file_name() + ".o"))) {
+        err = catch (r = restore_object(data_file_name()));
     }
 
     return r;
