@@ -22,6 +22,7 @@ string query_reflexive();
 string query_look_description();
 string to_string();
 
+void p_refresh();
 int inventory_accessible();
 int inventory_visible();
 string *parse_command_id_list();
@@ -158,6 +159,10 @@ string to_string() {
 }
 
 // NLP applies
+
+void p_refresh() {
+    parse_refresh();
+}
 
 int inventory_accessible() {
     return 1;
