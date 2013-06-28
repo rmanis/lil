@@ -18,7 +18,7 @@ int main(string arg) {
 
     here()->add_soft_object(soft, description);
     here()->set_grubby(1);
-    here()->p_refresh();
+    here()->parse_refresh();
 
     previous_object()->tell("Added soft object.\n");
 
