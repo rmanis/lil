@@ -45,12 +45,16 @@ void add_dynamic_comment(object editor, int start, int end) {
     string desc = this_object()->get_description();
     mapping soft_objects = this_object()->query_soft_objects();
 
+    // 72 for an indent of 4, a paren, and some buffer
     string rep = sprintf(
             "set_exits(%O);\n"
-            "set_glance(%O);\n"
-            "set_description(%O);\n"
+            "set_glance(%s);\n"
+            "set_description(%s);\n"
             "set_soft_objects(%O);\n",
-            exits, glance, desc, soft_objects);
+            exits,
+            codebreak_string(glance, 72 - strlen("set_glance")),
+            codebreak_string(desc, 72 - strlen("set_description")),
+            soft_objects);
     string *newlines = explode(rep, "\n");
     string line;
     int i;
