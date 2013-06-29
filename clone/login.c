@@ -18,7 +18,7 @@ private int user_exists(string name);
 void reject();
 
 void output(string str, mixed args...) {
-    write(wc_format(80, 0, COLOR_OB->get_color_map(),
+    write(wc_format(80, 0, COLOR_OB->query_color_map(),
                 str, args...));
 }
 
@@ -154,8 +154,8 @@ private void create_user_object(string name) {
 
         shout(sprintf("%%^BOLD%%^[ %s enters the mud ]%%^RESET%%^\n", name));
 #ifndef __NO_ENVIRONMENT__
-        user->move(user->get_room());
-        tell_room(user->get_room(),
+        user->move(user->query_room());
+        tell_room(user->query_room(),
                 color_surround("green", sprintf("%s enters the mud.\n", name)),
                 ({ user }));
 #endif

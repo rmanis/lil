@@ -11,7 +11,7 @@ private mapping exits;
 
 mapping attributes(string direction);
 void set_exits(mapping exs);
-mapping get_exits();
+mapping query_exits();
 void simple_set_exits(mapping exs);
 mapping remove_exit(string direction);
 varargs mapping add_exit(string direction, string destination);
@@ -49,7 +49,7 @@ void set_exits(mapping exs) {
     }
 }
 
-mapping get_exits() {
+mapping query_exits() {
     return exits;
 }
 

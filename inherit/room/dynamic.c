@@ -40,9 +40,9 @@ int save_to_room() {
 }
 
 void add_dynamic_comment(object editor, int start, int end) {
-    mapping exits = this_object()->get_exits();
-    string glance = this_object()->get_glance();
-    string desc = this_object()->get_description();
+    mapping exits = this_object()->query_exits();
+    string glance = this_object()->query_glance();
+    string desc = this_object()->query_description();
     mapping soft_objects = this_object()->query_soft_objects();
 
     // 72 for an indent of 4, a paren, and some buffer

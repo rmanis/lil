@@ -12,10 +12,10 @@ int main(string arg) {
     }
 
     foreach (alias in parts) {
-        if (!previous_object()->get_alias(alias)) {
+        if (!previous_object()->query_alias(alias)) {
             previous_object()->tell(sprintf("Alias '%s' is undefined.\n", alias));
         } else {
-            map_delete(previous_object()->get_aliases(), alias);
+            map_delete(previous_object()->query_aliases(), alias);
             previous_object()->tell(sprintf("Alias '%s' deleted.\n", alias));
         }
     }

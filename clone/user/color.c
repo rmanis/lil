@@ -5,7 +5,7 @@ mapping new_color_map();
 
 private mapping colors;
 
-mapping get_color_map() {
+mapping query_color_map() {
     if (!colors) {
         colors = new_color_map();
     }

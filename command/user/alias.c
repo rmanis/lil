@@ -19,7 +19,7 @@ int main(string arg) {
         key = parts[0];
         value = implode(parts[1..], " ");
 
-        old_alias = previous_object()->get_alias(key);
+        old_alias = previous_object()->query_alias(key);
 
         if (old_alias) {
             msg = sprintf("Changing alias '%s'\n", key);
@@ -44,7 +44,7 @@ void print_aliases() {
     int width;
     string fmt;
 
-    mapping aliases = previous_object()->get_aliases();
+    mapping aliases = previous_object()->query_aliases();
     string *keys = keys(aliases);
 
     if (!sizeof(aliases)) {
@@ -66,7 +66,7 @@ void print_aliases() {
 }
 
 void print_alias(string alias) {
-    string value = previous_object()->get_alias(alias);
+    string value = previous_object()->query_alias(alias);
     string msg;
 
     if (value) {

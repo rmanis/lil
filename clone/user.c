@@ -36,7 +36,7 @@ string query_target_string();
 string query_reflexive();
 int query_wizard();
 void set_wizard(int wiz);
-string get_room();
+string query_room();
 void set_room(string filename);
 void set_name(string arg);
 int is_logged_in();
@@ -122,7 +122,7 @@ void swap_out() {
     }
 }
 
-string get_room() {
+string query_room() {
     if (!room) {
         room = START_ROOM;
     }
@@ -263,7 +263,7 @@ void process_input(string arg) {
         old_input = arg;
     }
 
-    pre = get_prefix(arg[0]);
+    pre = query_prefix(arg[0]);
     if (pre) {
         arg = pre + " " + arg[1..];
     }

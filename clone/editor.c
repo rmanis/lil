@@ -17,7 +17,7 @@ void insert(int insertion_point, string text);
 void append(int after, string text);
 void delete_line(int line);
 void delete_lines(int start, int end);
-string get_line(int num);
+string query_line(int num);
 void change_line(int num, string replacement);
 void change_range(int start, int end, string replacement);
 int length();
@@ -90,7 +90,7 @@ void delete_lines(int start, int end) {
     lines = lines[0..start-1] + lines[end+1..];
 }
 
-string get_line(int num) {
+string query_line(int num) {
     num--;
     return lines[num];
 }

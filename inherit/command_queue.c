@@ -7,9 +7,9 @@ string which_command(string verb);
 void execute(string command);
 void try_execute(string command);
 void clear_queue();
-string *get_command_queue();
+string *query_command_queue();
 
-string *get_command_paths();
+string *query_command_paths();
 void set_command_paths(string *paths);
 string *add_command_path(string path);
 void ensure_wizard_paths();
@@ -17,7 +17,7 @@ void ensure_no_wizard_paths();
 
 varargs string *remove_first_slice(int num);
 
-int get_speed();
+int query_speed();
 void set_speed(int speed);
 
 string *command_paths;
@@ -37,7 +37,7 @@ void heart_beat() {
     }
 }
 
-int get_speed() {
+int query_speed() {
     if (!speed) {
         speed = DEFAULT_SPEED;
     }
@@ -55,7 +55,7 @@ string which_command(string verb) {
     string *existing;
 
     if (strlen(verb)) {
-        possibilities = map(get_command_paths(),
+        possibilities = map(query_command_paths(),
                 (: $1 + "/" + $2 + ".c" :), verb);
         existing = filter(possibilities, (: filep($1) :));
 
@@ -137,7 +137,7 @@ void try_execute(string command) {
     string *parts = explode(trim(command), " ");
     string verb = sizeof(parts) ? parts[0] : "";
     string rest = implode(parts[1..], " ");
-    string alias = get_alias(verb);
+    string alias = query_alias(verb);
     string *cmds;
     string cmd;
 
@@ -147,7 +147,7 @@ void try_execute(string command) {
         foreach (cmd in cmds) {
             try_execute(cmd);
         }
-    } else if (execution_count < get_speed()) {
+    } else if (execution_count < query_speed()) {
         execute(command);
         execution_count++;
     } else {
@@ -163,14 +163,14 @@ void clear_queue() {
     MESSAGE_D->tell(this_object(), "Command queue cleared\n");
 }
 
-string *get_command_queue() {
+string *query_command_queue() {
     if (!command_queue) {
         command_queue = ({ });
     }
     return command_queue;
 }
 
-string *get_command_paths() {
+string *query_command_paths() {
     if (!command_paths) {
         command_paths = ({ USER_PATH });
     }
@@ -182,24 +182,24 @@ void set_command_paths(string *paths) {
 }
 
 string *add_command_path(string path) {
-    set_command_paths(({ path }) + get_command_paths());
+    set_command_paths(({ path }) + query_command_paths());
     return command_paths;
 }
 
 void ensure_wizard_paths() {
-    if (member_array(WIZ_PATH, get_command_paths()) < 0) {
+    if (member_array(WIZ_PATH, query_command_paths()) < 0) {
         add_command_path(WIZ_PATH);
     }
 }
 
 void ensure_no_wizard_paths() {
-    set_command_paths(get_command_paths() - ({ WIZ_PATH }));
+    set_command_paths(query_command_paths() - ({ WIZ_PATH }));
 }
 
 varargs string *remove_first_slice(int num) {
     // int command_count = sizeof(command_queue);
-    int take = (num > 0 ? num : get_speed()) - 1;
-    string *slice = get_command_queue()[0..take];
+    int take = (num > 0 ? num : query_speed()) - 1;
+    string *slice = query_command_queue()[0..take];
     command_queue = command_queue[take+1..];
 
     return slice;

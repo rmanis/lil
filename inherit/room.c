@@ -16,8 +16,8 @@ void add_soft_object(string name, string desc);
 int remove_soft_object(string name);
 string query_soft_description(string name);
 string query_look_description();
-string get_glance();
-string get_description();
+string query_glance();
+string query_description();
 varargs void tell(string msg, int indent);
 
 private string glance;
@@ -86,14 +86,14 @@ string query_soft_description(string name) {
 }
 
 string query_look_description() {
-    return "This is a room.\n" + get_description();
+    return "This is a room.\n" + query_description();
 }
 
-string get_glance() {
+string query_glance() {
     return glance;
 }
 
-string get_description() {
+string query_description() {
     return description;
 }
 

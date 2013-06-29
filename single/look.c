@@ -21,17 +21,17 @@ void player_look(object player) {
 
     if (player) {
         room = environment(player);
-        description = room->get_description();
+        description = room->query_description();
         directions = room->exit_directions();
 
         exits = sizeof(directions) ?
             "Exits: " + itemize(directions) :
             "There are no obvious exits.";
 
-        pobs = room->get_players() - ({ player });
+        pobs = room->query_players() - ({ player });
         players = string_presence(map(pobs, (: $1->query_in_room_name() :)));
 
-        iobs = room->get_items();
+        iobs = room->query_items();
         items = string_presence(map(iobs, (: $1->query_in_room_name() :)));
 
         msg = description + "\n" +
@@ -55,14 +55,14 @@ void player_glance(object player) {
 
     if (player) {
         room = environment(player);
-        description = room->get_glance();
+        description = room->query_glance();
         exits = "[" +
             implode(map(room->exit_directions(),
                         (: abbreviate_direction($1) :)),
                     ",") + "]";
 
-        pobs = room->get_players() - ({ player });
-        iobs = room->get_items();
+        pobs = room->query_players() - ({ player });
+        iobs = room->query_items();
 
         players = string_presence(map(pobs, (: $1->query_in_room_name() :)));
         items = string_presence(map(iobs, (: $1->query_in_room_name() :)));
