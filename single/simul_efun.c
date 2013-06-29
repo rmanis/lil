@@ -5,6 +5,7 @@
 #include <globals.h>
 #include <lpctypes.h>
 
+inherit __DIR__ "simul_efun/arrays";
 inherit __DIR__ "simul_efun/files";
 inherit __DIR__ "simul_efun/objects";
 inherit __DIR__ "simul_efun/enviro";
