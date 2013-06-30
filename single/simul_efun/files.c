@@ -12,7 +12,7 @@ string user_path(string name);
 int dirp(string path);
 int filep(string path);
 string file_owner(string file);
-string basename(string path);
+varargs string basename(string path, string extension);
 string dirname(string path);
 string purename(string path);
 string resolve_path(string curr, string newer);
@@ -95,8 +95,10 @@ string dirname(string path) {
     return "/" + implode(parts[0..<2], "/");
 }
 
-string basename(string path) {
+varargs string basename(string path, string extension) {
     string *parts;
+    string base;
+    int xlen = strlen(extension);
 
     while (path[<1] == '/' && path != "/") {
         path = path[0..<2];
@@ -105,7 +107,12 @@ string basename(string path) {
     parts = explode(path, "/");
 
     if (sizeof(parts)) {
-        return parts[<1];
+        base = parts[<1];
+        if (!extension || base[<xlen..] != extension) {
+            return base;
+        }
+
+        return base[0..<(xlen+1)];
     }
 }
 
