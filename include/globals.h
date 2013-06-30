@@ -68,6 +68,8 @@
 #define M_STATUS                "status"
 #define M_SAY                   "say"
 
+#define SUBTLE                  "subtle"
+
 #define CLEAN_UP                "/inherit/clean_up"
 
 #endif
