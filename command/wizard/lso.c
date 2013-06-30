@@ -4,8 +4,10 @@
 inherit "/inherit/error_out";
 
 string *fetch(string file) {
+    string obname;
     if (filep(file)) {
-        return ({ basename(file) }) + children(file);
+        obname = dirname(file) + "/" + basename(file, ".c");
+        return ({ basename(file) }) + children(obname);
     } else {
         return ({ basename(file) + "/" });
     }
