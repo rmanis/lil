@@ -22,7 +22,9 @@ void player_look(object player) {
     if (player) {
         room = environment(player);
         description = room->query_description();
-        directions = room->exit_directions();
+        directions = filter(room->exit_directions(),
+                (: !($2->attributes($1)["subtle"]) :),
+                room);
 
         exits = sizeof(directions) ?
             "Exits: " + itemize(directions) :
@@ -46,6 +48,7 @@ void player_look(object player) {
 void player_glance(object player) {
     object room;
     string description;
+    string *directions;
     string exits;
     object *pobs;
     object *iobs;
@@ -56,9 +59,12 @@ void player_glance(object player) {
     if (player) {
         room = environment(player);
         description = room->query_glance();
+
+        directions = filter(room->exit_directions(),
+                (: !($2->attributes($1)["subtle"]) :),
+                room);
         exits = "[" +
-            implode(map(room->exit_directions(),
-                        (: abbreviate_direction($1) :)),
+            implode(map(directions, (: abbreviate_direction($1) :)),
                     ",") + "]";
 
         pobs = room->query_players() - ({ player });
