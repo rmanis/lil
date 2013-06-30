@@ -1,4 +1,6 @@
 
+#include <globals.h>
+
 // The look daemon.  Could take into account lighting, visibility, invisibility, &c.
 
 inherit "/inherit/itemize";
