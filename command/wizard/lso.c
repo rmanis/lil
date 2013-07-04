@@ -44,7 +44,9 @@ int display_all(mixed *files, int screen_width) {
 
     widest = select_greatest(map(files, (: width :)));
 
-    numcols = screen_width / widest;
+    if (sizeof(files)) {
+        numcols = screen_width / widest;
+    }
 
     for (i = 0; i < sizeof(detailed); i++) {
         column = i % numcols;
