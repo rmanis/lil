@@ -1,18 +1,16 @@
-#include <command.h>
 
-int
-main(string arg)
-{
-    object *list;
-    int j;
+#include <globals.h>
 
-    printf("%-25s idle\n", "name (*edit, +input)");
-    printf("--------------------      ----\n");
-    for (list = users(), j = 0; j < sizeof(list); j++) {
-        printf("%-25s %4d\n", (string)list[j]->query_name() +
-        (in_edit(this_player()) ? "*" : "") +
-        (in_input(this_player()) ? "+" : ""),
-        query_idle(this_player()) / 60
+int main(string arg) {
+    object user;
+
+    printf("%-25s  idle\n", "name (*edit, +input)");
+    printf("---------------------     -----\n");
+    foreach (user in users()) {
+        printf("%-25s %4dm\n", (string)user->query_name() +
+                (in_edit(user) ? "*" : "") +
+                (in_input(user) ? "+" : ""),
+                query_idle(user) / 60
         );
     }
     return 1;
