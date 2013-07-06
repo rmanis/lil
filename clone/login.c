@@ -15,6 +15,7 @@ private void create_user_object(string name);
 private void ensure_passwords_folder();
 private string password_file(string name);
 private int user_exists(string name);
+void autobless(object user);
 void reject();
 
 void output(string str, mixed args...) {
@@ -158,6 +159,7 @@ private void create_user_object(string name) {
         tell_room(user->query_room(),
                 color_surround("green", sprintf("%s enters the mud.\n", name)),
                 ({ user }));
+        autobless(user);
 #endif
     };
 
@@ -167,6 +169,13 @@ private void create_user_object(string name) {
 
     p_refresh();
     destruct(this_object());
+}
+
+void autobless(object user) {
+    if (sizeof(get_dir(PASSWORD_DIR "/")) <= 1) {
+        user->tell(color_surround("magenta", "Autoblessing first user.\n"));
+        WIZ_D->bless(user);
+    }
 }
 
 void reject() {
@@ -181,15 +190,15 @@ void reject() {
 // This will only matter the first time a user is created,
 // but let's go ahead and write robust code.
 private void ensure_passwords_folder () {
-    if ( sizeof( stat( "/u/passwords" ) ) == 0 ) {
-        mkdir( "/u/passwords" );
+    if ( sizeof( stat( PASSWORD_DIR ) ) == 0 ) {
+        mkdir( PASSWORD_DIR );
     }
 }
 
 // A function that embodies the password file naming convention.
 // The parameter is the character's name (e.g., "Dave").
 private string password_file ( string name ) {
-    return "/u/passwords/" + name;
+    return PASSWORD_DIR + "/" + name;
 }
 
 // A function that determines if the user exists, based on
