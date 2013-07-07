@@ -16,7 +16,7 @@ void handle_ed(string arg) {
         if (arg[0] == '!') {
             evaluate(previous_handler(), arg[1..]);
         } else {
-            this_object()->tell(ed_cmd(arg));
+            write(ed_cmd(arg));
         }
     } else {
         pop_handler();
