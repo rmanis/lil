@@ -9,6 +9,7 @@ inherit COMMAND_OB;
 inherit SAVABLE;
 inherit "/inherit/verb/indirect_give";
 inherit __DIR__ "user/terminal";
+inherit __DIR__ "user/handler-stack";
 
 private string old_input = "";
 private string name;
@@ -47,6 +48,7 @@ void setup();
 
 void quiet_move(mixed location);
 void move(mixed location);
+void process_command(string arg);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
 void catch_tell(string str) {
@@ -244,8 +246,7 @@ void move(mixed location) {
     LOOK_D->player_glance(this_object());
 }
 
-#ifdef __NO_ADD_ACTION__
-void process_input(string arg) {
+void process_command(string arg) {
     mixed pre;
 
 #ifndef __OLD_ED__
@@ -272,6 +273,11 @@ void process_input(string arg) {
     } else {
         try_execute(arg);
     }
+}
+
+#ifdef __NO_ADD_ACTION__
+void process_input(string arg) {
+    handle_input(arg);
 }
 #else
 string
