@@ -5,6 +5,7 @@ static function *stack = ({ });
 
 void handle_input(string arg);
 function query_handler();
+function previous_handler();
 void push_handler(function handler);
 void pop_handler();
 void process_command(string arg);
@@ -24,6 +25,12 @@ void handle_input(string arg) {
 function query_handler() {
     if (sizeof(stack)) {
         return stack[0];
+    }
+}
+
+function previous_handler() {
+    if (sizeof(stack) > 1) {
+        return stack[1];
     }
 }
 

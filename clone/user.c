@@ -8,6 +8,7 @@ inherit BASE;
 inherit COMMAND_OB;
 inherit SAVABLE;
 inherit "/inherit/verb/indirect_give";
+inherit "/inherit/handlers/ed-handler";
 inherit __DIR__ "user/terminal";
 inherit __DIR__ "user/handler-stack";
 
@@ -215,11 +216,6 @@ write_prompt() {
         break;
     }
 }
-
-void
-start_ed(string file) {
-    tell(ed_start(file, 0));
-}
 #endif
 
 varargs void tell(string str, int indent) {
@@ -249,15 +245,6 @@ void move(mixed location) {
 void process_command(string arg) {
     mixed pre;
 
-#ifndef __OLD_ED__
-    if (query_ed_mode() != -1) {
-    if (arg[0] != '!') {
-        tell(ed_cmd(arg));
-        return;
-    }
-    arg = arg[1..];
-    }
-#endif
     if (arg == "!") {
         arg = old_input;
     } else {
