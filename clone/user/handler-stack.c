@@ -1,14 +1,26 @@
 
 #include <globals.h>
 
+#define PUSH(thing,place) place = ({ thing }) + place
+#define POP(place) place = place[1..]
+#define PEEK(place) do { if (sizeof(place)) { return place[0]; } } while (0)
+#define PREVIOUS(place) do { if (sizeof(place) > 1) { return place[1]; } } while (0)
+
 static function *stack = ({ });
+static function *prompts = ({ });
+
+void process_command(string arg);
 
 void handle_input(string arg);
 function query_handler();
 function previous_handler();
 void push_handler(function handler);
 void pop_handler();
-void process_command(string arg);
+
+function query_prompt();
+function previous_prompt();
+void push_prompt(function prompt);
+void pop_prompt();
 
 void handle_input(string arg) {
     function handler;
@@ -23,23 +35,37 @@ void handle_input(string arg) {
 }
 
 function query_handler() {
-    if (sizeof(stack)) {
-        return stack[0];
-    }
+    PEEK(stack);
 }
 
 function previous_handler() {
-    if (sizeof(stack) > 1) {
-        return stack[1];
-    }
+    PREVIOUS(stack);
 }
 
 void push_handler(function handler) {
     if (handler) {
-        stack = ({ handler }) + stack;
+        PUSH(handler, stack);
     }
 }
 
 void pop_handler() {
-    stack = stack[1..];
+    POP(stack);
+}
+
+function query_prompt() {
+    PEEK(prompts);
+}
+
+function previous_prompt() {
+    PREVIOUS(prompts);
+}
+
+void push_prompt(function prompt) {
+    if (prompt) {
+        PUSH(prompt, prompts);
+    }
+}
+
+void pop_prompt() {
+    POP(prompts);
 }

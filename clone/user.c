@@ -201,20 +201,12 @@ id(string arg)
 #ifndef __OLD_ED__
 void
 write_prompt() {
-    switch (query_ed_mode()) {
-    case 0:
-    case -2:
-        tell(":");
-        break;
-
-    case -1:
-        tell("%^RESET%^> ");
-        break;
-
-    default:
-        tell("*\b");
-        break;
+    function prompt = query_prompt();
+    if (!prompt) {
+        prompt = (: tell("%^RESET%^> ") :);
+        push_prompt(prompt);
     }
+    evaluate(prompt);
 }
 #endif
 
