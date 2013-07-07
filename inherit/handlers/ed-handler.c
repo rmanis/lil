@@ -15,8 +15,9 @@ void handle_ed(string arg) {
     if (query_ed_mode() != -1) {
         if (arg[0] == '!') {
             evaluate(previous_handler(), arg[1..]);
+        } else {
+            this_object()->tell(ed_cmd(arg));
         }
-        this_object()->tell(ed_cmd(arg));
     } else {
         pop_handler();
         evaluate(query_handler(), arg);
