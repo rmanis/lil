@@ -8,7 +8,6 @@ inherit BASE;
 inherit COMMAND_OB;
 inherit SAVABLE;
 inherit "/inherit/verb/indirect_give";
-inherit "/inherit/handlers/ed-handler";
 inherit __DIR__ "user/terminal";
 inherit __DIR__ "user/handler-stack";
 
@@ -202,9 +201,11 @@ id(string arg)
 void
 write_prompt() {
     function prompt = query_prompt();
+    function handler;
     if (!prompt) {
+        handler = (: process_command :);
         prompt = (: tell("%^RESET%^> ") :);
-        push_prompt(prompt);
+        push_handler(handler, prompt);
     }
     evaluate(prompt);
 }

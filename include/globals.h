@@ -43,6 +43,8 @@
 #define ITEM_OB                 "/inherit/item"
 #define EDITOR_OB               "/clone/editor"
 
+#define ED_HANDLER              "/clone/handlers/ed-handler"
+
 #define SAVABLE                 "/inherit/savable"
 
 #define START_ROOM              "/domain/wiz/workshop"
