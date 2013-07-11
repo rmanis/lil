@@ -43,7 +43,7 @@
 #define ITEM_OB                 "/inherit/item"
 #define EDITOR_OB               "/clone/editor"
 
-#define ED_HANDLER              "/clone/handlers/ed-handler"
+#define ED_HANDLER              "/single/ed-handler"
 
 #define SAVABLE                 "/inherit/savable"
 
