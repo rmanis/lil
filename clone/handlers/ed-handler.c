@@ -4,6 +4,7 @@
 void handle_ed(string arg);
 void start_ed(string file);
 void prompt_ed();
+string *read_edrc();
 
 void handle_ed(string arg) {
 #ifndef __OLD_ED__
@@ -21,8 +22,15 @@ void handle_ed(string arg) {
 }
 
 void start_ed(string file) {
+    string *rc_commands = read_edrc();
+    string cmd;
+
     this_player()->push_handler((: handle_ed :), (: prompt_ed :));
     write(ed_start(file, 0));
+
+    foreach (cmd in rc_commands) {
+        ed_cmd(cmd);
+    }
 }
 
 void prompt_ed() {
@@ -40,4 +48,15 @@ void prompt_ed() {
         write("*\b");
         break;
     }
+}
+
+string *read_edrc() {
+    string *r = ({ });
+    string file = user_path(this_player()->query_name()) + "edrc";
+
+    if (filep(file)) {
+        r = explode(read_file(file), "\n");
+    }
+
+    return r;
 }
