@@ -106,7 +106,7 @@ string compose_message(object hearer, object doer, object target,
         }
         j++;
     }
-    return msg;
+    return msg + "\n";
 }
 
 // Simple action.

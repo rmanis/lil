@@ -72,6 +72,8 @@
 #define M_SAY                   "say"
 
 #define SUBTLE                  "subtle"
+#define LEAVE                   "leave"
+#define ARRIVE                  "arrive"
 
 #define CLEAN_UP                "/inherit/clean_up"
 
