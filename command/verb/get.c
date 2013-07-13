@@ -14,6 +14,6 @@ void create() {
 int can_get_obj() { return 1; }
 
 void do_get_obj(object obj, string obj_text) {
-    MESSAGE_D->targeted_action(previous_object(), "$N $vget $t.\n", obj);
+    MESSAGE_D->targeted_action(previous_object(), "$N $vget $t.", obj);
     obj->move(previous_object());
 }

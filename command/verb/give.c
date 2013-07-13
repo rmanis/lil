@@ -26,7 +26,7 @@ void do_give() {
 
 void do_give_obj_to_obj(object obj, object receiver) {
     if (environment(obj) == previous_object()) {
-        MESSAGE_D->targeted_action(previous_object(), "$N $vgive $t to $o.\n", obj, ({ receiver }));
+        MESSAGE_D->targeted_action(previous_object(), "$N $vgive $t to $o.", obj, ({ receiver }));
         obj->move(receiver);
     }
 }
