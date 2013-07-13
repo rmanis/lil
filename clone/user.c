@@ -38,7 +38,7 @@ string query_reflexive();
 int query_wizard();
 void set_wizard(int wiz);
 string query_room();
-void set_room(string filename);
+void set_room(mixed place);
 void set_name(string arg);
 int is_logged_in();
 varargs void tell(string str, int indent);
@@ -46,8 +46,7 @@ varargs void tell(string str, int indent);
 void activate_interactive();
 void setup();
 
-void quiet_move(mixed location);
-void move(mixed location);
+varargs void move(mixed location, string leave, string arrive);
 void process_command(string arg);
 
 #ifdef __INTERACTIVE_CATCH_TELL__
@@ -114,7 +113,7 @@ void swap_out() {
     new_user = BIRTH_D->create_swapped_user(query_name(), this_object());
 
     if (new_user) {
-        new_user->quiet_move(environment());
+        new_user->move(environment());
         new_user->load();
         new_user->tell("You feel different.\n");
 
@@ -131,7 +130,15 @@ string query_room() {
     return room;
 }
 
-void set_room(string filename) {
+void set_room(mixed place) {
+    string filename;
+    if (objectp(place)) {
+        filename = file_name(place);
+    } else if (stringp(place)) {
+        filename = place;
+    } else {
+        return;
+    }
     room = filename;
 }
 
@@ -219,19 +226,10 @@ varargs void tell(string str, int indent) {
     }
 }
 
-void quiet_move(mixed location) {
-    ::move(location);
+varargs void move(mixed location, string leave, string arrive) {
+    ::move(location, leave, arrive);
 
-    if (objectp(location)) {
-        set_room(file_name(location));
-    } else if (stringp(location)) {
-        set_room(location);
-    }
-}
-
-void move(mixed location) {
-    quiet_move(location);
-
+    set_room(location);
     LOOK_D->player_glance(this_object());
 }
 

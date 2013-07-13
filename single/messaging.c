@@ -43,7 +43,7 @@ string compose_message(object hearer, object doer, object target,
     string verb;
     mixed *fmt = reg_assoc(action, ({ "\\$[NnvTtOoSs][A-Za-z]*" }), ({ 1 }));
     // int num_objs = sizeof(objs);
-    fmt = fmt[0][1..];
+    fmt = fmt[0];
 
     for (i = 0; i < sizeof(fmt); i++) {
         if (!strlen(fmt[i])) {

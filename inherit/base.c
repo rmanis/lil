@@ -9,7 +9,7 @@ void setup();
 int save_to_data();
 int load_from_data();
 void remove();
-int move(mixed dest);
+varargs void move(mixed dest, string leave, string arrive);
 void set_ids(string *arg);
 int id(string arg);
 varargs void tell(string str, int indent);
@@ -87,10 +87,18 @@ void remove() {
 }
 
 #ifndef __NO_ENVIRONMENT__
-int move(mixed dest) {
+varargs void move(mixed dest, string leave, string arrive) {
     // add code here to prevent disallowed moves (target is full, object
     // is immovable, etc.).
-    move_object(dest);
+    if (dest) {
+        if (strlen(leave)) {
+            MESSAGE_D->other_action(this_object(), leave);
+        }
+        move_object(dest);
+        if (strlen(arrive)) {
+            MESSAGE_D->other_action(this_object(), arrive);
+        }
+    }
 }
 #endif
 
