@@ -20,6 +20,7 @@ int main(string arg) {
 
     attributes[SUBTLE] = 0;
     previous_object()->tell(sprintf("Made exit %s obvious.\n", direction));
+    room->set_grubby(1);
 
     return 1;
 }
