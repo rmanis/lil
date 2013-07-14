@@ -92,8 +92,12 @@ mixed *display(mixed f) {
     if (stringp(f)) {
         if (f[<1] == '/') {
             return ({ color_surround("green", f), width(f) });
-        } else {
+        } else if (f[<2..] == ".c") {
             return ({ color_surround("cyan", f), width(f) });
+        } else if (f[<2..] == ".o") {
+            return ({ color_surround("orange", f), width(f) });
+        } else {
+            return ({ f, width(f) });
         }
     } else if (objectp(f)) {
         return ({ color_surround("yellow", basename(sprintf("%O", f))),
