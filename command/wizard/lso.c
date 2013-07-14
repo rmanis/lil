@@ -21,13 +21,18 @@ int main(string dir) {
 	return error_out(sprintf("No such file or directory: %s", path));
     }
 
-    if (stringp(stat(path)[0]) && path != "/") {
+    if (dirp(path) && path != "/") {
 	path += "/";
     }
 
     files = filter(get_dir(path), (: $1[0] != '.' :));
 
-    fulls = map(files, (: $2 + $1 :), path);
+    if (filep(path)) {
+        fulls = ({ path });
+    } else {
+        fulls = map(files, (: $2 + $1 :), path);
+    }
+
     combined = select_many(fulls, (: fetch :), path);
 
     return display_all(combined, screen_width);
