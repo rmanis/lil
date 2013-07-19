@@ -8,7 +8,10 @@ string usage() {
 }
 
 void operate(string path) {
+    string *ancestors;
+    string ancestor;
     object obj;
+    object o;
     int exists;
     if (!(sizeof(stat(path + ".c")) || sizeof(stat(path)))) {
         exists = 0;
@@ -18,6 +21,12 @@ void operate(string path) {
     }
 
     if (obj = find_object(path)) {
+        ancestors = deep_inherit_list(obj);
+        foreach (ancestor in ancestors) {
+            if (o = find_object(ancestor)) {
+                destruct(o);
+            }
+        }
         destruct(obj);
     }
 
