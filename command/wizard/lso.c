@@ -30,7 +30,7 @@ int main(string dir) {
     if (filep(path)) {
         fulls = ({ path });
     } else {
-        fulls = map(files, (: $2 + $1 :), path);
+        fulls = map(files, (: $(path) + $1 :));
     }
 
     combined = select_many(fulls, (: fetch :), path);
