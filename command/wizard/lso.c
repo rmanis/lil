@@ -47,7 +47,7 @@ int display_all(mixed *files, int screen_width) {
     int num_spaces;
     string text = "";
 
-    widest = select_greatest(map(files, (: width :)));
+    widest = 1 + select_greatest(map(files, (: width :)));
 
     if (sizeof(files)) {
         numcols = screen_width / widest;
@@ -59,7 +59,7 @@ int display_all(mixed *files, int screen_width) {
             text += "\n";
         }
         num_spaces = (column < (numcols - 1) ?
-                1 + widest - detailed[i][1] :
+                widest - detailed[i][1] :
                 0);
         text +=
             sprintf("%s%s",
