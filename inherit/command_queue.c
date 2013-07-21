@@ -3,6 +3,8 @@
 
 inherit __DIR__ "command_queue/alias";
 
+int query_wizard();
+
 string which_command(string verb);
 void execute(string command);
 void try_execute(string command);
@@ -10,17 +12,12 @@ void clear_queue();
 string *query_command_queue();
 
 string *query_command_paths();
-void set_command_paths(string *paths);
-string *add_command_path(string path);
-void ensure_wizard_paths();
-void ensure_no_wizard_paths();
 
 varargs string *remove_first_slice(int num);
 
 int query_speed();
 void set_speed(int speed);
 
-string *command_paths;
 string *command_queue;
 int execution_count;
 int speed;
@@ -171,29 +168,10 @@ string *query_command_queue() {
 }
 
 string *query_command_paths() {
-    if (!command_paths) {
-        command_paths = ({ USER_PATH });
+    if (query_wizard()) {
+        return ({ WIZ_PATH, USER_PATH });
     }
-    return command_paths;
-}
-
-void set_command_paths(string *paths) {
-    command_paths = paths;
-}
-
-string *add_command_path(string path) {
-    set_command_paths(({ path }) + query_command_paths());
-    return command_paths;
-}
-
-void ensure_wizard_paths() {
-    if (member_array(WIZ_PATH, query_command_paths()) < 0) {
-        add_command_path(WIZ_PATH);
-    }
-}
-
-void ensure_no_wizard_paths() {
-    set_command_paths(query_command_paths() - ({ WIZ_PATH }));
+    return ({ USER_PATH });
 }
 
 varargs string *remove_first_slice(int num) {

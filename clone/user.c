@@ -358,10 +358,6 @@ void setup() {
     set_wizard(0);
     load();
 
-    if (query_wizard()) {
-        ensure_wizard_paths();
-    }
-
     look_description = "This is " + query_name() + ".\n";
 
     logged_in = 1;
