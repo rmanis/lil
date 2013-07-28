@@ -42,6 +42,7 @@
 #define VERB_OB                 "/inherit/verb"
 #define ITEM_OB                 "/inherit/item"
 #define EDITOR_OB               "/clone/editor"
+#define PAGER_OB                "/clone/pager"
 
 #define ED_HANDLER              "/single/ed-handler"
 
