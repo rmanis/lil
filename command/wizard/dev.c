@@ -18,7 +18,7 @@ int main(string arg) {
 
     ob = find_object(command_path);
     if (ob) {
-        destruct(ob);
+        deep_destruct(ob);
     }
 
     this_player()->process_input(arg);

@@ -7,6 +7,24 @@ varargs int getoid(object ob);
 string dump_variable(mixed arg);
 void p_refresh();
 
+void deep_destruct(object o) {
+    mixed *ancestors;
+    mixed ancestor;
+
+    if (!o) {
+        return;
+    }
+
+    ancestors = deep_inherit_list(o);
+    foreach (ancestor in ancestors) {
+        ancestor = find_object(ancestor);
+        if (ancestor) {
+            destruct(ancestor);
+        }
+    }
+    destruct(o);
+}
+
 int with_or_has(object haver, object ob) {
     return environment(ob) == haver ||
         environment(ob) == environment(haver);
