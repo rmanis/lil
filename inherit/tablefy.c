@@ -22,7 +22,7 @@ varargs string tablefy(mixed *detailed, int numcols) {
         return "";
     }
 
-    widest = 1 + select_greatest(map(detailed, (: $1[1] :)));
+    widest = 2 + select_greatest(map(detailed, (: $1[1] :)));
 
     if (!numcols) {
         numcols = this_player()->query_print_width() / widest;
