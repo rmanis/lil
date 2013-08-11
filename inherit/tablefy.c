@@ -1,9 +1,14 @@
 
 #include <globals.h>
 
+void print_table(string table);
 varargs string tablefy(mixed *detailed, int numcols);
 int select_greatest(int *nums);
 int width(mixed f);
+
+void print_table(string table) {
+    write(terminal_colour(table + "\n", this_user()->query_color_map()));
+}
 
 // detailed: list of things to tablefy,
 //   each element being of the form ({ string text, int width })

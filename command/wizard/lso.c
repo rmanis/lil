@@ -43,7 +43,7 @@ int display_all(mixed *files) {
 
     text = tablefy(detailed, 0, (: width :));
 
-    write(terminal_colour(text + "\n", this_user()->query_color_map()));
+    print_table(text);
     return 1;
 }
 
