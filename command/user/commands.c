@@ -11,13 +11,17 @@ int main(string arg) {
     string *commands;
     mixed *detailed;
     string path;
+    string *verbs = cleanse(VERB_D->query_verbs());
+    string verb;
+
+    printf("verbs:\n");
+    print_table(tablefy(map(verbs, (: detail :))));
 
     foreach (path in paths) {
         commands = cleanse(get_dir(path + "/"));
         detailed = map(commands, (: detail :));
-        printf("%s commands:\n", basename(path));
+        printf("\n%s commands:\n", basename(path));
         print_table(tablefy(detailed));
-        printf("\n");
     }
 
     return 1;
