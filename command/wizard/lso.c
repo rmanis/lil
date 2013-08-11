@@ -2,20 +2,19 @@
 #include <globals.h>
 
 inherit "/inherit/error_out";
+inherit "/inherit/tablefy";
 
 int main(string dir);
-int display_all(mixed *files, int screen_width);
+int display_all(mixed *files);
 string *fetch(string file);
 int width(mixed f);
 mixed *display(mixed f);
-int select_greatest(int *nums);
 
 int main(string dir) {
     string path = resolve_path(this_player()->query_cwd(), dir);
     string *files;
     string *fulls;
     mixed *combined;
-    int screen_width = this_player()->query_print_width();
 
     if (!sizeof(stat(path))) {
 	return error_out(sprintf("No such file or directory: %s", path));
@@ -35,37 +34,15 @@ int main(string dir) {
 
     combined = select_many(fulls, (: fetch :), path);
 
-    return display_all(combined, screen_width);
+    return display_all(combined);
 }
 
-int display_all(mixed *files, int screen_width) {
-    int widest;
-    int numcols;
+int display_all(mixed *files) {
     mixed *detailed = map(files, (: display :));
-    int i;
-    int column;
-    int num_spaces;
     string text = "";
 
-    widest = 1 + select_greatest(map(files, (: width :)));
+    text = tablefy(detailed, 0, (: width :));
 
-    if (sizeof(files)) {
-        numcols = screen_width / widest;
-    }
-
-    for (i = 0; i < sizeof(detailed); i++) {
-        column = i % numcols;
-        if (i && column == 0) {
-            text += "\n";
-        }
-        num_spaces = (column < (numcols - 1) ?
-                widest - detailed[i][1] :
-                0);
-        text +=
-            sprintf("%s%s",
-                detailed[i][0],
-                repeat_string(" ", num_spaces));
-    }
     write(terminal_colour(text + "\n", this_user()->query_color_map()));
     return 1;
 }
@@ -105,13 +82,3 @@ mixed *display(mixed f) {
     }
 }
 
-int select_greatest(int *nums) {
-    int n;
-    int max;
-    foreach (n in nums) {
-        if (n > max) {
-            max = n;
-        }
-    }
-    return max;
-}
