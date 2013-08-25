@@ -3,8 +3,8 @@
 #include <globals.h>
 
 // /inherit/master/valid.c contains all the valid_* functions
-inherit "/inherit/master/valid";
-inherit "/inherit/master/nlp";
+inherit __DIR__ "master/valid";
+inherit __DIR__ "master/nlp";
 
 void flag(string str) {
     switch (str) {

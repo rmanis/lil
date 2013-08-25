@@ -41,7 +41,6 @@ object *parse_command_users() {
     return users();
 }
 
-
 // Force the master to refresh parsing stuff.
 void p_refresh() {
     parse_refresh();
